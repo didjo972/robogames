@@ -18,13 +18,19 @@ public class UserEntityImpl implements UserEntity {
 	
 	/** L'Id */
 	private Long id;
+	
+	/** L'Habilitation */
+//	private HabilitationEntity habilitation;
+	
+	/** L'informations */
+//	private InformationsEntity informations;
 
 	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "USER_ID", unique = true, nullable = false, precision = 20, scale = 0)
 	public Long getId() {
-		return id;
+		return this.id;
 	}
 
 	@Override

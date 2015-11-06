@@ -1,13 +1,11 @@
 package fr.insta.robot.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import fr.insta.robot.bo.InformationsEntity;
@@ -64,7 +62,7 @@ public class InformationsEntityImpl implements InformationsEntity {
 	public void setPrenom(String prenom) {
 		this.prenom = prenom;
 	}
-	@OneToOne(cascade = CascadeType.ALL)
+	
 	@JoinColumn(name = "INF_USER_ID")
 	@Override
 	public UserEntity getUser() {

@@ -1,6 +1,5 @@
 package fr.insta.robot;
 
-import org.junit.BeforeClass;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -14,7 +13,6 @@ public class AbstractServiceFactory {
 	/**
 	 * Initialisation Environnement
 	 */
-	@BeforeClass
 	public static void initEnvironment() {
 		
 		System.out.println("load context");

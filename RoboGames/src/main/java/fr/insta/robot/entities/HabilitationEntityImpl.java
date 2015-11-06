@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import fr.insta.robot.bo.HabilitationEntity;
@@ -83,9 +83,9 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	public void setEtat(boolean etat) {
 		this.etat = etat;
 	}
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "HAB_USER_ID")
+	
 	@Override
+	@JoinColumn(name = "HAB_USER_ID")
 	public UserEntity getUser() {
 		return user;
 	}
@@ -95,7 +95,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 		this.user = user;
 		
 	}
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = RoleEntityImpl.class, optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name ="HAB_ROL_ID")
 	@Override
 	public RoleEntity getRole() {
@@ -106,6 +106,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	public void setRole(RoleEntity role) {
 		this.role = role;
 	}
+	
 	@Column(name = "HAB_INFOS", unique = false, nullable = false, length = 255)
 	@Override
 	public String getInfos() {

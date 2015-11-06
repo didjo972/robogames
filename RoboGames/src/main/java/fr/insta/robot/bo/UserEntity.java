@@ -15,4 +15,5 @@ public interface UserEntity extends Serializable {
 	 * @param id l'id
 	 */
 	void setId(Long id);
+	
 }

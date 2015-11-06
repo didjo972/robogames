@@ -9,7 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import fr.insta.robot.bo.EvenementEntity;
@@ -171,7 +171,7 @@ public class EvenementEntityImpl implements EvenementEntity {
 		this.valide = valide;
 
 	}
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = UserEntityImpl.class, optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name ="EVE_USER_ID")
 	@Override
 	public UserEntity getUser() {

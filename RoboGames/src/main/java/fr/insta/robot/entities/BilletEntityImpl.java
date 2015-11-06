@@ -7,8 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import fr.insta.robot.bo.BilletEntity;
@@ -45,7 +44,7 @@ public class BilletEntityImpl implements BilletEntity {
 	}
 	
 	@Override
-	@OneToOne(cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = UserEntityImpl.class, optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "BILL_USER_ID")
 	public UserEntity getUser() {
 		return user;
@@ -57,7 +56,7 @@ public class BilletEntityImpl implements BilletEntity {
 	}
 
 	@Override
-	@OneToMany(cascade = CascadeType.ALL)
+	@ManyToOne(targetEntity = EvenementEntityImpl.class, optional = false, cascade = CascadeType.ALL)
 	@JoinColumn(name = "BILL_EVE_ID")
 	public EvenementEntity getEvenement() {
 		return evenement;

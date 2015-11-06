@@ -52,6 +52,12 @@
 		<property name="dataSource" ref="dataSource"></property>
 		<property name="annotatedClasses">
 			<list>
+				<value>fr.insta.robot.entities.BilletEntityImpl</value>
+				<value>fr.insta.robot.entities.EvenementEntityImpl</value>
+				<value>fr.insta.robot.entities.HabilitationEntityImpl</value>
+				<value>fr.insta.robot.entities.InformationsEntityImpl</value>
+				<value>fr.insta.robot.entities.LiveEntityImpl</value>
+				<value>fr.insta.robot.entities.RoleEntityImpl</value>
 				<value>fr.insta.robot.entities.UserEntityImpl</value>
 			</list>
 		</property>

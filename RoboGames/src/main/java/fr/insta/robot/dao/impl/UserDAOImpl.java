@@ -14,10 +14,6 @@ public class UserDAOImpl implements UserDAO {
 	
 	@Autowired private SessionFactory sessionFactory;
 
-	/**
-	 * @Transactional annotation below will trigger Spring Hibernate transaction manager to automatically create
-	 * a hibernate session. See src/main/webapp/WEB-INF/servlet-context.xml
-	 */
 	@Override
 	@Transactional
 	public void persist(UserEntity user) {
