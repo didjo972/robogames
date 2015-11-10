@@ -5,11 +5,13 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import fr.insta.robot.bo.HabilitationEntity;
@@ -33,7 +35,9 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	/** Etat */
 	private boolean etat;
 	/** l'User */
-	private UserEntity user;
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	@JoinColumn(name = "HAB_USER_ID")
+	private UserEntity userH;
 	/** Role */
 	private RoleEntity role;
 	/** Informations de l'habilitation */
@@ -87,12 +91,12 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	@Override
 	@JoinColumn(name = "HAB_USER_ID")
 	public UserEntity getUser() {
-		return user;
+		return userH;
 	}
 
 	@Override
 	public void setUser(UserEntity user) {
-		this.user = user;
+		this.userH = user;
 		
 	}
 	@ManyToOne(targetEntity = RoleEntityImpl.class, optional = false, cascade = CascadeType.ALL)

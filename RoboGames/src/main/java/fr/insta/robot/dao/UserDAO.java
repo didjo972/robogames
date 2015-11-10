@@ -28,4 +28,10 @@ public interface UserDAO {
 	 * @param user l'user
 	 */
 	void delete(UserEntity user);
+	/**
+	 * Cherche l'entité en base par son pseudo
+	 * @param user
+	 * @return
+	 */
+	UserEntity findByPseudo(String pseudo);
 }

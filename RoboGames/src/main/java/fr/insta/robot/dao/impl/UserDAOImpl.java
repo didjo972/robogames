@@ -1,6 +1,8 @@
 package fr.insta.robot.dao.impl;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,5 +40,15 @@ public class UserDAOImpl implements UserDAO {
 		sessionFactory.getCurrentSession().delete(user);
 
 	}
+
+	@Override
+	@Transactional
+	public UserEntity findByPseudo(String pseudo) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserEntityImpl.class);
+		criteria.add(Restrictions.eq("pseudo", pseudo));
+		return (UserEntity) criteria.uniqueResult();
+	}
+	
+	
 
 }

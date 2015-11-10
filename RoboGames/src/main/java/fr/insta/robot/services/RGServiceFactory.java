@@ -22,6 +22,7 @@ public class RGServiceFactory extends AbstractServiceFactory {
      * @return le singleton
      */
     public static RGServiceFactory getInstance() {
+    	AbstractServiceFactory.initEnvironment();
         return INSTANCE;
     }
     

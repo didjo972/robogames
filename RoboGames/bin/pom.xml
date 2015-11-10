@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.springframework.samples.service.service</groupId>
-	<artifactId>test2</artifactId>
+	<artifactId>RoboGames</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 
@@ -14,7 +14,7 @@
 		<!-- <servlet.version>2.5</servlet.version> -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.2.2.RELEASE</spring.version>
-		<hibernate.version>4.2.2.Final</hibernate.version>
+<!-- 		<hibernate.version>4.2.2.Final</hibernate.version> -->
 		<servlet-api.version>2.5</servlet-api.version>
 		<jstl.version>1.2</jstl.version>
 		<commons-dbcp.version>1.4</commons-dbcp.version>
@@ -64,13 +64,32 @@
 			<artifactId>spring-orm</artifactId>
 			<version>${spring.version}</version>
 		</dependency>
+		<!-- Test Artifacts -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>4.1.0.RELEASE</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
 
 		<!-- Hibernate -->
 		<dependency>
-			<groupId>org.hibernate</groupId>
-			<artifactId>hibernate-core</artifactId>
-			<version>${hibernate.version}</version>
-		</dependency>
+			<groupId>javax.persistence</groupId>
+            <artifactId>persistence-api</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.2.2.Final</version>
+        </dependency>
 
 		<!-- Java EE -->
 		<dependency>

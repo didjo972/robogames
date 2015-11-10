@@ -20,6 +20,7 @@ public interface InformationsEntity extends Serializable {
 	 * Retourne le nom
 	 * @return
 	 */
+	
 	String getNom();
 	
 	/**
@@ -51,4 +52,27 @@ public interface InformationsEntity extends Serializable {
 	 * @param user l'user
 	 */
 	void setUser(UserEntity user);
+	/**
+	 * Met à jour le pseudo
+	 * @param pseudo
+	 */
+	void setPseudo(String pseudo);
+	
+	/**
+	 * Retourne le pseudo
+	 * @return pseudo
+	 */
+	String getPseudo();
+	/**
+	 * Met à jour le password
+	 * @param encodeMd5
+	 */
+	
+	void setPassword(String encodeMd5);
+	/**
+	 * Retourne le password crypté par md5
+	 * @return
+	 */
+	String getPassword();
+	
 }

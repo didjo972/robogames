@@ -28,5 +28,12 @@ public interface UserService {
 	 * @param user l'user
 	 */
 	void deleteUser(UserEntity user);
+
+	/**
+	 * Recherche un user par son pseudo
+	 * @param string
+	 * @return
+	 */
+	UserEntity findUserByPseudo(String pseudo);
 	
 }

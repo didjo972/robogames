@@ -15,16 +15,19 @@ public class UserEntityImpl implements UserEntity {
 
 	/** serialVersionUID **/
 	private static final long serialVersionUID = 1L;
-	
+
 	/** L'Id */
 	private Long id;
-	
-	/** L'Habilitation */
-//	private HabilitationEntity habilitation;
-	
-	/** L'informations */
-//	private InformationsEntity informations;
-
+	/** Nom */
+	private String nom;
+	/** prenom */
+	private String prenom;
+	/** pseudo */
+	private String pseudo;
+	/** password */
+	private String password;
+	/** email */
+	private String email;
 	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,4 +41,60 @@ public class UserEntityImpl implements UserEntity {
 		this.id = id;
 	}
 
+	@Override
+	@Column(name = "USER_NOM", unique = false, nullable = false, length = 100)
+	public String getNom() {
+		return nom;
+	}
+
+	@Override
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	@Override
+	@Column(name = "USER_PRENOM", unique = false, nullable = false, length = 100)
+	public String getPrenom() {
+		return prenom;
+	}
+
+	@Override
+	public void setPrenom(String prenom) {
+		this.prenom = prenom;
+	}
+
+	@Column(name = "USER_PSEUDO", unique = true, nullable = false, length = 100)
+	@Override
+	public String getPseudo() {
+		return pseudo;
+	}
+
+	@Override
+	public void setPseudo(String pseudo) {
+		this.pseudo = pseudo;
+
+	}
+	@Column(name = "USER_PASSWORD", unique = false, nullable = false, length = 100)
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
+	@Override
+	public void setPassword(String password) {
+		this.password = password;
+
+	}
+
+	@Override
+	@Column(name = "USER_EMAIL", unique = true, nullable = false, length = 100)
+	public String getEmail() {
+		return email;
+	}
+
+	@Override
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 }

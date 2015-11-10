@@ -38,4 +38,9 @@ public class UserServiceImpl implements UserService {
 		userDAO.delete(user);
 	}
 
+	@Override
+	public UserEntity findUserByPseudo(String pseudo) {
+		return userDAO.findByPseudo(pseudo);
+	}
+
 }

@@ -29,4 +29,5 @@ public interface InformationsService {
 	 */
 	void deleteInformations(InformationsEntity informations);
 	
+	
 }
