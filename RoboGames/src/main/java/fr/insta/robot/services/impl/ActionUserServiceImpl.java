@@ -65,7 +65,7 @@ public class ActionUserServiceImpl implements RegisterService {
 
 	@Override
 	public void updateUser(UserEntity user, String nom, String prenom, String oldpass, String newpass) throws DonneesInexistantException, FonctionnelleException {
-		if (Objects.isNull(user)) {
+		if (user == null) {
 			throw new FonctionnelleException("Erreur, utilsateur inconnu.");
 		}
 		
