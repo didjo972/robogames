@@ -71,5 +71,14 @@ public interface UserEntity extends Serializable {
 	 * @param email
 	 */
 	void setEmail(String email);
-
+	/**
+	 * Retourne l'etat du compte
+	 * @return
+	 */
+	boolean getEtat();
+	/**
+	 * Met à jour l'etat
+	 * @param etat
+	 */
+	void setEtat(boolean etat);
 }

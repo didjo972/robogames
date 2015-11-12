@@ -34,4 +34,10 @@ public interface UserDAO {
 	 * @return
 	 */
 	UserEntity findByPseudo(String pseudo);
+	/**
+	 * Cherche l'entité en base par son email
+	 * @param email
+	 * @return
+	 */
+	UserEntity findByEmail(String email);
 }

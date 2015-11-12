@@ -28,6 +28,9 @@ public class UserEntityImpl implements UserEntity {
 	private String password;
 	/** email */
 	private String email;
+	/** etat */
+
+	private boolean etat;
 	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -95,6 +98,18 @@ public class UserEntityImpl implements UserEntity {
 	@Override
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	@Override
+	@Column(name = "USER_ETAT", nullable = false)
+	public boolean getEtat() {
+		return etat;
+	}
+
+	@Override
+	
+	public void setEtat(boolean etat) {
+		this.etat = etat;	
 	}
 	
 }

@@ -43,4 +43,9 @@ public class UserServiceImpl implements UserService {
 		return userDAO.findByPseudo(pseudo);
 	}
 
+	@Override
+	public UserEntity findUserByEmail(String email) {
+		return userDAO.findByEmail(email);
+	}
+
 }
