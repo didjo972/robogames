@@ -48,6 +48,14 @@ public class UserDAOImpl implements UserDAO {
 		criteria.add(Restrictions.eq("pseudo", pseudo));
 		return (UserEntity) criteria.uniqueResult();
 	}
+
+	@Override
+	@Transactional
+	public UserEntity findByEmail(String email) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserEntityImpl.class);
+		criteria.add(Restrictions.eq("email", email));
+		return (UserEntity) criteria.uniqueResult();
+	}
 	
 	
 

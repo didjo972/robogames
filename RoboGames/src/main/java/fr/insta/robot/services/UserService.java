@@ -35,5 +35,11 @@ public interface UserService {
 	 * @return
 	 */
 	UserEntity findUserByPseudo(String pseudo);
+	/**
+	 * Recherche un user par son email
+	 * @param email
+	 * @return
+	 */
+	UserEntity findUserByEmail(String email);
 	
 }
