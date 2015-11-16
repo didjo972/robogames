@@ -1,7 +1,6 @@
 package fr.insta.robot.bo;
 
 import java.io.Serializable;
-import java.util.Set;
 
 public interface RoleEntity extends Serializable {
 
@@ -28,25 +27,5 @@ public interface RoleEntity extends Serializable {
 	 * @param libelle le libelle
 	 */
 	void setLibelle(String libelle);
-	//////////////////////////////////////////////////////////////////
-	/**
-	 * Retourne un set d'habilitations
-	 * @return
-	 */
-	Set<HabilitationEntity> getHabilitations();
-	/**
-	 * Met a jour le set d'habilitations
-	 * @param habilitations
-	 */
-	void setHabilitations(Set<HabilitationEntity> habilitations);
-	/**
-	 * Ajoute une habilitation
-	 * @param habilitation
-	 */
-	void addHabilitations(HabilitationEntity habilitation);
-	/**
-	 * Supprime une habilitation
-	 * @param habilitation
-	 */
-	void removeHabilitations(HabilitationEntity habilitation);
+	
 }

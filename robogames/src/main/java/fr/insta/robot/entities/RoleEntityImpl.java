@@ -1,18 +1,12 @@
 package fr.insta.robot.entities;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import fr.insta.robot.bo.HabilitationEntity;
 import fr.insta.robot.bo.RoleEntity;
 
 @Entity
@@ -26,7 +20,6 @@ public class RoleEntityImpl implements RoleEntity {
 	
 	private Long id;
 	private String libelle;
-	private Set<HabilitationEntity> habilitations = new HashSet<HabilitationEntity>();
 	
 	@Override
 	@Id
@@ -50,25 +43,5 @@ public class RoleEntityImpl implements RoleEntity {
 	@Override
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
-	}
-	/////////////////////////////////////////////////////////////////////////
-	@OneToMany(mappedBy="role", targetEntity = HabilitationEntityImpl.class, cascade = CascadeType.ALL)
-	@Override
-	public Set<HabilitationEntity> getHabilitations() {
-		return habilitations;
-	}
-	
-	@Override
-	public void setHabilitations(Set<HabilitationEntity> habilitations) {
-		this.habilitations = habilitations;
-	}
-	////////////////////////////////////////////////////////////////////////
-	@Override
-	public void addHabilitations(HabilitationEntity habilitation){
-		habilitations.add(habilitation);
-	}
-	@Override
-	public void removeHabilitations(HabilitationEntity habilitation){
-		habilitations.remove(habilitation);
 	}
 }

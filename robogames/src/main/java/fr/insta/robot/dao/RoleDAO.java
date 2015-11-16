@@ -28,5 +28,11 @@ public interface RoleDAO {
 	 * @param roleEntity l'roleEntity
 	 */
 	void delete(RoleEntity roleEntity);
+	/**
+	 * Retourne le role par le nom
+	 * @param role
+	 * @return
+	 */
+	RoleEntity findByRole(String role);
 	
 }

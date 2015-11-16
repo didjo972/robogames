@@ -1,6 +1,8 @@
 package fr.insta.robot.dao.impl;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,5 +40,14 @@ public class RoleDAOImpl implements RoleDAO {
 		sessionFactory.getCurrentSession().delete(role);
 
 	}
+
+	@Override
+	@Transactional
+	public RoleEntity findByRole(String role) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(RoleEntityImpl.class);
+		criteria.add(Restrictions.eq("libelle", role));
+		return (RoleEntity) criteria.uniqueResult();
+	}
+	
 	
 }

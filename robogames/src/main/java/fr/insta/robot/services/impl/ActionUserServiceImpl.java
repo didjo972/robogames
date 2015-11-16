@@ -2,19 +2,25 @@ package fr.insta.robot.services.impl;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Date;
 import java.util.Objects;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import fr.insta.robot.bo.HabilitationEntity;
 import fr.insta.robot.bo.InformationsEntity;
+import fr.insta.robot.bo.RoleEntity;
 import fr.insta.robot.bo.UserEntity;
+import fr.insta.robot.entities.HabilitationEntityImpl;
 import fr.insta.robot.entities.RGEntityFactory;
 import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.ActionUserService;
 import fr.insta.robot.services.InformationsService;
 import fr.insta.robot.services.RGServiceFactory;
+import fr.insta.robot.services.RoleConstantService;
+import fr.insta.robot.services.RoleService;
 import fr.insta.robot.services.UserService;
 
 public class ActionUserServiceImpl implements ActionUserService {
@@ -30,6 +36,8 @@ public class ActionUserServiceImpl implements ActionUserService {
 				|| StringUtils.isBlank(password) || StringUtils.isBlank(mail)) {
 			throw new DonneesInexistantException("Erreur, toutes les données doivent être fournies.");
 		}
+		//Habilitation 
+		HabilitationEntity hab = new HabilitationEntityImpl();
 		// Initialisation de l'entité user
 		UserEntity user = RGEntityFactory.getUserEntityInstance();
 		user.setEtat(true);
@@ -53,7 +61,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 		//Appel des services DAO
 		UserService userService = RGServiceFactory.getInstance().getUserService();
 		InformationsService infoService = RGServiceFactory.getInstance().getInformationsService();
-
+		RoleService roleService = RGServiceFactory.getInstance().getRoleService();
 		//Recherche si le mail ou pseudo existe deja en base
 		InformationsEntity infos2 = infoService.findInformationsByPseudo(pseudo);
 
@@ -62,6 +70,18 @@ public class ActionUserServiceImpl implements ActionUserService {
 				throw new FonctionnelleException("Erreur, le pseudo ou l'email existe déjà!");
 			}
 		}
+		RoleEntity role = roleService.findRoleByString(RoleConstantService.USER);
+		//Affectation du role
+		hab.setDateDebut(new Date());
+		hab.setDateFin(null);
+		hab.setInfos("toto");
+		hab.setEtat(true);
+		hab.setRole(role);
+	
+		//Lien habilitation <-> user
+		hab.setUser(user);
+		user.setHabilitation(hab);
+
 		//Persist en base
 		userService.persistUser(user);
 

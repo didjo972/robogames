@@ -64,7 +64,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	public void setDateDebut(Date dateDebut) {
 		this.dateDebut = dateDebut;
 	}
-	@Column(name = "HAB_DATE_FIN", unique = false, nullable = false)
+	@Column(name = "HAB_DATE_FIN", unique = false, nullable = true)
 	@Override
 	public Date getDateFin() {
 		return dateFin;

@@ -28,5 +28,11 @@ public interface RoleService {
 	 * @param role le role
 	 */
 	void deleteRole(RoleEntity role);
+	/**
+	 * Retourne le role
+	 * @param role
+	 * @return
+	 */
+	RoleEntity findRoleByString(String role);
 	
 }

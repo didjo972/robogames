@@ -38,4 +38,10 @@ public class RoleServiceImpl implements RoleService {
 		roleDAO.delete(role);
 	}
 
+	@Override
+	@Transactional
+	public RoleEntity findRoleByString(String role) {
+		return roleDAO.findByRole(role);
+	}
+
 }

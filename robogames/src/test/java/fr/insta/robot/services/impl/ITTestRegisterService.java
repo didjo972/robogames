@@ -26,7 +26,7 @@ public class ITTestRegisterService extends AbstractRgItTest {
 
 		UserService userService = RGServiceFactory.getInstance().getUserService();
 		Assert.assertEquals("kingcat", user.getInformation().getPseudo());
-		userService.deleteUser(user);
+		//userService.deleteUser(user);
 	}
 
 	@Test
