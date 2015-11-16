@@ -35,6 +35,9 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	/** Etat */
 	private boolean etat;
 	/** l'User */
+	@OneToOne(optional = false, cascade = CascadeType.ALL)
+	@JoinColumn(name = "HAB_USER_ID")
+	private UserEntity userH;
 	private UserEntity user;
 	/** Role */
 	private RoleEntity role;
@@ -49,6 +52,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	public Long getId() {
 		return id;
 	}
+
 	@Override
 	public void setId(Long id) {
 		this.id = id;
@@ -58,6 +62,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	public Date getDateDebut() {
 		return dateDebut;
 	}
+
 	@Override
 	public void setDateDebut(Date dateDebut) {
 		this.dateDebut = dateDebut;
@@ -67,6 +72,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	public Date getDateFin() {
 		return dateFin;
 	}
+
 	@Override
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
@@ -85,6 +91,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	
 	@Column(name = "HAB_INFOS", unique = false, nullable = false, length = 255)
 	@Override
+	@JoinColumn(name = "HAB_USER_ID")
 	public String getInfos() {
 		return infos;
 	}
@@ -98,14 +105,18 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	@OneToOne(fetch=FetchType.LAZY, targetEntity = UserEntityImpl.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "HAB_USER_ID", referencedColumnName="USER_ID")
 	public UserEntity getUser() {
+		return userH;
 		return user;
 	}
 
 	@Override
 	public void setUser(UserEntity user) {
+		this.userH = user;
 		this.user = user;
 		
 	}
+	@ManyToOne(targetEntity = RoleEntityImpl.class, optional = false, cascade = CascadeType.ALL)
+	@JoinColumn(name ="HAB_ROL_ID")
 	
 	@ManyToOne(targetEntity = RoleEntityImpl.class)
 	@JoinColumn(name ="HAB_ROL_ID", referencedColumnName="ROL_ID")
@@ -118,4 +129,16 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	public void setRole(RoleEntity role) {
 		this.role = role;
 	}
+	
+	@Column(name = "HAB_INFOS", unique = false, nullable = false, length = 255)
+	@Override
+	public String getInfos() {
+		return infos;
+	}
+
+	@Override
+	public void setInfos(String infos) {
+		this.infos = infos;
+	}
+
 }

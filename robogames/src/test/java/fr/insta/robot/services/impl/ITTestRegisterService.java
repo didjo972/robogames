@@ -1,8 +1,5 @@
 package fr.insta.robot.services.impl;
 
-import java.security.NoSuchAlgorithmException;
-import java.util.Objects;
-
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -69,7 +66,7 @@ public class ITTestRegisterService extends AbstractRgItTest {
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
 		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr");
 		
-		UserService userService = RGServiceFactory.getInstance().getUserService();
+
 		UserEntity user = actionService.findUserbyPseudo("kingcat");
 
 		actionService.updateUser(user, "tang", "lam","kingcat2@yolo.fr", "123456", "123456");
