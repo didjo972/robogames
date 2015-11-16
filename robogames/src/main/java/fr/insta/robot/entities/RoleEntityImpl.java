@@ -26,7 +26,7 @@ public class RoleEntityImpl implements RoleEntity {
 	
 	private Long id;
 	private String libelle;
-	private Set<HabilitationEntity> habilitations = new HashSet<>();
+	private Set<HabilitationEntity> habilitations = new HashSet<HabilitationEntity>();
 	
 	@Override
 	@Id
@@ -62,5 +62,13 @@ public class RoleEntityImpl implements RoleEntity {
 	public void setHabilitations(Set<HabilitationEntity> habilitations) {
 		this.habilitations = habilitations;
 	}
-
+	////////////////////////////////////////////////////////////////////////
+	@Override
+	public void addHabilitations(HabilitationEntity habilitation){
+		habilitations.add(habilitation);
+	}
+	@Override
+	public void removeHabilitations(HabilitationEntity habilitation){
+		habilitations.remove(habilitation);
+	}
 }

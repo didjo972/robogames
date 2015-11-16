@@ -39,4 +39,14 @@ public interface RoleEntity extends Serializable {
 	 * @param habilitations
 	 */
 	void setHabilitations(Set<HabilitationEntity> habilitations);
+	/**
+	 * Ajoute une habilitation
+	 * @param habilitation
+	 */
+	void addHabilitations(HabilitationEntity habilitation);
+	/**
+	 * Supprime une habilitation
+	 * @param habilitation
+	 */
+	void removeHabilitations(HabilitationEntity habilitation);
 }

@@ -73,4 +73,24 @@ public interface UserEntity extends Serializable {
 	 * @return
 	 */
 	InformationsEntity getInformation();
+	/**
+	 * Ajoute un evenement dans le set
+	 * @param evenement
+	 */
+	void addEvenement(EvenementEntity evenement);
+	/**
+	 * Supprime un evenement dans le set
+	 * @param evenement
+	 */
+	void removeEvenement(EvenementEntity evenement);
+	/**
+	 * Ajoute un billet dans le set de l'utilisateur
+	 * @param billet
+	 */
+	void addBillets(BilletEntity billet);
+	/**
+	 * Supprime un billet dans le set de l'utilisateur
+	 * @param billet
+	 */
+	void removeBillets(BilletEntity billet);
 }

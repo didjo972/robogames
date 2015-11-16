@@ -169,4 +169,14 @@ public interface EvenementEntity extends Serializable {
 	 * @param debrief
 	 */
 	void setDebrief(DebriefEntity debrief);
+	/**
+	 * Ajoute un billet au set de l'evenement
+	 * @param billet
+	 */
+	void addBillets(BilletEntity billet);
+	/**
+	 * Supprime un billet au set de l'evenement
+	 * @param billet
+	 */
+	void removeBillets(BilletEntity billet);
 }

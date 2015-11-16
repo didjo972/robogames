@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import fr.insta.robot.bo.InformationsEntity;
@@ -21,7 +22,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 	public ActionUserServiceImpl() {
 
 	}
-
+	// A rajouter habilitation date fin 
 	@Override
 	public UserEntity createUser(String nom, String prenom, String pseudo, String password, String mail)
 			throws DonneesInexistantException, FonctionnelleException {
@@ -56,14 +57,14 @@ public class ActionUserServiceImpl implements ActionUserService {
 		//Recherche si le mail ou pseudo existe deja en base
 		InformationsEntity infos2 = infoService.findInformationsByPseudo(pseudo);
 
-		if (!Objects.isNull(infos2)) {
+		if (infos2 != null) {
 			if (infos2.getPseudo().equals(informations.getPseudo()) || infos2.getEmail().equals(informations.getEmail())) {
 				throw new FonctionnelleException("Erreur, le pseudo ou l'email existe déjà!");
 			}
 		}
 		//Persist en base
 		userService.persistUser(user);
-		
+
 		return user;
 	}
 
@@ -83,10 +84,12 @@ public class ActionUserServiceImpl implements ActionUserService {
 	}
 
 	@Override
-	public void updateUser(UserEntity user, String nom, String prenom, String email, String oldpass, String newpass)
+	public void updateUser(UserEntity user, String nom, String prenom, String oldpass, String newpass)
 			throws DonneesInexistantException, FonctionnelleException {
 		//Initialisation des services
-		if (Objects.isNull(user)) {
+		//InformationsService infoService = RGServiceFactory.getInstance().getInformationsService();
+		UserService userService = RGServiceFactory.getInstance().getUserService();
+		if (user == null) {
 			throw new FonctionnelleException("Erreur, utilsateur inconnu.");
 		}
 		//Modifie le nom
@@ -107,73 +110,85 @@ public class ActionUserServiceImpl implements ActionUserService {
 				throw new FonctionnelleException("Erreur, le cryptage md5 a échoué.");
 			}
 		}
-		
+		System.out.println(user.getInformation().getNom());
+		//infoService.updateInformations(user.getInformation());
+		userService.updateUser(user);
 	}
 
-		@Override
-		public UserEntity loginUser(String pseudo, String password)
-				throws DonneesInexistantException, FonctionnelleException {
-			if (StringUtils.isBlank(pseudo) || StringUtils.isBlank(password)) {
-				throw new DonneesInexistantException("Erreur, veuillez remplir les champs");
-			}
-			//Initialisation des Services DAO
-			UserService userService = RGServiceFactory.getInstance().getUserService();
-			InformationsService infosService = RGServiceFactory.getInstance().getInformationsService();
-			
-			//Retrouver les infos par pseudo
-			InformationsEntity infos = infosService.findInformationsByPseudo(pseudo);
-			if (Objects.isNull(infos)) {
-				throw new FonctionnelleException("Erreur, pseudo incorrect.");
-			}
-			//teste du mot en login
-			try {
-				if (!encodeMd5(password).equalsIgnoreCase(infos.getPassword())) {
-					throw new FonctionnelleException("Erreur, mot de passe incorrect.");
-				}
-			} catch (NoSuchAlgorithmException e) {
-				throw new FonctionnelleException("Erreur, le cryptage du mot passe en parametre a échoué.");
-			}
-			//Retrouver le UserEntity a partir de l'informations
-			UserEntity user = userService.findUserById(infos.getUser().getId());
-			return user;
+	@Override
+	public UserEntity loginUser(String pseudo, String password)
+			throws DonneesInexistantException, FonctionnelleException {
+		if (StringUtils.isBlank(pseudo) || StringUtils.isBlank(password)) {
+			throw new DonneesInexistantException("Erreur, veuillez remplir les champs");
 		}
+		//Initialisation des Services DAO
+		UserService userService = RGServiceFactory.getInstance().getUserService();
+		InformationsService infosService = RGServiceFactory.getInstance().getInformationsService();
 
-		@Override
-		public void disableUser(UserEntity user) {
-			if (!Objects.isNull(user)) {
-				user.setEtat(false);
-				UserService userService = RGServiceFactory.getInstance().getUserService();
-				userService.updateUser(user);
-			}
+		//Retrouver les infos par pseudo
+		InformationsEntity infos = infosService.findInformationsByPseudo(pseudo);
+		if (infos == null) {
+			throw new FonctionnelleException("Erreur, pseudo incorrect.");
 		}
+		//teste du mot en login
+		try {
+			if (!encodeMd5(password).equalsIgnoreCase(infos.getPassword())) {
+				throw new FonctionnelleException("Erreur, mot de passe incorrect.");
+			}
+		} catch (NoSuchAlgorithmException e) {
+			throw new FonctionnelleException("Erreur, le cryptage du mot passe en parametre a échoué.");
+		}
+		//Retrouver le UserEntity a partir de l'informations
+		UserEntity user = userService.findUserById(infos.getUser().getId());
+		return user;
+	}
 
-		@Override
-		public String resetPasswordUser(String email) throws FonctionnelleException {
-		/*	String generatepassword = RandomStringUtils.randomAlphanumeric(10);
+	@Override
+	public void disableUser(UserEntity user) {
+		if (!Objects.isNull(user)) {
+			user.setEtat(false);
 			UserService userService = RGServiceFactory.getInstance().getUserService();
-			UserEntity user = userService.findUserByEmail(email);
-			if(Objects.isNull(user)){
-				throw new FonctionnelleException("Erreur, l'email n'existe pas.");
-			}
-			try {
-				user.setPassword(encodeMd5(generatepassword));
-			} catch (NoSuchAlgorithmException e) {
-				throw new FonctionnelleException("Erreur, le cryptage du mot passe en parametre a échoué.");
-			}
 			userService.updateUser(user);
-
-			// TODO Faire l'envoie du mail
-			return generatepassword;*/
-			return null;
-		}
-
-		@Override
-		public UserEntity findUserbyPseudo(String pseudo) {
-			UserService userService = RGServiceFactory.getInstance().getUserService();
-			InformationsService infosService = RGServiceFactory.getInstance().getInformationsService();
-			
-			InformationsEntity infos = infosService.findInformationsByPseudo(pseudo);
-			UserEntity user = userService.findUserById(infos.getUser().getId());
-			return user;
 		}
 	}
+
+	@Override
+	public String resetPasswordUser(String email) throws FonctionnelleException {
+		String generatepassword = RandomStringUtils.randomAlphanumeric(10);
+		UserService userService = RGServiceFactory.getInstance().getUserService();
+		UserEntity user = findUserbyEmail(email);
+		if(user == null){
+			throw new FonctionnelleException("Erreur, l'email n'existe pas.");
+		}
+		try {
+			user.getInformation().setPassword(encodeMd5(generatepassword));
+		}catch (NoSuchAlgorithmException e) {
+			throw new FonctionnelleException("Erreur, le cryptage du mot passe en parametre a échoué.");
+		}
+		userService.updateUser(user);
+
+		return generatepassword;
+
+
+	}
+
+	@Override
+	public UserEntity findUserbyPseudo(String pseudo) {
+		UserService userService = RGServiceFactory.getInstance().getUserService();
+		InformationsService infosService = RGServiceFactory.getInstance().getInformationsService();
+
+		InformationsEntity infos = infosService.findInformationsByPseudo(pseudo);
+		UserEntity user = userService.findUserById(infos.getUser().getId());
+		return user;
+	}
+	@Override
+	public UserEntity findUserbyEmail(String email){
+		UserService userService = RGServiceFactory.getInstance().getUserService();
+		InformationsService infosService = RGServiceFactory.getInstance().getInformationsService();
+
+		InformationsEntity infos = infosService.findInformationsByEmail(email);
+		UserEntity user = userService.findUserById(infos.getUser().getId());
+		return user;
+	}
+
+}

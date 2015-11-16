@@ -19,8 +19,9 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 				|| nb_place == 0 || prix == 0 || infos == null) {
 			throw new DonneesInexistantException("Erreur, toutes les données doivent être fournies.");
 		}
-		
+		// Initialisation de l'entité evenement
 		EvenementEntity evenement = RGEntityFactory.getEvenementEntityInstance();
+		//Affectation des variables dans evenement
 		evenement.setDateDebut(d_debut);
 		evenement.setDateFin(d_fin);
 		evenement.setAdresse(adresse);
@@ -30,14 +31,15 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 		evenement.setPrix(prix);
 		evenement.setEtat(true);
 		evenement.setInfos(infos);
-		evenement.setUser(user);
 		
+		//Affectation de l'evenement dans user
+		evenement.setUser(user);
+		user.addEvenement(evenement);
+
 		EvenementService evenementService =  RGServiceFactory.getInstance().getEvenementService();
 		evenementService.persistEvenement(evenement);
-		
-		return evenement;
-		
 
+		return evenement;
 	}
 
 	@Override

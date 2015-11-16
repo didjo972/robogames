@@ -3,6 +3,7 @@ package fr.insta.robot.entities;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -105,8 +106,8 @@ public class InformationsEntityImpl implements InformationsEntity {
 	
 	/////////////////////////////////////////////////////////
 	@Override
-	@OneToOne(targetEntity = UserEntityImpl.class, cascade = CascadeType.ALL)
-	@JoinColumn(name = "INF_USER_ID", referencedColumnName="USER_ID", updatable = true)
+	@OneToOne(targetEntity = UserEntityImpl.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "INF_USER_ID", referencedColumnName="USER_ID")
 	public UserEntity getUser() {
 		return user;
 	}

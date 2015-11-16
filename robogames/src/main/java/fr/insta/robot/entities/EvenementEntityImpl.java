@@ -213,6 +213,15 @@ public class EvenementEntityImpl implements EvenementEntity {
 	public void setDebrief(DebriefEntity debrief) {
 		this.debrief = debrief;
 	}
-	
+	///////////////////////////////////////////////////////////
+	//Methode d'ajout dans le set
+	@Override
+	public void addBillets(BilletEntity billet){
+		billets.add(billet);
+	}
+	@Override
+	public void removeBillets(BilletEntity billet){
+		billets.remove(billet);
+	}
 
 }

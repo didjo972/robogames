@@ -31,9 +31,9 @@ public class UserEntityImpl implements UserEntity {
 	/** etat */
 	private boolean etat;
 	/** evenements */
-	private Set<EvenementEntity> evenements = new HashSet<>();
+	private Set<EvenementEntity> evenements = new HashSet<EvenementEntity>();
 	/** billet */
-	private Set<BilletEntity> billets = new HashSet<>();
+	private Set<BilletEntity> billets = new HashSet<BilletEntity>();
 	/** Habilitation */
 	private HabilitationEntity habilitation;
 	/** Information */
@@ -63,7 +63,7 @@ public class UserEntityImpl implements UserEntity {
 	}
 	/***********************************************************************/
 	@Override
-	@OneToMany(mappedBy = "user", targetEntity = EvenementEntityImpl.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", targetEntity = EvenementEntityImpl.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	public Set<EvenementEntity> getEvenements() {
 		return evenements;
 	}
@@ -92,7 +92,7 @@ public class UserEntityImpl implements UserEntity {
 		this.habilitation = habilitation;
 	}
 	@Override
-	@OneToOne(mappedBy = "user", targetEntity = InformationsEntityImpl.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(mappedBy = "user", targetEntity = InformationsEntityImpl.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public InformationsEntity getInformation() {
 		return information;
 	}
@@ -100,4 +100,22 @@ public class UserEntityImpl implements UserEntity {
 	public void setInformation(InformationsEntity information) {
 		this.information = information;
 	}
+	/*************************************************************/
+	//Methode d'ajout dans les set
+	@Override
+	public void addEvenement(EvenementEntity evenement){
+		evenements.add(evenement);
+	}
+	@Override
+	public void removeEvenement(EvenementEntity evenement){
+		evenements.remove(evenement);
+	}
+	@Override
+	public void addBillets(BilletEntity billet){
+		billets.add(billet);
+	}
+	@Override
+	public void removeBillets(BilletEntity billet){
+		billets.remove(billet);
+	}	
 }
