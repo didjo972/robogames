@@ -1,9 +1,6 @@
 package fr.insta.robot;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Classe abstraite des tests d'intégration.

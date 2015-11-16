@@ -1,18 +1,5 @@
 package fr.insta.robot.services.impl;
 
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
-
-import org.junit.Test;
-
-import fr.insta.robot.bo.EvenementEntity;
-import fr.insta.robot.bo.UserEntity;
-import fr.insta.robot.exceptions.DonneesInexistantException;
-import fr.insta.robot.exceptions.FonctionnelleException;
-import fr.insta.robot.services.RGServiceFactory;
-import fr.insta.robot.services.UserService;
-
 public class ITTestEvenementService {
 	
 /*	@Test

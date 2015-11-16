@@ -35,9 +35,6 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	/** Etat */
 	private boolean etat;
 	/** l'User */
-	@OneToOne(optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name = "HAB_USER_ID")
-	private UserEntity userH;
 	private UserEntity user;
 	/** Role */
 	private RoleEntity role;
@@ -89,34 +86,19 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 		this.etat = etat;
 	}
 	
-	@Column(name = "HAB_INFOS", unique = false, nullable = false, length = 255)
-	@Override
-	@JoinColumn(name = "HAB_USER_ID")
-	public String getInfos() {
-		return infos;
-	}
-
-	@Override
-	public void setInfos(String infos) {
-		this.infos = infos;
-	}
 	/***********************************************************************/
 	@Override
 	@OneToOne(fetch=FetchType.LAZY, targetEntity = UserEntityImpl.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "HAB_USER_ID", referencedColumnName="USER_ID")
 	public UserEntity getUser() {
-		return userH;
 		return user;
 	}
 
 	@Override
 	public void setUser(UserEntity user) {
-		this.userH = user;
 		this.user = user;
 		
 	}
-	@ManyToOne(targetEntity = RoleEntityImpl.class, optional = false, cascade = CascadeType.ALL)
-	@JoinColumn(name ="HAB_ROL_ID")
 	
 	@ManyToOne(targetEntity = RoleEntityImpl.class)
 	@JoinColumn(name ="HAB_ROL_ID", referencedColumnName="ROL_ID")
