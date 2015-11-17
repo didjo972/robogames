@@ -29,7 +29,6 @@ public class DebriefEntityImpl implements DebriefEntity {
 	/** Evenement */
 	private EvenementEntity evenement;
 	
-	
 	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -44,7 +43,7 @@ public class DebriefEntityImpl implements DebriefEntity {
 	}
 
 	@Override
-	@Column(name = "DEB_DEBRIEF", unique = false, nullable = false, columnDefinition = "LONGTEXT")
+	@Column(name = "DEB_DEBRIEF", unique = false, nullable = true, columnDefinition = "LONGTEXT")
 	public String getDebrief() {
 		return debrief;
 	}

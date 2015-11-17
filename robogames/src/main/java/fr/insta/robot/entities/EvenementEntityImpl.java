@@ -31,6 +31,8 @@ public class EvenementEntityImpl implements EvenementEntity {
 	private static final long serialVersionUID = 1L;
 	/** l'ID */
 	private Long id;
+	/** le nom de l'event */
+	private String nom;
 	/** Date de debut */
 	private Date dateDebut;
 	/** Date de Fin */
@@ -73,6 +75,16 @@ public class EvenementEntityImpl implements EvenementEntity {
 		this.id = id;
 
 	}
+	@Override
+	@Column(name="EVE_NOM", unique = true, nullable = false, length = 100)
+	public String getNom() {
+		return nom;
+	}
+	@Override
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+	
 	@Override
 	@Column(name = "EVE_DATE_DEBUT", unique = false, nullable = false)
 	public Date getDateDebut() {

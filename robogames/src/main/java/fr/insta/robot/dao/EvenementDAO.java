@@ -28,5 +28,10 @@ public interface EvenementDAO {
 	 * @param EvenementEntity l'EvenementEntity
 	 */
 	void delete(EvenementEntity evenementEntity);
+	/**
+	 * Retourne l'evenement
+	 * @param nom
+	 */
+	EvenementEntity findByName(String nom);
 	
 }

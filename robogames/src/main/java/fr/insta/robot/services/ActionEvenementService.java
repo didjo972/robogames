@@ -20,9 +20,10 @@ public interface ActionEvenementService {
 	 * @param prix
 	 * @param infos
 	 * @throws DonneesInexistantException 
+	 * @throws FonctionnelleException 
 	 */
-	EvenementEntity createEvenement(UserEntity user, Date d_debut, Date d_fin, String adresse, String ville, int codePostal,
-			int nb_place, int prix, String infos) throws DonneesInexistantException;
+	EvenementEntity createEvenement(UserEntity user, String nom, Date d_debut, Date d_fin, String adresse, String ville, int codePostal,
+			int nb_place, int prix, String infos) throws DonneesInexistantException, FonctionnelleException;
 	/**
 	 * Modifie un evenement par l'utilisateur
 	 * @param evenement
@@ -35,20 +36,20 @@ public interface ActionEvenementService {
 	 * @param prix
 	 * @param infos
 	 * @throws FonctionnelleException 
+	 * @throws DonneesInexistantException 
 	 */
-	void updateEvenement(EvenementEntity evenement,Date d_debut, Date d_fin, String adresse, String ville, int codePostal,
-			int nb_place, int prix, String infos) throws FonctionnelleException;
+	void updateEvenement(UserEntity user, String nom, Date d_debut, Date d_fin, String adresse, String ville, int codePostal,
+			int nb_place, int prix, String infos) throws FonctionnelleException, DonneesInexistantException;
 	/**
 	 * Supprime un evenement 
 	 * @param evenement
 	 */
 	void deleteEvenement(EvenementEntity evenement);
 	/**
-	 * Ajoute un debrief
-	 * @param evenement
-	 * @param debrief
-	 * @throws DonneesInexistantException
+	 * 
+	 * @param nom
+	 * @return
 	 */
-	void addDebriefEvenement(EvenementEntity evenement, String debrief) throws DonneesInexistantException;
+	EvenementEntity findByNameEvenement(String nom);
 	
 }

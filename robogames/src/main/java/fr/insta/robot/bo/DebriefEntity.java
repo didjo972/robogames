@@ -36,6 +36,4 @@ public interface DebriefEntity extends Serializable{
 	 * @param evenement
 	 */
 	void setEvenement(EvenementEntity evenement);
-	
-	
 }

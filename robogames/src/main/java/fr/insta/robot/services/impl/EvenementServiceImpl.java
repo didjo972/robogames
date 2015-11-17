@@ -38,4 +38,11 @@ public class EvenementServiceImpl implements EvenementService {
 		evenementDAO.delete(evenement);
 	}
 
+	@Override
+	@Transactional
+	public EvenementEntity findEvenementByName(String nom) {
+		return evenementDAO.findByName(nom);
+	}
+
+
 }

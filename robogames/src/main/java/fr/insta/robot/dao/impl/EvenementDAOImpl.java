@@ -1,6 +1,8 @@
 package fr.insta.robot.dao.impl;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,6 +39,14 @@ public class EvenementDAOImpl implements EvenementDAO {
 	public void delete(EvenementEntity evenement) {
 		sessionFactory.getCurrentSession().delete(evenement);
 
+	}
+
+	@Override
+	@Transactional
+	public EvenementEntity findByName(String nom) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(EvenementEntityImpl.class);
+		criteria.add(Restrictions.eq("nom", nom));
+		return (EvenementEntity) criteria.uniqueResult();
 	}
 	
 }

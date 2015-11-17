@@ -28,5 +28,11 @@ public interface EvenementService {
 	 * @param evenement l'evenement
 	 */
 	void deleteEvenement(EvenementEntity evenement);
+	/**
+	 * Retourne l'evenement par le nom
+	 * @param nom
+	 * @return
+	 */
+	EvenementEntity findEvenementByName(String nom);
 	
 }
