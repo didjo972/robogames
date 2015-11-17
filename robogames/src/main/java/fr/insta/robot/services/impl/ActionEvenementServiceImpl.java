@@ -1,6 +1,7 @@
 package fr.insta.robot.services.impl;
 
 import java.util.Date;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -114,4 +115,17 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 		EvenementEntity evenement = eveService.findEvenementByName(nom);
 		return evenement;
 	}
+
+	@Override
+	public EvenementEntity findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<EvenementEntity> findAllEnvenement(UserEntity admin) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 }

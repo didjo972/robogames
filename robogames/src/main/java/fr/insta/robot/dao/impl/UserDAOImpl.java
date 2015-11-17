@@ -1,5 +1,8 @@
 package fr.insta.robot.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,5 +40,13 @@ public class UserDAOImpl implements UserDAO {
 	public void delete(UserEntity user) {
 		sessionFactory.getCurrentSession().delete(user);
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<UserEntity> findAllUser() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(UserEntityImpl.class);
+		return criteria.list();
 	}
 }

@@ -3,6 +3,7 @@ package fr.insta.robot.services.impl;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -229,4 +230,22 @@ public class ActionUserServiceImpl implements ActionUserService {
 		UserEntity user = userService.findUserById(infos.getUser().getId());
 		return user;
 	}
+	@Override
+	public UserEntity findUserById(Long id){
+		UserService userService = RGServiceFactory.getInstance().getUserService();
+		UserEntity user = userService.findUserById(id);
+		return user;
+	}
+	@Override
+	public List<UserEntity> findAllUser(UserEntity admin){
+		UserService userService = RGServiceFactory.getInstance().getUserService();
+		//mettre en commentaire pas encore de admin defini
+		if(admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)){
+			return userService.findAllUser();
+		}
+		else{
+			return null;
+		}
+	}
+	
 }

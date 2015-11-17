@@ -1,5 +1,7 @@
 package fr.insta.robot.dao;
 
+import java.util.List;
+
 import fr.insta.robot.bo.UserEntity;
 
 public interface UserDAO {
@@ -28,5 +30,10 @@ public interface UserDAO {
 	 * @param user l'user
 	 */
 	void delete(UserEntity user);
+	/**
+	 * Retourne la liste des utilisateurs
+	 * @return
+	 */
+	List<UserEntity> findAllUser();
 	
 }

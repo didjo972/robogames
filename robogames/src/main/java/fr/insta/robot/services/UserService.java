@@ -1,5 +1,7 @@
 package fr.insta.robot.services;
 
+import java.util.List;
+
 import fr.insta.robot.bo.UserEntity;
 
 public interface UserService {
@@ -27,5 +29,10 @@ public interface UserService {
 	 * Supprime l'entite
 	 * @param user l'user
 	 */
-	void deleteUser(UserEntity user);	
+	void deleteUser(UserEntity user);
+	/**
+	 * Retourne la liste des utilisateurs
+	 * @return
+	 */
+	List<UserEntity> findAllUser();	
 }

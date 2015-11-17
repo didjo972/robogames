@@ -17,7 +17,7 @@ public interface ActionBilletService {
 	 * @param admin
 	 * @return
 	 */
-	Set<BilletEntity> getAllBillets(UserEntity admin);
+	Set<BilletEntity> findAllBillets(UserEntity admin);
 	
 	
 }

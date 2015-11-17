@@ -1,6 +1,7 @@
 package fr.insta.robot.services;
 
 import java.security.NoSuchAlgorithmException;
+import java.util.List;
 
 import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.exceptions.DonneesInexistantException;
@@ -70,6 +71,18 @@ public interface ActionUserService {
 	 * @return
 	 */
 	UserEntity findUserbyEmail(String email);
+	/**
+	 * Retourne le user par id
+	 * @param id
+	 * @return
+	 */
+	UserEntity findUserById(Long id);
+	/**
+	 * Retourne tous les users
+	 * @param admin
+	 * @return
+	 */
+	List<UserEntity> findAllUser(UserEntity admin);
 	
 	
 }

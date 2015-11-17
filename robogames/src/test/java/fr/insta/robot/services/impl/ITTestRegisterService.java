@@ -121,4 +121,14 @@ public class ITTestRegisterService extends AbstractRgItTest {
 
 		userService.deleteUser(user);
 	}
+	@Test 
+	public void testListUser() throws DonneesInexistantException, FonctionnelleException{
+		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
+	//	actionService.createUser("tang", "lam", "kingcat1", "123456", "kingca1@yolo.fr", null);
+	//	actionService.createUser("tang", "lam", "kingcat2", "123456", "kingca22t@yolo.fr", null);
+	//	actionService.createUser("tang", "lam", "kingcat3", "123456", "kingca3t@yolo.fr", null);
+		
+		UserEntity user = actionService.findUserbyPseudo("kingcat1");
+		System.out.println(actionService.findAllUser(user));
+	}
 }

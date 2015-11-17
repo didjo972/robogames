@@ -13,9 +13,8 @@ public class ActionBilletServiceImpl implements ActionBilletService{
 	public void createBillet(UserEntity user, EvenementEntity evenement) {
 		
 	}
-
 	@Override
-	public Set<BilletEntity> getAllBillets(UserEntity admin) {
+	public Set<BilletEntity> findAllBillets(UserEntity admin) {
 		// TODO Auto-generated method stub
 		return null;
 	}

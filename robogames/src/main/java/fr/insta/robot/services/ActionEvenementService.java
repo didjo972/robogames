@@ -1,6 +1,7 @@
 package fr.insta.robot.services;
 
 import java.util.Date;
+import java.util.Set;
 
 import fr.insta.robot.bo.EvenementEntity;
 import fr.insta.robot.bo.UserEntity;
@@ -46,10 +47,22 @@ public interface ActionEvenementService {
 	 */
 	void deleteEvenement(EvenementEntity evenement);
 	/**
-	 * 
+	 * Retourne l'evenement par nom
 	 * @param nom
 	 * @return
 	 */
 	EvenementEntity findByNameEvenement(String nom);
+	/**
+	 * Retourne l'evenement par id
+	 * @param id
+	 * @return
+	 */
+	EvenementEntity findById(Long id);
+	/**
+	 * Retourne tous les utilisateurs pour l'admin
+	 * @param admin
+	 * @return
+	 */
+	Set<EvenementEntity> findAllEnvenement(UserEntity admin);
 	
 }
