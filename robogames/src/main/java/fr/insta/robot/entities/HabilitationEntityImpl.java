@@ -40,7 +40,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	private RoleEntity role;
 	/** Informations de l'habilitation */
 	private String infos;
-	
+
 
 	@Override
 	@Id
@@ -73,7 +73,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	@Override
 	public void setDateFin(Date dateFin) {
 		this.dateFin = dateFin;
-		
+
 	}
 	@Column(name = "HAB_ETAT", unique = false, nullable = false)
 	@Override
@@ -85,7 +85,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	public void setEtat(boolean etat) {
 		this.etat = etat;
 	}
-	
+
 	/***********************************************************************/
 	@Override
 	@OneToOne(fetch=FetchType.LAZY, targetEntity = UserEntityImpl.class, cascade = CascadeType.ALL)
@@ -97,9 +97,9 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	@Override
 	public void setUser(UserEntity user) {
 		this.user = user;
-		
+
 	}
-	
+
 	@ManyToOne(targetEntity = RoleEntityImpl.class)
 	@JoinColumn(name ="HAB_ROL_ID", referencedColumnName="ROL_ID")
 	@Override
@@ -111,7 +111,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	public void setRole(RoleEntity role) {
 		this.role = role;
 	}
-	
+
 	@Column(name = "HAB_INFOS", unique = false, nullable = false, length = 255)
 	@Override
 	public String getInfos() {

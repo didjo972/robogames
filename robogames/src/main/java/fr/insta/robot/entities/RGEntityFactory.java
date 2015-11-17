@@ -1,6 +1,7 @@
 package fr.insta.robot.entities;
 
 import fr.insta.robot.bo.BilletEntity;
+import fr.insta.robot.bo.DebriefEntity;
 import fr.insta.robot.bo.EvenementEntity;
 import fr.insta.robot.bo.HabilitationEntity;
 import fr.insta.robot.bo.InformationsEntity;
@@ -75,5 +76,11 @@ public final class RGEntityFactory {
     public static UserEntity getUserEntityInstance() {
         return new UserEntityImpl();
     }
-    
+    /**
+     * Methode qui crée et renvoie un objet de type DebriefEntity
+     * @return DebriefEntity
+     */
+    public static DebriefEntity getDebriefEntityInstance(){
+    	return new DebriefEntityImpl();
+    }
 }

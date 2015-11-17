@@ -9,6 +9,8 @@ import fr.insta.robot.bo.EvenementEntity;
 import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.exceptions.FonctionnelleException;
+import fr.insta.robot.services.RGServiceFactory;
+import fr.insta.robot.services.UserService;
 
 public class ITTestEvenementService {
 
@@ -29,7 +31,25 @@ public class ITTestEvenementService {
 		EvenementEntity evenement = evenementService.createEvenement(user, c.getTime(), d.getTime(), "17, rue Linné", "Paris", 75011, 100, 15, "combat de robots evenement");
 		
 		Assert.assertEquals("Paris", evenement.getVille());
+		//UserService userService = RGServiceFactory.getInstance().getUserService();
+		
+		//userService.deleteUser(user);
+		
 	}
-
+	@Test 
+	public void testUpdateEvenement(){
+		
+	}
+	
+	@Test 
+	public void testSuppressionEvenement(){
+		
+	}
+	
+	@Test
+	public void testDebriefEvenement(){
+		
+	}
+	
 
 }

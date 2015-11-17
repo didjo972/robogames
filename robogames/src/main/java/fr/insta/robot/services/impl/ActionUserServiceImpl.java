@@ -24,7 +24,8 @@ import fr.insta.robot.services.RoleService;
 import fr.insta.robot.services.UserService;
 
 public class ActionUserServiceImpl implements ActionUserService {
-
+	
+	
 	public ActionUserServiceImpl() {
 
 	}
@@ -41,19 +42,24 @@ public class ActionUserServiceImpl implements ActionUserService {
 		// Initialisation de l'entité user
 		UserEntity user = RGEntityFactory.getUserEntityInstance();
 		user.setEtat(true);
+		
+		
 		// Initialisation de l'entité information
 		InformationsEntity informations = RGEntityFactory.getInformationsEntityInstance();
+		
 		// Affectation des valeurs 
 		informations.setNom(nom);
 		informations.setPrenom(prenom);
 		informations.setPseudo(pseudo);
 		informations.setEmail(mail);
+		
 		// Cryptage du mot de passe en md5
 		try {
 			informations.setPassword(encodeMd5(password));
 		} catch (NoSuchAlgorithmException e) {
 			throw new FonctionnelleException("Erreur, le cryptage md5 a échoué.");
 		}
+		
 		//Ajout dans les deux entites l'information dans l'user et inversement
 		user.setInformation(informations);
 		informations.setUser(user);
@@ -62,6 +68,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 		UserService userService = RGServiceFactory.getInstance().getUserService();
 		InformationsService infoService = RGServiceFactory.getInstance().getInformationsService();
 		RoleService roleService = RGServiceFactory.getInstance().getRoleService();
+		
 		//Recherche si le mail ou pseudo existe deja en base
 		InformationsEntity infos2 = infoService.findInformationsByPseudo(pseudo);
 
@@ -70,25 +77,30 @@ public class ActionUserServiceImpl implements ActionUserService {
 				throw new FonctionnelleException("Erreur, le pseudo ou l'email existe déjà!");
 			}
 		}
+		//Role 
 		RoleEntity role = roleService.findRoleByString(RoleConstantService.USER);
+	
 		//Affectation du role
 		hab.setDateDebut(new Date());
 		hab.setDateFin(null);
 		hab.setInfos("toto");
 		hab.setEtat(true);
 		hab.setRole(role);
-	
+
 		//Lien habilitation <-> user
 		hab.setUser(user);
 		user.setHabilitation(hab);
 
 		//Persist en base
 		userService.persistUser(user);
-
+		
+		//retourne l'utilisateur
 		return user;
 	}
 
-
+	/**
+	 * Methode pour encoder en md5
+	 */
 	@Override
 	public String encodeMd5(String password) throws NoSuchAlgorithmException {
 		MessageDigest digist = MessageDigest.getInstance("MD5");
@@ -102,7 +114,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 		}
 		return sb.toString();
 	}
-
+	
 	@Override
 	public void updateUser(UserEntity user, String nom, String prenom, String oldpass, String newpass)
 			throws DonneesInexistantException, FonctionnelleException {
@@ -160,7 +172,12 @@ public class ActionUserServiceImpl implements ActionUserService {
 		}
 		//Retrouver le UserEntity a partir de l'informations
 		UserEntity user = userService.findUserById(infos.getUser().getId());
+		if(user.getEtat()){
 		return user;
+		}
+		else{
+			throw new FonctionnelleException("Erreur, votre compte n'est pas activé!");
+		}
 	}
 
 	@Override
