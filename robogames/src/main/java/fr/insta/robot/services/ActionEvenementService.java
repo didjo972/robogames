@@ -1,7 +1,7 @@
 package fr.insta.robot.services;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import fr.insta.robot.bo.EvenementEntity;
 import fr.insta.robot.bo.UserEntity;
@@ -63,6 +63,6 @@ public interface ActionEvenementService {
 	 * @param admin
 	 * @return
 	 */
-	Set<EvenementEntity> findAllEnvenement(UserEntity admin);
+	List<EvenementEntity> findAllEnvenement(UserEntity admin);
 	
 }

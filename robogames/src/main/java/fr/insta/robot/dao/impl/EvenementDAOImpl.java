@@ -1,5 +1,7 @@
 package fr.insta.robot.dao.impl;
 
+import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -48,5 +50,14 @@ public class EvenementDAOImpl implements EvenementDAO {
 		criteria.add(Restrictions.eq("nom", nom));
 		return (EvenementEntity) criteria.uniqueResult();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<EvenementEntity> findAllUser() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(EvenementEntityImpl.class);
+		return criteria.list();
+	}
+	
 	
 }

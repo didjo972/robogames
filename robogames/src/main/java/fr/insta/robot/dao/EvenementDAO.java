@@ -1,5 +1,7 @@
 package fr.insta.robot.dao;
 
+import java.util.List;
+
 import fr.insta.robot.bo.EvenementEntity;
 
 public interface EvenementDAO {
@@ -33,5 +35,10 @@ public interface EvenementDAO {
 	 * @param nom
 	 */
 	EvenementEntity findByName(String nom);
+	/**
+	 * Retourne tous les events
+	 * @return
+	 */
+	List<EvenementEntity> findAllUser();
 	
 }

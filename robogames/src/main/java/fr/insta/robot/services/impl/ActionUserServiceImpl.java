@@ -240,12 +240,12 @@ public class ActionUserServiceImpl implements ActionUserService {
 	public List<UserEntity> findAllUser(UserEntity admin){
 		UserService userService = RGServiceFactory.getInstance().getUserService();
 		//mettre en commentaire pas encore de admin defini
-		if(admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)){
+	//	if(admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)){
 			return userService.findAllUser();
-		}
-		else{
-			return null;
-		}
+	//	}
+	//	else{
+	//		return null;
+		//}
 	}
 	
 }

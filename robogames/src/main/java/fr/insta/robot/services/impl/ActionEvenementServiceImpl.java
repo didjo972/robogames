@@ -1,7 +1,7 @@
 package fr.insta.robot.services.impl;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -118,14 +118,15 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 
 	@Override
 	public EvenementEntity findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
+		return eventService.findEvenementById(id);
 	}
 
 	@Override
-	public Set<EvenementEntity> findAllEnvenement(UserEntity admin) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<EvenementEntity> findAllEnvenement(UserEntity admin) {
+		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
+		return eventService.findAllEvenement();
+		
 	}
 	
 }

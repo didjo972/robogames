@@ -1,6 +1,6 @@
 package fr.insta.robot.services;
 
-import java.util.Set;
+import java.util.List;
 
 import fr.insta.robot.bo.BilletEntity;
 import fr.insta.robot.bo.EvenementEntity;
@@ -17,7 +17,7 @@ public interface ActionBilletService {
 	 * @param admin
 	 * @return
 	 */
-	Set<BilletEntity> findAllBillets(UserEntity admin);
+	List<BilletEntity> findAllBillets(UserEntity admin);
 	
 	
 }

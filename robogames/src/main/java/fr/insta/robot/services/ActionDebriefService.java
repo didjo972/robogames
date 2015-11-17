@@ -1,5 +1,6 @@
 package fr.insta.robot.services;
 
+import fr.insta.robot.bo.DebriefEntity;
 import fr.insta.robot.bo.EvenementEntity;
 import fr.insta.robot.exceptions.DonneesInexistantException;
 
@@ -17,4 +18,10 @@ public interface ActionDebriefService {
 	 * @throws DonneesInexistantException
 	 */
 	void deleteDebriefEvenement(EvenementEntity evenement) throws DonneesInexistantException;
+	/**
+	 * Retourne le debrief par id
+	 * @param id
+	 * @return
+	 */
+	DebriefEntity findDebriefById(Long id);
 }

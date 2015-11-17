@@ -1,5 +1,7 @@
 package fr.insta.robot.services;
 
+import java.util.List;
+
 import fr.insta.robot.bo.EvenementEntity;
 
 public interface EvenementService {
@@ -34,5 +36,10 @@ public interface EvenementService {
 	 * @return
 	 */
 	EvenementEntity findEvenementByName(String nom);
+	/**
+	 * Retourne tous les evenements
+	 * @return
+	 */
+	List<EvenementEntity> findAllEvenement();
 	
 }

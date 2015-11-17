@@ -1,5 +1,7 @@
 package fr.insta.robot.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,6 +44,12 @@ public class EvenementServiceImpl implements EvenementService {
 	@Transactional
 	public EvenementEntity findEvenementByName(String nom) {
 		return evenementDAO.findByName(nom);
+	}
+
+	@Override
+	@Transactional
+	public List<EvenementEntity> findAllEvenement() {
+		return evenementDAO.findAllUser();
 	}
 
 
