@@ -38,7 +38,7 @@ public interface ActionUserService {
 	 * @throws DonneesInexistantException
 	 * @throws FonctionnelleException
 	 */
-	void updateUser(UserEntity user ,String nom, String prenom, String oldpass, String newpass) throws DonneesInexistantException, FonctionnelleException;
+	UserEntity updateUser(UserEntity user ,String nom, String prenom, String oldpass, String newpass) throws DonneesInexistantException, FonctionnelleException;
 	/**
 	 * Retourne un user à partir d'un mot de passe et d'un pseudo
 	 * @param pseudo

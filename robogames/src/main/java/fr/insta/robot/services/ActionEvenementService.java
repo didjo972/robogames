@@ -39,7 +39,7 @@ public interface ActionEvenementService {
 	 * @throws FonctionnelleException 
 	 * @throws DonneesInexistantException 
 	 */
-	void updateEvenement(UserEntity user, String nom, Date d_debut, Date d_fin, String adresse, String ville, int codePostal,
+	EvenementEntity updateEvenement(UserEntity user, String nom, Date d_debut, Date d_fin, String adresse, String ville, int codePostal,
 			int nb_place, int prix, String infos) throws FonctionnelleException, DonneesInexistantException;
 	/**
 	 * Supprime un evenement 

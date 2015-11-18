@@ -118,7 +118,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 	}
 
 	@Override
-	public void updateUser(UserEntity user, String nom, String prenom, String oldpass, String newpass)
+	public UserEntity updateUser(UserEntity user, String nom, String prenom, String oldpass, String newpass)
 			throws DonneesInexistantException, FonctionnelleException {
 		// Initialisation des services
 		// InformationsService infoService =
@@ -147,6 +147,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 		}
 		// infoService.updateInformations(user.getInformation());
 		userService.updateUser(user);
+		return user;
 	}
 
 	@Override

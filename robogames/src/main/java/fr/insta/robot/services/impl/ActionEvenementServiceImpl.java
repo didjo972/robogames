@@ -62,7 +62,7 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 	}
 
 	@Override
-	public void updateEvenement(UserEntity user, String nom, Date d_debut, Date d_fin, String adresse, String ville,
+	public EvenementEntity updateEvenement(UserEntity user, String nom, Date d_debut, Date d_fin, String adresse, String ville,
 			int codePostal, int nb_place, int prix, String infos) throws FonctionnelleException, DonneesInexistantException {
 		if(user == null){
 			throw new FonctionnelleException("Erreur, user inconnu.");
@@ -101,6 +101,7 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 			evenement.setPrix(prix);
 		}
 		evenementService.updateEvenement(evenement);
+		return evenement;
 	}
 
 	@Override
