@@ -76,6 +76,14 @@ public class ITTestEvenementService {
 		Assert.assertEquals("c'etait un match incroyable oo!", evenement.getDebrief().getDebrief());
 	}
 	
+	@Test
+	public void testFindByUser(){
+		ActionUserService userService = new ActionUserServiceImpl();
+		UserEntity user = userService.findUserById(new Long(103));
+		ActionEvenementService eventService = new ActionEvenementServiceImpl();
+		System.out.println(eventService.findAllEventByUser(user));
+	}
+	
 
 
 }

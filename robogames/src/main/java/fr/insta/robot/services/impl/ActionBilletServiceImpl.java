@@ -32,4 +32,9 @@ public class ActionBilletServiceImpl implements ActionBilletService{
 		BilletService billetService = RGServiceFactory.getInstance().getBilletService();
 		return billetService.findAllBilletsByEvenement(evenement);
 	}
+	@Override
+	public BilletEntity findById(Long id){
+		BilletService billetService = RGServiceFactory.getInstance().getBilletService();
+		return billetService.findBilletById(id);
+	}
 }

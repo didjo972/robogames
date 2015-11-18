@@ -126,7 +126,11 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 	public List<EvenementEntity> findAllEnvenement() {
 		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
 		return eventService.findAllEvenement();
-		
 	}
-	
+	@Override
+	public List<EvenementEntity> findAllEventByUser(UserEntity user){
+		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
+		return eventService.findAllEventByUser(user);
+	}
+	 
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.insta.robot.bo.EvenementEntity;
+import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.dao.EvenementDAO;
 import fr.insta.robot.services.EvenementService;
 
@@ -51,6 +52,14 @@ public class EvenementServiceImpl implements EvenementService {
 	public List<EvenementEntity> findAllEvenement() {
 		return evenementDAO.findAll();
 	}
+
+	@Override
+	@Transactional
+	public List<EvenementEntity> findAllEventByUser(UserEntity user) {
+		return evenementDAO.findByUser(user);
+	}
+	
+	
 
 
 }

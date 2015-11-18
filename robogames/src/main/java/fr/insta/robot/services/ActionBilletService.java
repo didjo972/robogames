@@ -30,6 +30,12 @@ public interface ActionBilletService {
 	 * @return
 	 */
 	List<BilletEntity> findAllbilletsByEvenement(EvenementEntity evenement);
+	/**
+	 * Retourne le billet par id
+	 * @param id
+	 * @return
+	 */
+	BilletEntity findById(Long id);
 	
 	
 }

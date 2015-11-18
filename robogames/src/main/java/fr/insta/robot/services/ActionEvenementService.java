@@ -64,5 +64,11 @@ public interface ActionEvenementService {
 	 * @return
 	 */
 	List<EvenementEntity> findAllEnvenement();
+	/**
+	 * Retourne tous les utilisateurs par user
+	 * @param user
+	 * @return
+	 */
+	List<EvenementEntity> findAllEventByUser(UserEntity user);
 	
 }
