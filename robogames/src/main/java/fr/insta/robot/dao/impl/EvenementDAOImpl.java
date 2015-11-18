@@ -55,7 +55,7 @@ public class EvenementDAOImpl implements EvenementDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<EvenementEntity> findAllUser() {
+	public List<EvenementEntity> findAll() {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(EvenementEntityImpl.class);
 		return criteria.list();
 	}

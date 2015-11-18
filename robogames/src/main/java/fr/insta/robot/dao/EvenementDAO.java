@@ -40,7 +40,7 @@ public interface EvenementDAO {
 	 * Retourne tous les events
 	 * @return
 	 */
-	List<EvenementEntity> findAllUser();
+	List<EvenementEntity> findAll();
 	/**
 	 * Retourne tous les events de l'user
 	 * @param user

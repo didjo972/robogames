@@ -49,7 +49,7 @@ public class EvenementServiceImpl implements EvenementService {
 	@Override
 	@Transactional
 	public List<EvenementEntity> findAllEvenement() {
-		return evenementDAO.findAllUser();
+		return evenementDAO.findAll();
 	}
 
 
