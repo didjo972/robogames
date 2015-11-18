@@ -34,5 +34,6 @@ public interface UserService {
 	 * Retourne la liste des utilisateurs
 	 * @return
 	 */
-	List<UserEntity> findAllUser();	
+	List<UserEntity> findAllUser();
+	
 }

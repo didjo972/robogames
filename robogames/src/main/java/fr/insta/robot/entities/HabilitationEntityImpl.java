@@ -112,7 +112,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 		this.role = role;
 	}
 
-	@Column(name = "HAB_INFOS", unique = false, nullable = false, length = 255)
+	@Column(name = "HAB_INFOS", unique = false, nullable = true, length = 255)
 	@Override
 	public String getInfos() {
 		return infos;

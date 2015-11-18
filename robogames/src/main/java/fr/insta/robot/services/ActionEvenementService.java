@@ -63,6 +63,6 @@ public interface ActionEvenementService {
 	 * @param admin
 	 * @return
 	 */
-	List<EvenementEntity> findAllEnvenement(UserEntity admin);
+	List<EvenementEntity> findAllEnvenement();
 	
 }

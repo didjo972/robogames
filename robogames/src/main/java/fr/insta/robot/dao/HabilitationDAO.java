@@ -29,4 +29,7 @@ public interface HabilitationDAO {
 	 */
 	void delete(HabilitationEntity habilitationEntity);
 	
+	
+	
+	
 }

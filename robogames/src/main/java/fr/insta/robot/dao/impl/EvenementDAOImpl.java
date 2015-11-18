@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.insta.robot.bo.EvenementEntity;
+import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.dao.EvenementDAO;
 import fr.insta.robot.entities.EvenementEntityImpl;
 
@@ -56,6 +57,15 @@ public class EvenementDAOImpl implements EvenementDAO {
 	@Transactional
 	public List<EvenementEntity> findAllUser() {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(EvenementEntityImpl.class);
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<EvenementEntity> findByUser(UserEntity user) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(EvenementEntityImpl.class);
+		criteria.add(Restrictions.eq("user", user));
 		return criteria.list();
 	}
 	

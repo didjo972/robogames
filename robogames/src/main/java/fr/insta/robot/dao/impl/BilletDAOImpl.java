@@ -1,11 +1,17 @@
 package fr.insta.robot.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.insta.robot.bo.BilletEntity;
+import fr.insta.robot.bo.EvenementEntity;
+import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.dao.BilletDAO;
 import fr.insta.robot.entities.BilletEntityImpl;
 
@@ -37,6 +43,32 @@ public class BilletDAOImpl implements BilletDAO {
 	public void delete(BilletEntity billet) {
 		sessionFactory.getCurrentSession().delete(billet);
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<BilletEntity> findAllBilletByEvenement(EvenementEntity evenement) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BilletEntityImpl.class);
+		criteria.add(Restrictions.eq("evenement", evenement));
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<BilletEntity> findAllBillet() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BilletEntityImpl.class);
+		return criteria.list();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<BilletEntity> findAllBilletsByUser(UserEntity user) {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(BilletEntityImpl.class);
+		criteria.add(Restrictions.eq("user", user));
+		return criteria.list();
 	}
 
 }

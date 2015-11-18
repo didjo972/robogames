@@ -1,10 +1,14 @@
 package fr.insta.robot.services.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import fr.insta.robot.bo.BilletEntity;
+import fr.insta.robot.bo.EvenementEntity;
+import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.dao.BilletDAO;
 import fr.insta.robot.services.BilletService;
 
@@ -36,6 +40,24 @@ public class BilletServiceImpl implements BilletService {
 	@Transactional
 	public void deleteBillet(BilletEntity billet) {
 		billetDAO.delete(billet);
+	}
+
+	@Override
+	@Transactional
+	public List<BilletEntity> findAllBillets() {
+		return billetDAO.findAllBillet();
+	}
+
+	@Override
+	@Transactional
+	public List<BilletEntity> findAllBilletsByUser(UserEntity user) {
+		return billetDAO.findAllBilletsByUser(user);
+	}
+
+	@Override
+	@Transactional
+	public List<BilletEntity> findAllBilletsByEvenement(EvenementEntity evenement) {
+		return billetDAO.findAllBilletByEvenement(evenement);
 	}
 
 }

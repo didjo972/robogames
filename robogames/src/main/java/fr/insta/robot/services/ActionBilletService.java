@@ -18,6 +18,18 @@ public interface ActionBilletService {
 	 * @return
 	 */
 	List<BilletEntity> findAllBillets(UserEntity admin);
+	/**
+	 * tous les billets par user
+	 * @param user
+	 * @return
+	 */
+	List<BilletEntity> findAllbilletsByUser(UserEntity user);
+	/**
+	 * tous les billets par evenement
+	 * @param evenement
+	 * @return
+	 */
+	List<BilletEntity> findAllbilletsByEvenement(EvenementEntity evenement);
 	
 	
 }

@@ -123,7 +123,7 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 	}
 
 	@Override
-	public List<EvenementEntity> findAllEnvenement(UserEntity admin) {
+	public List<EvenementEntity> findAllEnvenement() {
 		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
 		return eventService.findAllEvenement();
 		

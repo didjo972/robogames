@@ -81,8 +81,9 @@ public interface ActionUserService {
 	 * Retourne tous les users
 	 * @param admin
 	 * @return
+	 * @throws FonctionnelleException 
 	 */
-	List<UserEntity> findAllUser(UserEntity admin);
+	List<UserEntity> findAllUser(UserEntity admin) throws FonctionnelleException;
 	
 	
 }

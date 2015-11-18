@@ -4,7 +4,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -87,10 +86,9 @@ public class ActionUserServiceImpl implements ActionUserService {
 		if (StringUtils.isNotBlank(infos)) {
 			hab.setInfos(infos);
 		}
-		hab.setInfos("toto");
 		hab.setEtat(true);
 		hab.setRole(role);
-
+		
 		// Lien habilitation <-> user
 		hab.setUser(user);
 		user.setHabilitation(hab);
@@ -185,7 +183,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 
 	@Override
 	public void disableUser(UserEntity user) {
-		if (!Objects.isNull(user)) {
+		if (user != null) {
 			user.setEtat(false);
 			UserService userService = RGServiceFactory.getInstance().getUserService();
 			userService.updateUser(user);
@@ -237,15 +235,15 @@ public class ActionUserServiceImpl implements ActionUserService {
 		return user;
 	}
 	@Override
-	public List<UserEntity> findAllUser(UserEntity admin){
+	public List<UserEntity> findAllUser(UserEntity admin) throws FonctionnelleException{
 		UserService userService = RGServiceFactory.getInstance().getUserService();
 		//mettre en commentaire pas encore de admin defini
-	//	if(admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)){
+		if(admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)){
 			return userService.findAllUser();
-	//	}
-	//	else{
-	//		return null;
-		//}
+		}
+		else{
+			throw new FonctionnelleException("Erreur, votre compte n'est pas eligible.");
+		}
 	}
 	
 }

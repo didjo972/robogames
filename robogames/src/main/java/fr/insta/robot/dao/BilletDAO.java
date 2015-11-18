@@ -1,6 +1,10 @@
 package fr.insta.robot.dao;
 
+import java.util.List;
+
 import fr.insta.robot.bo.BilletEntity;
+import fr.insta.robot.bo.EvenementEntity;
+import fr.insta.robot.bo.UserEntity;
 
 public interface BilletDAO {
 
@@ -28,4 +32,21 @@ public interface BilletDAO {
 	 * @param billet le billet
 	 */
 	void delete(BilletEntity billet);
+	/**
+	 * 
+	 * @param evenement
+	 * @return
+	 */
+	List<BilletEntity> findAllBilletByEvenement(EvenementEntity evenement);
+	/**
+	 * 
+	 * @return
+	 */
+	List<BilletEntity> findAllBillet();
+	/**
+	 * 
+	 * @param user
+	 * @return
+	 */
+	List<BilletEntity> findAllBilletsByUser(UserEntity user);
 }

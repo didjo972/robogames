@@ -36,4 +36,6 @@ public interface UserDAO {
 	 */
 	List<UserEntity> findAllUser();
 	
+	
+	
 }
