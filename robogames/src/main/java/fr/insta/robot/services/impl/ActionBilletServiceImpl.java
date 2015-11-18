@@ -5,6 +5,8 @@ import java.util.List;
 import fr.insta.robot.bo.BilletEntity;
 import fr.insta.robot.bo.EvenementEntity;
 import fr.insta.robot.bo.UserEntity;
+import fr.insta.robot.entities.BilletEntityImpl;
+import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.ActionBilletService;
 import fr.insta.robot.services.BilletService;
 import fr.insta.robot.services.RGServiceFactory;
@@ -12,8 +14,28 @@ import fr.insta.robot.services.RGServiceFactory;
 public class ActionBilletServiceImpl implements ActionBilletService{
 
 	@Override
-	public void createBillet(UserEntity user, EvenementEntity evenement) {
+	public BilletEntity createBillet(UserEntity user, EvenementEntity evenement) throws FonctionnelleException {
 		List<BilletEntity> billets = findAllbilletsByEvenement(evenement);
+		int nbBilletRestant = evenement.getNbPlace() - billets.size();
+		
+		if(nbBilletRestant > 0){
+			//Creation d'un billet
+			BilletEntity billet = new BilletEntityImpl();
+			billet.setUser(user);
+			billet.setEvenement(evenement);
+			//Ajout dans user et evenement le billet
+			user.addBillets(billet);
+			evenement.addBillets(billet);
+			//Persiste le billet
+			BilletService billetService = RGServiceFactory.getInstance().getBilletService();
+			billetService.persistBillet(billet);
+			return billet;
+		}
+		else{
+			throw new FonctionnelleException("Erreur, plus de billets disponible.");
+		}
+		
+		
 		
 	}
 	@Override

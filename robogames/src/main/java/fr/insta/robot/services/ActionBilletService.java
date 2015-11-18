@@ -5,13 +5,15 @@ import java.util.List;
 import fr.insta.robot.bo.BilletEntity;
 import fr.insta.robot.bo.EvenementEntity;
 import fr.insta.robot.bo.UserEntity;
+import fr.insta.robot.exceptions.FonctionnelleException;
 
 public interface ActionBilletService {
 	/**
 	 * creer un billet
 	 * @param user
+	 * @throws FonctionnelleException 
 	 */
-	void createBillet(UserEntity user, EvenementEntity evenement);
+	BilletEntity createBillet(UserEntity user, EvenementEntity evenement) throws FonctionnelleException;
 	/**
 	 * tous les infos sur les billets
 	 * @param admin

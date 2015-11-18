@@ -1,7 +1,6 @@
 package fr.insta.robot.services;
 
 import java.util.List;
-import java.util.Set;
 
 import fr.insta.robot.bo.BilletEntity;
 import fr.insta.robot.bo.EvenementEntity;
