@@ -32,7 +32,7 @@ public class LiveEntityImpl implements LiveEntity {
 	}
 
 	@Override
-	@Column(name = "INF_NOM", unique = false, nullable = false, columnDefinition = "LONGTEXT")
+	@Column(name = "INF_NOM", unique = true, nullable = false, columnDefinition = "LONGTEXT")
 	public String getUrl() {
 		return url;
 	}

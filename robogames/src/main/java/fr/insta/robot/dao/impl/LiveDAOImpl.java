@@ -1,5 +1,8 @@
 package fr.insta.robot.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -36,7 +39,17 @@ public class LiveDAOImpl implements LiveDAO {
 	@Transactional
 	public void delete(LiveEntity live) {
 		sessionFactory.getCurrentSession().delete(live);
-
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<LiveEntity> findAllLive() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(LiveEntityImpl.class);
+		return criteria.list();
+	}
+	
+	
+	
 	
 }
