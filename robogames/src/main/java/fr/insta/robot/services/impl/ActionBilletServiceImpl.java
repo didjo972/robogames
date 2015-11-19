@@ -34,11 +34,10 @@ public class ActionBilletServiceImpl implements ActionBilletService{
 		else{
 			throw new FonctionnelleException("Erreur, plus de billets disponible.");
 		}
-	}
-	public void deleteBillet(BilletEntity billet){
+		
+		
 		
 	}
-	
 	@Override
 	public List<BilletEntity> findAllBillets(UserEntity admin) {
 		BilletService billetService = RGServiceFactory.getInstance().getBilletService();

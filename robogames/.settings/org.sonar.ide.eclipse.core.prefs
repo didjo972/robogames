@@ -1,5 +1,5 @@
 eclipse.preferences.version=1
 extraProperties=
-projectKey=org.springframework.samples.service.service\:RoboGames
-serverUrl=http\://localhost\:9000
+projectKey=robobogames\:robobogames
+serverUrl=
 version=2

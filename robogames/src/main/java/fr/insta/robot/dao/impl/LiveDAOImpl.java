@@ -39,8 +39,8 @@ public class LiveDAOImpl implements LiveDAO {
 	@Transactional
 	public void delete(LiveEntity live) {
 		sessionFactory.getCurrentSession().delete(live);
-	}
 
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
@@ -48,8 +48,4 @@ public class LiveDAOImpl implements LiveDAO {
 		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(LiveEntityImpl.class);
 		return criteria.list();
 	}
-	
-	
-	
-	
 }

@@ -247,8 +247,8 @@ public class ActionEvenementController {
 			Date d_Debut = sdf.parse(dateDebut);
 			Date d_Fin = sdf.parse(dateFin);
 			// TODO Ajouter le retour de l'update
-			//evenement = 
-			actionEvenement.updateEvenement(userEntity, nomEvent, d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
+			evenement = actionEvenement.findByNameEvenement(nomEvent);
+			actionEvenement.updateEvenement(userEntity, evenement.getId() , d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
 		} catch (NumberFormatException e) {
 			RetourDTO retour = new RetourDTO();
 			retour.setMessage("Erreur, une donnée n'est pas correct");

@@ -17,7 +17,6 @@ import fr.insta.robot.services.RGServiceFactory;
 
 public class ActionEvenementServiceImpl implements ActionEvenementService {
 
-
 	@Override
 	public EvenementEntity createEvenement(UserEntity user, String nom, Date d_debut, Date d_fin, String adresse,
 			String ville, int codePostal, int nb_place, int prix, String infos)
@@ -27,7 +26,7 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 				|| StringUtils.isBlank(infos) || StringUtils.isBlank(nom)) {
 			throw new DonneesInexistantException("Erreur, toutes les données doivent être fournies.");
 		}
-		//Initialisation de l'entité debrief
+		// Initialisation de l'entité debrief
 		DebriefEntity debrief = RGEntityFactory.getDebriefEntityInstance();
 		// Initialisation de l'entité evenement
 		EvenementEntity evenement = RGEntityFactory.getEvenementEntityInstance();
@@ -62,15 +61,58 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 	}
 
 	@Override
-	public EvenementEntity updateEvenement(UserEntity user, String nom, Date d_debut, Date d_fin, String adresse, String ville,
-			int codePostal, int nb_place, int prix, String infos) throws FonctionnelleException, DonneesInexistantException {
-		if(user == null){
+	public EvenementEntity updateEvenement(UserEntity user, Long id, Date d_debut, Date d_fin, String adresse,
+			String ville, int codePostal, int nb_place, int prix, String infos)
+					throws FonctionnelleException, DonneesInexistantException {
+		if (user == null) {
 			throw new FonctionnelleException("Erreur, user inconnu.");
 		}
-		if(StringUtils.isBlank(nom)){
+		if (id < 0) {
 			throw new DonneesInexistantException("nom de l'evenement inexistant");
-		}	
-		EvenementEntity evenement = findByNameEvenement(nom);
+		}
+		EvenementEntity evenement = findById(id);
+
+		EvenementService evenementService = RGServiceFactory.getInstance().getEvenementService();
+		if (evenement == null) {
+			throw new FonctionnelleException("Erreur, evenement inconnu.");
+		}
+		if (d_debut != null) {
+			evenement.setDateDebut(d_debut);
+		}
+		if (d_fin != null) {
+			evenement.setDateFin(d_fin);
+		}
+		if (StringUtils.isNotBlank(adresse)) {
+			evenement.setAdresse(adresse);
+		}
+		if (StringUtils.isNotBlank(ville)) {
+			evenement.setVille(ville);
+		}
+		if (StringUtils.isNotBlank(infos)) {
+			evenement.setInfos(infos);
+		}
+		if (codePostal > 0) {
+			evenement.setCodePostal(codePostal);
+		}
+		if (nb_place > 0) {
+			evenement.setNbPlace(nb_place);
+		}
+		if (prix >= 0) {
+			evenement.setPrix(prix);
+		}
+		evenementService.updateEvenement(evenement);
+		return evenement;
+	}
+
+	@Override
+	public EvenementEntity updateEvenementAdmin(Long id, Date d_debut, Date d_fin, String adresse, String ville,
+			int codePostal, int nb_place, int prix, String infos)
+					throws FonctionnelleException, DonneesInexistantException {
+
+		if (id < 0) {
+			throw new DonneesInexistantException("nom de l'evenement inexistant");
+		}
+		EvenementEntity evenement = findById(id);
 
 		EvenementService evenementService = RGServiceFactory.getInstance().getEvenementService();
 		if (evenement == null) {
@@ -128,10 +170,11 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
 		return eventService.findAllEvenement();
 	}
+
 	@Override
-	public List<EvenementEntity> findAllEventByUser(UserEntity user){
+	public List<EvenementEntity> findAllEventByUser(UserEntity user) {
 		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
 		return eventService.findAllEventByUser(user);
 	}
-	 
+
 }

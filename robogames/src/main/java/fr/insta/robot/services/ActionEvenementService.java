@@ -39,7 +39,7 @@ public interface ActionEvenementService {
 	 * @throws FonctionnelleException 
 	 * @throws DonneesInexistantException 
 	 */
-	EvenementEntity updateEvenement(UserEntity user, String nom, Date d_debut, Date d_fin, String adresse, String ville, int codePostal,
+	EvenementEntity updateEvenement(UserEntity user, Long id, Date d_debut, Date d_fin, String adresse, String ville, int codePostal,
 			int nb_place, int prix, String infos) throws FonctionnelleException, DonneesInexistantException;
 	/**
 	 * Supprime un evenement 
@@ -70,5 +70,23 @@ public interface ActionEvenementService {
 	 * @return
 	 */
 	List<EvenementEntity> findAllEventByUser(UserEntity user);
+	/**
+	 * Met a jour un evenement par l'admin
+	 * @param id
+	 * @param d_debut
+	 * @param d_fin
+	 * @param adresse
+	 * @param ville
+	 * @param codePostal
+	 * @param nb_place
+	 * @param prix
+	 * @param infos
+	 * @return
+	 * @throws FonctionnelleException
+	 * @throws DonneesInexistantException
+	 */
+	EvenementEntity updateEvenementAdmin(Long id, Date d_debut, Date d_fin, String adresse, String ville,
+			int codePostal, int nb_place, int prix, String infos)
+					throws FonctionnelleException, DonneesInexistantException;
 	
 }

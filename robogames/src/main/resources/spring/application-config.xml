@@ -17,6 +17,13 @@
 	<context:component-scan base-package="fr.insta.robot.*" />
 
 	<tx:annotation-driven />
+	
+<!-- 	<jee:jndi-lookup id="dbDataSource" jndi-name="jdbc/robogamesDS" -->
+<!-- 		expected-type="javax.sql.DataSource" /> -->
+	
+<!-- 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
+<!--         <property name="jndiName" value="java:/comp/env/jdbc/robogamesDS"/> -->
+<!--     </bean> -->
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -54,12 +61,12 @@
 			<list>
 				<value>fr.insta.robot.entities.BilletEntityImpl</value>
 				<value>fr.insta.robot.entities.EvenementEntityImpl</value>
-				<value>fr.insta.robot.entities.InformationsEntityImpl</value>
 				<value>fr.insta.robot.entities.HabilitationEntityImpl</value>
 				<value>fr.insta.robot.entities.LiveEntityImpl</value>
 				<value>fr.insta.robot.entities.RoleEntityImpl</value>
 				<value>fr.insta.robot.entities.UserEntityImpl</value>
-				<value>fr.insta.robot.entities.DebriefEntityImpl</value>		
+				<value>fr.insta.robot.entities.DebriefEntityImpl</value>
+				<value>fr.insta.robot.entities.InformationsEntityImpl</value>
 			</list>
 		</property>
 		<property name="hibernateProperties">

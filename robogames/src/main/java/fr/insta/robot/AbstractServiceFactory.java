@@ -25,7 +25,7 @@ public class AbstractServiceFactory {
 		context = new ClassPathXmlApplicationContext("spring/application-config.xml");
 
 		BasicConfigurator.configure();
-		Logger.getRootLogger().setLevel(Level.TRACE);
+		Logger.getRootLogger().setLevel(Level.ERROR);
 		try {
 			Log4jConfigurer.initLogging("classpath:log4jconfig.xml");
 		} catch (FileNotFoundException e) {
