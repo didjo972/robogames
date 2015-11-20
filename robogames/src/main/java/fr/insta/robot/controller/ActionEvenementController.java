@@ -247,8 +247,9 @@ public class ActionEvenementController {
 			Date d_Debut = sdf.parse(dateDebut);
 			Date d_Fin = sdf.parse(dateFin);
 			// TODO Ajouter le retour de l'update
-			evenement = actionEvenement.findByNameEvenement(nomEvent);
-			actionEvenement.updateEvenement(userEntity, evenement.getId() , d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
+			//evenement = 
+			// TODO Modification de l'update (by id)
+			actionEvenement.updateEvenement(userEntity, Long.parseLong(nomEvent), d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
 		} catch (NumberFormatException e) {
 			RetourDTO retour = new RetourDTO();
 			retour.setMessage("Erreur, une donnée n'est pas correct");
@@ -346,7 +347,7 @@ public class ActionEvenementController {
 		// Récupération des évènements
 		List<EvenementDTO> listEvenement = new ArrayList<EvenementDTO>();
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
-		// TODO Faire la récupération des évènements
+		// TODO Faire la récupération des évènements et trier pour ne renvoyer que les évènements valider
 		// TODO Fake retour		
 		EvenementDTO evenement = new EvenementDTO();
 		evenement.setAdresse("17 rue linné");
@@ -457,6 +458,65 @@ public class ActionEvenementController {
 		evenementDTO.setNbPlaceRestant(i);
 		
 		return evenementDTO;
+	}
+	
+	@RequestMapping(value = "/USER/getEvenementByUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO getEvenementsUtilisateur(@RequestBody String infoIdUser) {
+		System.out.println(infoIdUser);
+		// Récupération des informations de création de compte
+		String[] tableau = infoIdUser.split("&");
+		String idUser = null;
+		for (int i = 0; i <= tableau.length - 1; i++) {
+			String map = tableau[i];
+			String[] tableauCleValue = map.split("=");
+
+			if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
+				idUser = tableauCleValue[1];
+			}
+		}
+		
+		// Recherche de l'évènement par son id
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntity = actionUser.findUserById(Long.parseLong(idUser));
+		if (userEntity == null) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Aucun utilisateur correspondant pour l'id "+idUser);
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération des évènements créé de l'utilisateur
+		List<EvenementDTO> listEvenement = new ArrayList<EvenementDTO>();
+		EvenementDTO evenement = new EvenementDTO();
+		evenement.setAdresse("17 rue linné");
+		evenement.setCodePostal(75005);
+		Date date = new Date();
+		evenement.setDateDebut(date.toString());
+		evenement.setDateFin(date.toString());
+		evenement.setDebrief("Aucun");
+		evenement.setEtat(true);
+		evenement.setIdEvent("103");
+		evenement.setIdUser("10001");
+		evenement.setInfos("Venez avec un parapluie.");
+		evenement.setNbPlace(50);
+		evenement.setNomEvent("Premier Combat");
+		evenement.setPrix(15);
+		evenement.setValide(true);
+		evenement.setVille("Paris");
+		evenement.setNbPlaceRestant(5);
+		listEvenement.add(evenement);
+		/*for (EvenementEntity evenement : userEntity.getEvenements()) {
+			listEvenement.add(fillEvenementDTO(evenement));
+		}*/
+		
+		RetourDTO retour = new RetourDTO();
+		retour.setMessage("OK");
+		ReponseDTO reponse = new ReponseDTO();
+		reponse.setRetour(retour);
+		reponse.setObject(listEvenement);
+		return reponse;
 	}
 
 }
