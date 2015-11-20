@@ -34,11 +34,56 @@ public class ActionAdminController {
 
 	@RequestMapping(value = "/ADMIN/getAllEvenement", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ReponseDTO getAllEvenement() {
+	public ReponseDTO getAllEvenement(@RequestBody String infoAdmin) {
+		LOG.info(infoAdmin);
+		// Récupération de l'id de l'admin
+		String[] tableau = infoAdmin.split("&");
+		String idAdmin = null;
+
+		try {
+			for (int i = 0; i <= tableau.length - 1; i++) {
+				String map = tableau[i];
+				String[] tableauCleValue = map.split("=");
+
+				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
+					idAdmin = tableauCleValue[1];
+				}
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'admin
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
+		if (userEntityAdmin == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la récupération des utilisateurs");
+			retour.setMessage("Erreur lors de la récupération des utilisateurs");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
 		// Récupération des évènements
 		List<EvenementDTO> listEvenement = new ArrayList<EvenementDTO>();
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
-		List<EvenementEntity> listEvenementEntity = actionEvenement.findAllEnvenement();
+		List<EvenementEntity> listEvenementEntity;
+		try {
+			listEvenementEntity = actionEvenement.findAllEnvenement(userEntityAdmin);
+		} catch (FonctionnelleException e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
+			retour.setMessage(e.getMessage());
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		
 		// Remplissage de l'évènementDTO
 		for (EvenementEntity evenementEntity : listEvenementEntity) {

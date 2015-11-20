@@ -4,6 +4,7 @@ import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.springframework.web.context.ContextLoaderListener;
 
@@ -12,15 +13,17 @@ import fr.insta.robot.services.impl.ActionEvenementServiceImpl;
 /**
  * Listener du context
  */
-public class MonListener extends ContextLoaderListener {
+public class ContextLoadListener extends ContextLoaderListener {
 	
-	Logger LOG = Logger.getLogger(MonListener.class);
+	Logger LOG = Logger.getLogger(ContextLoadListener.class);
 
 	/**
 	 * Batch de vérification des évènements
 	 */
-	public MonListener() {
+	public ContextLoadListener() {
 		super();
+		BasicConfigurator.configure();
+		//PropertyConfigurator.configure("classpath:log4j.properties");
 		Timer monTimer = new Timer();
 		TimerTask taskAExec = new TimerTask(){
 			public void run(){
