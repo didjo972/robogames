@@ -190,6 +190,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 			userService.updateUser(user);
 		}
 	}
+	
 
 	@Override
 	public String resetPasswordUser(String email) throws FonctionnelleException {
@@ -238,7 +239,6 @@ public class ActionUserServiceImpl implements ActionUserService {
 	@Override
 	public List<UserEntity> findAllUser(UserEntity admin) throws FonctionnelleException{
 		UserService userService = RGServiceFactory.getInstance().getUserService();
-		//mettre en commentaire pas encore de admin defini
 		if(admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)){
 			return userService.findAllUser();
 		}

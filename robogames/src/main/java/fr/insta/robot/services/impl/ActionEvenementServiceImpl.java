@@ -14,6 +14,7 @@ import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.ActionEvenementService;
 import fr.insta.robot.services.EvenementService;
 import fr.insta.robot.services.RGServiceFactory;
+import fr.insta.robot.services.RoleConstantService;
 
 public class ActionEvenementServiceImpl implements ActionEvenementService {
 
@@ -170,9 +171,14 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 	}
 
 	@Override
-	public List<EvenementEntity> findAllEnvenement() {
+	public List<EvenementEntity> findAllEnvenement(UserEntity admin) throws FonctionnelleException {
+		if(admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)){
 		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
 		return eventService.findAllEvenement();
+		}
+		else{
+			throw new FonctionnelleException("Erreur, votre compte n'est pas eligible.");
+		}
 	}
 
 	@Override
@@ -182,8 +188,8 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 	}
 	@Override
 	public void updateStateEvenement() {
-		ActionEvenementService actionEvent = new ActionEvenementServiceImpl();
-		List<EvenementEntity> listEvent = actionEvent.findAllEnvenement();
+		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
+		List<EvenementEntity> listEvent = eventService.findAllEvenement();
 		for (EvenementEntity event : listEvent) {
 			Date date = new Date();
 			if (event.getDateDebut().after(date) && event.getDateFin().after(date)) {

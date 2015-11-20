@@ -62,8 +62,9 @@ public interface ActionEvenementService {
 	 * Retourne tous les utilisateurs pour l'admin
 	 * @param admin
 	 * @return
+	 * @throws FonctionnelleException 
 	 */
-	List<EvenementEntity> findAllEnvenement();
+	List<EvenementEntity> findAllEnvenement(UserEntity admin) throws FonctionnelleException;
 	/**
 	 * Retourne tous les utilisateurs par user
 	 * @param user
@@ -92,5 +93,6 @@ public interface ActionEvenementService {
 	 * Mise a jour auto des etats
 	 */
 	void updateStateEvenement();
+	
 	
 }
