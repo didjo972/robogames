@@ -19,6 +19,9 @@ public class UserDTO {
 	
 	/** Libellé habilitation */
 	private String libelleHabilitation;
+	
+	/** Date inscription */
+	private String dateInscription;
 
 	/**
 	 * @return the nom
@@ -102,6 +105,20 @@ public class UserDTO {
 	 */
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	/**
+	 * @return the dateInscription
+	 */
+	public String getDateInscription() {
+		return dateInscription;
+	}
+
+	/**
+	 * @param dateInscription the dateInscription to set
+	 */
+	public void setDateInscription(String dateInscription) {
+		this.dateInscription = dateInscription;
 	}
 	
 }

@@ -245,7 +245,7 @@ public class ActionAdminController {
 		return reponse;
 	}
 	
-	public EvenementDTO fillEvenementDTO(EvenementEntity evenement) {
+	private EvenementDTO fillEvenementDTO(EvenementEntity evenement) {
 		EvenementDTO evenementDTO = new EvenementDTO();
 		evenementDTO.setAdresse(evenement.getAdresse());
 		evenementDTO.setCodePostal(evenement.getCodePostal());
@@ -349,6 +349,7 @@ public class ActionAdminController {
 		userDTO.setNom(userEntity.getInformation().getNom());
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
+		userDTO.setDateInscription(userEntity.getHabilitation().getDateDebut().toString());
 		return userDTO;
 	}
 	

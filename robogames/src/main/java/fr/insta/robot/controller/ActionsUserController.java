@@ -137,6 +137,7 @@ public class ActionsUserController {
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
 		userDTO.setId(userEntity.getId());
+		userDTO.setDateInscription(userEntity.getHabilitation().getDateFin().toString());
 
 		RetourDTO retour = new RetourDTO();
 		LOG.info("OK");
@@ -215,6 +216,7 @@ public class ActionsUserController {
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
 		userDTO.setId(userEntity.getId());
+		userDTO.setDateInscription(userEntity.getHabilitation().getDateDebut().toString());
 
 		// Création de la session
 		session.setAttribute(ATTRIBUT_SESSION, userDTO.getPseudo());
@@ -318,6 +320,7 @@ public class ActionsUserController {
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
 		userDTO.setId(userEntity.getId());
+		userDTO.setDateInscription(userEntity.getHabilitation().getDateDebut().toString());
 		
 		RetourDTO retour = new RetourDTO();
 		LOG.info("OK");
