@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -21,7 +22,6 @@ import fr.insta.robot.bo.ReponseDTO;
 import fr.insta.robot.bo.RetourDTO;
 import fr.insta.robot.bo.UserDTO;
 import fr.insta.robot.bo.UserEntity;
-import fr.insta.robot.entities.RGEntityFactory;
 import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.impl.ActionEvenementServiceImpl;
@@ -121,6 +121,8 @@ public class ActionAdminController {
 		String dateDebut = null;
 		String dateFin = null;
 		String nomEvent = null;
+		String idAdmin = null;
+		
 		try {
 			for (int i = 0; i <= tableau.length - 1; i++) {
 				String map = tableau[i];
@@ -156,6 +158,10 @@ public class ActionAdminController {
 				if (tableauCleValue[0].equalsIgnoreCase("nomEvent")) {
 					nomEvent = tableauCleValue[1];
 				}
+				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
+					idAdmin = tableauCleValue[1];
+				}
+				
 			}
 		} catch (Exception e) {
 			RetourDTO retour = new RetourDTO();
@@ -165,9 +171,29 @@ public class ActionAdminController {
 			reponse.setRetour(retour);
 			return reponse;
 		}
+		
+		if (StringUtils.isBlank(idAdmin)) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'admin
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
+		if (userEntityAdmin == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la modification des évènements");
+			retour.setMessage("Erreur lors de la modification des évènements");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 
 		// Récupération de l'USER
-		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
 		UserEntity userEntity = actionUser.findUserById(Long.parseLong(idUser));
 		if (userEntity == null) {
 			ReponseDTO reponse = new ReponseDTO();
@@ -180,15 +206,12 @@ public class ActionAdminController {
 
 		// Modification de l'évènement
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
-		EvenementEntity evenement = RGEntityFactory.getEvenementEntityInstance();
+		EvenementEntity evenement = null;
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date d_Debut = sdf.parse(dateDebut);
 			Date d_Fin = sdf.parse(dateFin);
-			// TODO Ajouter le retour de l'update
-			//evenement = 
-			// TODO Modification de l'update (by id)
-			actionEvenement.updateEvenement(userEntity, Long.parseLong(nomEvent), d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
+			evenement = actionEvenement.updateEvenementAdmin(Long.parseLong(nomEvent), d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
 		} catch (NumberFormatException e) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, une donnée n'est pas correct");
