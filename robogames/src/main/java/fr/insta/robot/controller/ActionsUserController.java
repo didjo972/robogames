@@ -1,11 +1,9 @@
 package fr.insta.robot.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,6 +23,8 @@ import fr.insta.robot.services.impl.ActionUserServiceImpl;
 public class ActionsUserController {
 
 	private static final String ATTRIBUT_SESSION = "USER";
+	
+	Logger LOG = Logger.getLogger(ActionsUserController.class);
 
 	/**
 	 * Creer un compte 
@@ -34,7 +34,7 @@ public class ActionsUserController {
 	@RequestMapping(value = "/creerCompte", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ReponseDTO creerCompte(@RequestBody String infoCompte) {
-		System.out.println(infoCompte);
+		LOG.info(infoCompte);
 		// Récupération des informations de création de compte
 		String[] tableau = infoCompte.split("&");
 		String nom = null;
@@ -54,7 +54,6 @@ public class ActionsUserController {
 				if (tableauCleValue[0].equalsIgnoreCase("email")) {
 					email = tableauCleValue[1];
 					email = email.replace("%40", "@");
-					System.out.println(email);
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("pseudo")) {
 					pseudo = tableauCleValue[1];
@@ -71,6 +70,7 @@ public class ActionsUserController {
 			}
 		} catch (Exception e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
@@ -83,6 +83,7 @@ public class ActionsUserController {
 				|| StringUtils.isBlank(email)) {
 			// Retourne une erreur
 			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
@@ -96,12 +97,14 @@ public class ActionsUserController {
 			userEntity = actionUser.createUser(nom, prenom, pseudo, password, email, infos);
 		} catch (DonneesInexistantException e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
 			retour.setMessage(e.getMessage());
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
 		} catch (FonctionnelleException e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
 			retour.setMessage(e.getMessage());
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
@@ -110,6 +113,7 @@ public class ActionsUserController {
 
 		if (userEntity == null) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la création de compte");
 			retour.setMessage("Erreur lors de la création de compte");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
@@ -122,6 +126,7 @@ public class ActionsUserController {
 		} else {
 			userDTO.setEtat("false");
 		}
+		
 		userDTO.setLibelleHabilitation(userEntity.getHabilitation().getRole().getLibelle());
 		userDTO.setNom(userEntity.getInformation().getNom());
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
@@ -129,6 +134,7 @@ public class ActionsUserController {
 		userDTO.setId(userEntity.getId());
 
 		RetourDTO retour = new RetourDTO();
+		LOG.info("OK");
 		retour.setMessage("OK");
 		ReponseDTO reponse = new ReponseDTO();
 		reponse.setObject(userDTO);
@@ -145,7 +151,7 @@ public class ActionsUserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ReponseDTO logIn(@RequestBody String info, HttpSession session) {
-		System.out.println(info);
+		LOG.info(info);
 		// Récupération des informations de création de compte
 		String[] tableau = info.split("&");
 		String pseudo = null;
@@ -162,10 +168,10 @@ public class ActionsUserController {
 				if (tableauCleValue[0].equalsIgnoreCase("password")) {
 					password = tableauCleValue[1];
 				}
-				// }
 			}
 		} catch (Exception e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
@@ -178,12 +184,14 @@ public class ActionsUserController {
 			userEntity = actionUser.loginUser(pseudo, password);
 		} catch (DonneesInexistantException e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
 			retour.setMessage(e.getMessage());
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
 		} catch (FonctionnelleException e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
 			retour.setMessage(e.getMessage());
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
@@ -196,7 +204,8 @@ public class ActionsUserController {
 		} else {
 			userDTO.setEtat("false");
 		}
-		//userDTO.setLibelleHabilitation(userEntity.getHabilitation().getRole().getLibelle());
+		
+		userDTO.setLibelleHabilitation(userEntity.getHabilitation().getRole().getLibelle());
 		userDTO.setNom(userEntity.getInformation().getNom());
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
@@ -205,8 +214,8 @@ public class ActionsUserController {
 		// Création de la session
 		session.setAttribute(ATTRIBUT_SESSION, userDTO.getPseudo());
 
-		System.out.println(session.getId());
 		RetourDTO retour = new RetourDTO();
+		LOG.info("OK");
 		retour.setMessage("OK");
 		ReponseDTO reponse = new ReponseDTO();
 		reponse.setObject(userDTO);
@@ -249,6 +258,7 @@ public class ActionsUserController {
 		session.removeAttribute(ATTRIBUT_SESSION);
 
 		RetourDTO retour = new RetourDTO();
+		LOG.info("OK");
 		retour.setMessage("OK");
 		ReponseDTO reponse = new ReponseDTO();
 		reponse.setRetour(retour);
@@ -258,7 +268,7 @@ public class ActionsUserController {
 	@RequestMapping(value = "/USER/getUtilisateur", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ReponseDTO getUtilisateur(@RequestBody String infoUser) {
-		System.out.println(infoUser);
+		LOG.info(infoUser);
 		// Récupération des informations de création de compte
 		String[] tableau = infoUser.split("&");
 		String idUser = null;
@@ -274,6 +284,7 @@ public class ActionsUserController {
 			}
 		} catch (Exception e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
@@ -285,6 +296,7 @@ public class ActionsUserController {
 		if (userEntity == null) {
 			ReponseDTO reponse = new ReponseDTO();
 			RetourDTO retour = new RetourDTO();
+			LOG.error("Aucun utilisateur connu pour cette l'id "+idUser);
 			retour.setMessage("Aucun utilisateur connu pour cette l'id "+idUser);
 			reponse.setRetour(retour);
 			return reponse;
@@ -303,25 +315,11 @@ public class ActionsUserController {
 		userDTO.setId(userEntity.getId());
 		
 		RetourDTO retour = new RetourDTO();
+		LOG.info("OK");
 		retour.setMessage("OK");
 		ReponseDTO reponse = new ReponseDTO();
 		reponse.setRetour(retour);
 		reponse.setObject(userDTO);
-		return reponse;
-	}
-
-	@RequestMapping(value = "/USER/getAllUtilisateur", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	@ResponseBody
-	public ReponseDTO getAllUtilisateur() {
-		// TODO Récupération de tous les utilisateurs
-
-		// TODO Remplissage de la liste de DTO
-		List<UserDTO> listUserDTO = new ArrayList<UserDTO>();
-		RetourDTO retour = new RetourDTO();
-		retour.setMessage("OK");
-		ReponseDTO reponse = new ReponseDTO();
-		reponse.setObject(listUserDTO);
-		reponse.setRetour(retour);
 		return reponse;
 	}
 

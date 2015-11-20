@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,7 @@ import fr.insta.robot.bo.EvenementDTO;
 import fr.insta.robot.bo.EvenementEntity;
 import fr.insta.robot.bo.ReponseDTO;
 import fr.insta.robot.bo.RetourDTO;
+import fr.insta.robot.bo.UserDTO;
 import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.entities.RGEntityFactory;
 import fr.insta.robot.exceptions.DonneesInexistantException;
@@ -27,6 +29,8 @@ import fr.insta.robot.services.impl.ActionUserServiceImpl;
 
 @Controller
 public class ActionAdminController {
+	
+	Logger LOG = Logger.getLogger(ActionAdminController.class);
 
 	@RequestMapping(value = "/ADMIN/getAllEvenement", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
@@ -34,50 +38,17 @@ public class ActionAdminController {
 		// Récupération des évènements
 		List<EvenementDTO> listEvenement = new ArrayList<EvenementDTO>();
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
-		// TODO Faire la récupération des évènements
-		// TODO Fake retour		
-		EvenementDTO evenement = new EvenementDTO();
-		evenement.setAdresse("17 rue linné");
-		evenement.setCodePostal(75005);
-		Date date = new Date();
-		evenement.setDateDebut(date.toString());
-		evenement.setDateFin(date.toString());
-		evenement.setDebrief("Aucun");
-		evenement.setEtat(0);
-		evenement.setIdEvent("103");
-		evenement.setIdUser("10001");
-		evenement.setInfos("Venez avec un parapluie.");
-		evenement.setNbPlace(50);
-		evenement.setNomEvent("Premier Combat");
-		evenement.setPrix(15);
-		evenement.setValide(true);
-		evenement.setVille("Paris");
-		evenement.setNbPlaceRestant(5);
-		listEvenement.add(evenement);
+		List<EvenementEntity> listEvenementEntity = actionEvenement.findAllEnvenement();
 		
-		// 2ème itération test
-		evenement = new EvenementDTO();
-		evenement.setAdresse("36 rue du faubourg");
-		evenement.setCodePostal(75003);
-		date = new Date();
-		evenement.setDateDebut(date.toString());
-		evenement.setDateFin(date.toString());
-		evenement.setDebrief("Aucun");
-		evenement.setEtat(0);
-		evenement.setIdEvent("103");
-		evenement.setIdUser("10001");
-		evenement.setInfos("Venez comme vous êtes");
-		evenement.setNbPlace(50);
-		evenement.setNomEvent("Deuxième Combat");
-		evenement.setPrix(15);
-		evenement.setValide(true);
-		evenement.setVille("Paris");
-		evenement.setNbPlaceRestant(45);
-		listEvenement.add(evenement);		
+		// Remplissage de l'évènementDTO
+		for (EvenementEntity evenementEntity : listEvenementEntity) {
+			listEvenement.add(fillEvenementDTO(evenementEntity));
+		}		
 		
 		// Remplissage de la réponse
 		ReponseDTO reponse = new ReponseDTO();
 		RetourDTO retour = new RetourDTO();
+		LOG.info("OK");
 		retour.setMessage("OK");
 		reponse.setRetour(retour);
 		reponse.setObject(listEvenement);
@@ -92,7 +63,7 @@ public class ActionAdminController {
 	@RequestMapping(value = "/ADMIN/modifierEvenement", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ReponseDTO modifierEvenement(@RequestBody String infoEvenement) {
-		System.out.println(infoEvenement);
+		LOG.info(infoEvenement);
 		// Récupération des informations de création de compte
 		String[] tableau = infoEvenement.split("&");
 		String adresse = null;
@@ -143,6 +114,7 @@ public class ActionAdminController {
 			}
 		} catch (Exception e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
@@ -155,6 +127,7 @@ public class ActionAdminController {
 		if (userEntity == null) {
 			ReponseDTO reponse = new ReponseDTO();
 			RetourDTO retour = new RetourDTO();
+			LOG.error("Aucun utilisateur correspondant pour l'id "+idUser);
 			retour.setMessage("Aucun utilisateur correspondant pour l'id "+idUser);
 			reponse.setRetour(retour);
 			return reponse;
@@ -173,24 +146,28 @@ public class ActionAdminController {
 			actionEvenement.updateEvenement(userEntity, Long.parseLong(nomEvent), d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
 		} catch (NumberFormatException e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, une donnée n'est pas correct");
 			retour.setMessage("Erreur, une donnée n'est pas correct");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
 		} catch (DonneesInexistantException e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
 			retour.setMessage(e.getMessage());
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
 		} catch (FonctionnelleException e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
 			retour.setMessage(e.getMessage());
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
 		} catch (ParseException e) {
 			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
 			retour.setMessage(e.getMessage());
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
@@ -201,6 +178,7 @@ public class ActionAdminController {
 		EvenementDTO evenementDTO = fillEvenementDTO(evenement);
 
 		RetourDTO retour = new RetourDTO();
+		LOG.info("OK");
 		retour.setMessage("OK");
 		ReponseDTO reponse = new ReponseDTO();
 		reponse.setObject(evenementDTO);
@@ -235,8 +213,84 @@ public class ActionAdminController {
 		return evenementDTO;
 	}
 	
-//	public ReponseDTO getUser() {
-//		return
-//	}
+	@RequestMapping(value = "/ADMIN/getAllUtilisateur", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO getAllUtilisateur(@RequestBody String infoAdmin) {
+		LOG.info(infoAdmin);
+		// Récupération de l'id de l'admin
+		String[] tableau = infoAdmin.split("&");
+		String idAdmin = null;
+
+		try {
+			for (int i = 0; i <= tableau.length - 1; i++) {
+				String map = tableau[i];
+				String[] tableauCleValue = map.split("=");
+
+				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
+					idAdmin = tableauCleValue[1];
+				}
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'admin
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
+		if (userEntityAdmin == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la récupération des utilisateurs");
+			retour.setMessage("Erreur lors de la récupération des utilisateurs");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de tous les utilisateurs
+		List<UserEntity> listUserEntity = null;
+		try {
+			listUserEntity = actionUser.findAllUser(userEntityAdmin);
+		} catch (FonctionnelleException e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
+			retour.setMessage(e.getMessage());
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+
+		// Remplissage de la liste de DTO
+		List<UserDTO> listUserDTO = new ArrayList<UserDTO>();
+		for (UserEntity userEntity : listUserEntity) {
+			listUserDTO.add(fillUserDTO(userEntity));
+		}
+		RetourDTO retour = new RetourDTO();
+		LOG.info("OK");
+		retour.setMessage("OK");
+		ReponseDTO reponse = new ReponseDTO();
+		reponse.setObject(listUserDTO);
+		reponse.setRetour(retour);
+		return reponse;
+	}
+
+	private UserDTO fillUserDTO(UserEntity userEntity) {
+		UserDTO userDTO = new UserDTO();
+		if (userEntity.getEtat()) {
+			userDTO.setEtat("true");
+		} else {
+			userDTO.setEtat("false");
+		}
+		userDTO.setId(userEntity.getId());
+		userDTO.setLibelleHabilitation(userEntity.getHabilitation().getRole().getLibelle());
+		userDTO.setNom(userEntity.getInformation().getNom());
+		userDTO.setPrenom(userEntity.getInformation().getPrenom());
+		userDTO.setPseudo(userEntity.getInformation().getPseudo());
+		return userDTO;
+	}
 	
 }
