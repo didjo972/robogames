@@ -1,11 +1,7 @@
 package fr.insta.robot.services;
 
-import java.util.List;
-
 import fr.insta.robot.bo.LiveEntity;
-import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.exceptions.DonneesInexistantException;
-import fr.insta.robot.exceptions.FonctionnelleException;
 
 public interface ActionLiveService {
 	/**
@@ -26,12 +22,6 @@ public interface ActionLiveService {
 	 * Retourne l'id du live
 	 */
 	LiveEntity findById(Long id);
-	/**
-	 * Retourne tous les lives
-	 * @return
-	 * @throws FonctionnelleException 
-	 */
-	List<LiveEntity> findAllLive(UserEntity admin) throws FonctionnelleException;
 	/**
 	 * Supprime le lien
 	 * @param live

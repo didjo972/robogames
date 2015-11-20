@@ -20,7 +20,7 @@ public interface ActionUserService {
 	 * @throws DonneesInexistantException
 	 * @throws FonctionnelleException
 	 */
-	UserEntity createUser(String nom, String prenom, String pseudo, String password, String mail,  String infos) throws DonneesInexistantException, FonctionnelleException;
+	UserEntity createUser(String nom, String prenom, String pseudo, String password, String mail, String infos, String image) throws DonneesInexistantException, FonctionnelleException;
 	/**
 	 * Retourne une chaine crypté en md5
 	 * @param password
@@ -38,7 +38,7 @@ public interface ActionUserService {
 	 * @throws DonneesInexistantException
 	 * @throws FonctionnelleException
 	 */
-	UserEntity updateUser(UserEntity user ,String nom, String prenom, String oldpass, String newpass) throws DonneesInexistantException, FonctionnelleException;
+	UserEntity updateUser(UserEntity user, String nom, String prenom, String image, String oldpass, String newpass) throws DonneesInexistantException, FonctionnelleException;
 	/**
 	 * Retourne un user à partir d'un mot de passe et d'un pseudo
 	 * @param pseudo

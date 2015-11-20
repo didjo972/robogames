@@ -1,18 +1,13 @@
 package fr.insta.robot.services.impl;
 
-import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 
 import fr.insta.robot.bo.LiveEntity;
-import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.entities.RGEntityFactory;
 import fr.insta.robot.exceptions.DonneesInexistantException;
-import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.ActionLiveService;
 import fr.insta.robot.services.LiveService;
 import fr.insta.robot.services.RGServiceFactory;
-import fr.insta.robot.services.RoleConstantService;
 
 public class ActionLiveServiceImpl implements ActionLiveService {
 
@@ -47,17 +42,6 @@ public class ActionLiveServiceImpl implements ActionLiveService {
 		LiveService liveS = RGServiceFactory.getInstance().getLiveService();
 		LiveEntity live = liveS.findLiveById(id);
 		return live;
-	}
-
-	@Override
-	public List<LiveEntity> findAllLive(UserEntity admin) throws FonctionnelleException {
-		if(admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)){
-		LiveService liveS = RGServiceFactory.getInstance().getLiveService();
-		return liveS.findAllLive();
-		}
-		else{
-			throw new FonctionnelleException("Erreur, votre compte n'est pas eligible.");
-		}
 	}
 
 	@Override

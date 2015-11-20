@@ -26,11 +26,8 @@ public interface UserEntity extends Serializable {
 	 * @param etat
 	 */
 	void setEtat(boolean etat);
-	/**
-	 * Ajoute un evenement
-	 * @param e
-	 */
-
+	
+	
 	////////////////////Evenements //////////////////////////
 
 	public Set<EvenementEntity> getEvenements();

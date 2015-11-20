@@ -84,6 +84,16 @@ public interface InformationsEntity extends Serializable {
 	 * @param mail
 	 */
 	void setEmail(String mail);
+	/**
+	 * Retourne l'image
+	 * @return
+	 */
+	String getImage();
+	/**
+	 * Met a jour l'image
+	 * @param image
+	 */
+	void setImage(String image);
 	
 	
 }

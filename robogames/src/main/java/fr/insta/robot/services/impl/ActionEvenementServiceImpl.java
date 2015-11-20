@@ -14,7 +14,6 @@ import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.ActionEvenementService;
 import fr.insta.robot.services.EvenementService;
 import fr.insta.robot.services.RGServiceFactory;
-import fr.insta.robot.services.RoleConstantService;
 
 public class ActionEvenementServiceImpl implements ActionEvenementService {
 
@@ -29,7 +28,7 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 		}
 		// Verifier la date
 		Date tmp = new Date();
-		if (d_debut.before(tmp) || d_debut.before(d_fin)) {
+		if (d_debut.before(tmp) || d_debut.after(d_fin)) {
 			throw new FonctionnelleException("Erreur, les dates données sont incorrects");
 		}
 		// Initialisation de l'entité debrief
@@ -171,14 +170,9 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 	}
 
 	@Override
-	public List<EvenementEntity> findAllEnvenement(UserEntity admin) throws FonctionnelleException {
-		if(admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)){
+	public List<EvenementEntity> findAllEnvenement() {
 		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
 		return eventService.findAllEvenement();
-		}
-		else{
-			throw new FonctionnelleException("Erreur, votre compte n'est pas eligible.");
-		}
 	}
 
 	@Override

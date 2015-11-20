@@ -59,12 +59,10 @@ public interface ActionEvenementService {
 	 */
 	EvenementEntity findById(Long id);
 	/**
-	 * Retourne tous les utilisateurs pour l'admin
-	 * @param admin
+	 * Retourne tous les événements
 	 * @return
-	 * @throws FonctionnelleException 
 	 */
-	List<EvenementEntity> findAllEnvenement(UserEntity admin) throws FonctionnelleException;
+	List<EvenementEntity> findAllEnvenement();
 	/**
 	 * Retourne tous les utilisateurs par user
 	 * @param user

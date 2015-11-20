@@ -1,7 +1,5 @@
 package fr.insta.robot.services.impl;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,10 +36,5 @@ public class LiveServiceImpl implements LiveService {
 	@Transactional
 	public void deleteLive(LiveEntity live) {
 		liveDAO.delete(live);
-	}
-	@Override
-	@Transactional
-	public List<LiveEntity> findAllLive() {
-		return liveDAO.findAllLive();
 	}
 }

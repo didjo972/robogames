@@ -1,7 +1,5 @@
 package fr.insta.robot.dao;
 
-import java.util.List;
-
 import fr.insta.robot.bo.LiveEntity;
 
 public interface LiveDAO {
@@ -30,10 +28,5 @@ public interface LiveDAO {
 	 * @param liveEntity l'liveEntity
 	 */
 	void delete(LiveEntity liveEntity);
-	/**
-	 * Retourne tous les lives
-	 * @return
-	 */
-	List<LiveEntity> findAllLive();
-	
+
 }

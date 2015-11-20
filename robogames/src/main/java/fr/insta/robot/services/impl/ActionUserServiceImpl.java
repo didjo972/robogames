@@ -31,8 +31,8 @@ public class ActionUserServiceImpl implements ActionUserService {
 
 	// A rajouter habilitation date fin
 	@Override
-	public UserEntity createUser(String nom, String prenom, String pseudo, String password, String mail, String infos)
-			throws DonneesInexistantException, FonctionnelleException {
+	public UserEntity createUser(String nom, String prenom, String pseudo, String password, String mail, String infos,
+			String image) throws DonneesInexistantException, FonctionnelleException {
 		if (StringUtils.isBlank(nom) || StringUtils.isBlank(prenom) || StringUtils.isBlank(pseudo)
 				|| StringUtils.isBlank(password) || StringUtils.isBlank(mail)) {
 			throw new DonneesInexistantException("Erreur, toutes les données doivent être fournies.");
@@ -52,6 +52,10 @@ public class ActionUserServiceImpl implements ActionUserService {
 		informations.setPseudo(pseudo);
 		informations.setEmail(mail);
 
+		// Image facultatif
+		if (StringUtils.isNoneBlank(image)) {
+			informations.setImage(image);
+		}
 		// Cryptage du mot de passe en md5
 		try {
 			informations.setPassword(encodeMd5(password));
@@ -88,7 +92,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 		}
 		hab.setEtat(true);
 		hab.setRole(role);
-		
+
 		// Lien habilitation <-> user
 		hab.setUser(user);
 		user.setHabilitation(hab);
@@ -118,8 +122,8 @@ public class ActionUserServiceImpl implements ActionUserService {
 	}
 
 	@Override
-	public UserEntity updateUser(UserEntity user, String nom, String prenom, String oldpass, String newpass)
-			throws DonneesInexistantException, FonctionnelleException {
+	public UserEntity updateUser(UserEntity user, String nom, String prenom, String image, String oldpass,
+			String newpass) throws DonneesInexistantException, FonctionnelleException {
 		// Initialisation des services
 		// InformationsService infoService =
 		// RGServiceFactory.getInstance().getInformationsService();
@@ -135,6 +139,10 @@ public class ActionUserServiceImpl implements ActionUserService {
 		if (StringUtils.isNotBlank(nom)) {
 			user.getInformation().setPrenom(prenom);
 		}
+		if (StringUtils.isNotBlank(image)) {
+			user.getInformation().setImage(image);
+		}
+
 		// modifie mot de passe
 		if (StringUtils.isNotBlank(oldpass) && StringUtils.isNotBlank(newpass)) {
 			try {
@@ -190,7 +198,6 @@ public class ActionUserServiceImpl implements ActionUserService {
 			userService.updateUser(user);
 		}
 	}
-	
 
 	@Override
 	public String resetPasswordUser(String email) throws FonctionnelleException {
@@ -230,21 +237,22 @@ public class ActionUserServiceImpl implements ActionUserService {
 		UserEntity user = userService.findUserById(infos.getUser().getId());
 		return user;
 	}
+
 	@Override
-	public UserEntity findUserById(Long id){
+	public UserEntity findUserById(Long id) {
 		UserService userService = RGServiceFactory.getInstance().getUserService();
 		UserEntity user = userService.findUserById(id);
 		return user;
 	}
+
 	@Override
-	public List<UserEntity> findAllUser(UserEntity admin) throws FonctionnelleException{
+	public List<UserEntity> findAllUser(UserEntity admin) throws FonctionnelleException {
 		UserService userService = RGServiceFactory.getInstance().getUserService();
-		if(admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)){
+		if (admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)) {
 			return userService.findAllUser();
-		}
-		else{
+		} else {
 			throw new FonctionnelleException("Erreur, votre compte n'est pas eligible.");
 		}
 	}
-	
+
 }

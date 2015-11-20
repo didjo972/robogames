@@ -61,6 +61,7 @@ public class UserEntityImpl implements UserEntity {
 	public void setEtat(boolean etat) {
 		this.etat = etat;	
 	}
+		
 	/***********************************************************************/
 	@Override
 	@OneToMany(mappedBy = "user", targetEntity = EvenementEntityImpl.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)

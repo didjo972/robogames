@@ -34,6 +34,8 @@ public class InformationsEntityImpl implements InformationsEntity {
 	private String password;
 	/** email */
 	private String email;
+	/** image */
+	private String image;
 	/** Utilisateur */
 	private UserEntity user;
 
@@ -102,6 +104,17 @@ public class InformationsEntityImpl implements InformationsEntity {
 	@Override
 	public void setEmail(String mail) {
 		this.email = mail;
+	}
+	
+	@Override
+	@Column(name = "INF_IMAGE", unique = false, nullable = true, length = 100)
+	public String getImage() {
+		return image;
+	}
+	
+	@Override
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 	/////////////////////////////////////////////////////////

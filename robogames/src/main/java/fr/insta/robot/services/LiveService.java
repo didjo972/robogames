@@ -1,7 +1,5 @@
 package fr.insta.robot.services;
 
-import java.util.List;
-
 import fr.insta.robot.bo.LiveEntity;
 
 public interface LiveService {
@@ -30,10 +28,4 @@ public interface LiveService {
 	 * @param live le live
 	 */
 	void deleteLive(LiveEntity live);
-	/**
-	 * Retourne tous les lives
-	 * @return
-	 */
-	List<LiveEntity> findAllLive();
-	
 }
