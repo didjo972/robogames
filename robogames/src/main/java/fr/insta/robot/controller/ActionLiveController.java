@@ -14,6 +14,7 @@ import fr.insta.robot.bo.LiveEntity;
 import fr.insta.robot.bo.ReponseDTO;
 import fr.insta.robot.bo.RetourDTO;
 import fr.insta.robot.bo.UserEntity;
+import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.services.impl.ActionLiveServiceImpl;
 import fr.insta.robot.services.impl.ActionUserServiceImpl;
 
@@ -65,18 +66,17 @@ public class ActionLiveController {
 		}
 		
 		// Récupération du live
-		LiveEntity liveEntity = null;
 		ActionLiveServiceImpl actionLive = new ActionLiveServiceImpl();
-		//actionLive.createLive(url);
+		LiveEntity liveEntity = actionLive.findURL();
 		
-		// TODO Remplissage du DTO
+		// Remplissage du DTO
+		LiveDTO liveDTO = new LiveDTO();
+		liveDTO.setUrl(liveEntity.getUrl());
+		
 		ReponseDTO reponse = new ReponseDTO();
 		RetourDTO retour = new RetourDTO();
 		LOG.info("OK");
 		retour.setMessage("OK");
-		LiveDTO liveDTO = new LiveDTO();
-		// TODO A supprimer
-		liveDTO.setUrl("https://www.youtube.com/embed/fypJbdbU5iQ");
 		reponse.setObject(liveDTO);
 		reponse.setRetour(retour);
 		return reponse;
@@ -132,8 +132,18 @@ public class ActionLiveController {
 			return reponse;
 		}
 		
-		// TODO Mise à jour de l'url
-		
+		// Mise à jour de l'url
+		ActionLiveServiceImpl actionLive = new ActionLiveServiceImpl();
+		try {
+			actionLive.ajouteUrl(url);
+		} catch (DonneesInexistantException e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
+			retour.setMessage(e.getMessage());
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		
 		ReponseDTO reponseDTO = new ReponseDTO();
 		RetourDTO retour = new RetourDTO();
