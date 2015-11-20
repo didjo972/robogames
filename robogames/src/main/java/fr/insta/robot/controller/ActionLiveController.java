@@ -82,7 +82,7 @@ public class ActionLiveController {
 		return reponse;
 	}
 	
-	@RequestMapping(value = "/ADM/updateUrlLive", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/ADMIN/updateUrlLive", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ReponseDTO setUrlLive(@RequestBody String infoUrl) {
 		LOG.info(infoUrl);
