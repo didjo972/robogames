@@ -26,6 +26,11 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 				|| StringUtils.isBlank(infos) || StringUtils.isBlank(nom)) {
 			throw new DonneesInexistantException("Erreur, toutes les données doivent être fournies.");
 		}
+		// Verifier la date
+		Date tmp = new Date();
+		if (d_debut.before(tmp) || d_debut.before(d_fin)) {
+			throw new FonctionnelleException("Erreur, les dates données sont incorrects");
+		}
 		// Initialisation de l'entité debrief
 		DebriefEntity debrief = RGEntityFactory.getDebriefEntityInstance();
 		// Initialisation de l'entité evenement
@@ -45,7 +50,7 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 		evenement.setCodePostal(codePostal);
 		evenement.setNbPlace(nb_place);
 		evenement.setPrix(prix);
-		evenement.setEtat(true);
+		evenement.setEtat(0);
 		evenement.setInfos(infos);
 
 		// Affectation de l'evenement dans user
@@ -105,15 +110,14 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 	}
 
 	@Override
-	public EvenementEntity updateEvenementAdmin(Long id, Date d_debut, Date d_fin, String adresse, String ville,
+	public EvenementEntity updateEvenementAdmin(Long idEvent, Date d_debut, Date d_fin, String adresse, String ville,
 			int codePostal, int nb_place, int prix, String infos)
 					throws FonctionnelleException, DonneesInexistantException {
 
-		if (id < 0) {
+		if (idEvent < 0) {
 			throw new DonneesInexistantException("nom de l'evenement inexistant");
 		}
-		EvenementEntity evenement = findById(id);
-
+		EvenementEntity evenement = findById(idEvent);
 		EvenementService evenementService = RGServiceFactory.getInstance().getEvenementService();
 		if (evenement == null) {
 			throw new FonctionnelleException("Erreur, evenement inconnu.");
@@ -176,5 +180,17 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
 		return eventService.findAllEventByUser(user);
 	}
-
+	@Override
+	public void updateStateEvenement() {
+		ActionEvenementService actionEvent = new ActionEvenementServiceImpl();
+		List<EvenementEntity> listEvent = actionEvent.findAllEnvenement();
+		for (EvenementEntity event : listEvent) {
+			Date date = new Date();
+			if (event.getDateDebut().after(date) && event.getDateFin().after(date)) {
+				event.setEtat(2);
+			} else if (event.getDateDebut().after(date) && event.getDateFin().before(date)) {
+				event.setEtat(1);
+			}
+		}
+	}
 }

@@ -117,13 +117,13 @@ public interface EvenementEntity extends Serializable {
 	 * Retourne l'etat
 	 * @return l'etat
 	 */
-	boolean getEtat();
+	int getEtat();
 
 	/**
 	 * Met à jour l'etat
 	 * @param etat l'etat
 	 */
-	void setEtat(boolean etat);
+	void setEtat(int etat);
 
 	/**
 	 * Retourne infos

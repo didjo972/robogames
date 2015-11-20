@@ -34,7 +34,7 @@ public class EvenementDTO {
 	private int prix;
 	
 	/** L'état */
-	private boolean etat;
+	private int etat;
 	
 	/** Les infos supplémentaires */
 	private String infos;
@@ -191,14 +191,14 @@ public class EvenementDTO {
 	/**
 	 * @return the etat
 	 */
-	public boolean isEtat() {
+	public int isEtat() {
 		return etat;
 	}
 
 	/**
 	 * @param etat the etat to set
 	 */
-	public void setEtat(boolean etat) {
+	public void setEtat(int etat) {
 		this.etat = etat;
 	}
 

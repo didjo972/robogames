@@ -355,7 +355,7 @@ public class ActionEvenementController {
 		evenement.setDateDebut(date.toString());
 		evenement.setDateFin(date.toString());
 		evenement.setDebrief("Aucun");
-		evenement.setEtat(true);
+		evenement.setEtat(0);
 		evenement.setIdEvent("103");
 		evenement.setIdUser("10001");
 		evenement.setInfos("Venez avec un parapluie.");
@@ -375,7 +375,7 @@ public class ActionEvenementController {
 		evenement.setDateDebut(date.toString());
 		evenement.setDateFin(date.toString());
 		evenement.setDebrief("Aucun");
-		evenement.setEtat(true);
+		evenement.setEtat(0);
 		evenement.setIdEvent("103");
 		evenement.setIdUser("10001");
 		evenement.setInfos("Venez comme vous êtes");

@@ -48,7 +48,7 @@ public class EvenementEntityImpl implements EvenementEntity {
 	/** prix */
 	private int prix;
 	/** Etat de l'événement */
-	private boolean etat;
+	private int etat;
 	/** Informations sur l'événement */
 	private String infos;
 	/** Valide */
@@ -164,12 +164,12 @@ public class EvenementEntityImpl implements EvenementEntity {
 	}
 	@Column(name = "EVE_ETAT", unique = false, nullable = false)
 	@Override
-	public boolean getEtat() {
+	public int getEtat() {
 		return etat;
 	}
 
 	@Override
-	public void setEtat(boolean etat) {
+	public void setEtat(int etat) {
 		this.etat = etat;
 	}
 	@Column(name = "EVE_INFOS", unique = false, nullable = false, columnDefinition = "LONGTEXT")

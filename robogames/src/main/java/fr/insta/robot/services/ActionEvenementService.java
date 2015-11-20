@@ -88,5 +88,9 @@ public interface ActionEvenementService {
 	EvenementEntity updateEvenementAdmin(Long id, Date d_debut, Date d_fin, String adresse, String ville,
 			int codePostal, int nb_place, int prix, String infos)
 					throws FonctionnelleException, DonneesInexistantException;
+	/**
+	 * Mise a jour auto des etats
+	 */
+	void updateStateEvenement();
 	
 }
