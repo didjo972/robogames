@@ -28,5 +28,10 @@ public interface LiveDAO {
 	 * @param liveEntity l'liveEntity
 	 */
 	void delete(LiveEntity liveEntity);
+	/**
+	 * Retourne le live
+	 * @return
+	 */
+	LiveEntity findLive();
 
 }

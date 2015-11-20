@@ -12,45 +12,34 @@ import fr.insta.robot.services.RGServiceFactory;
 public class ActionLiveServiceImpl implements ActionLiveService {
 
 	@Override
-	public LiveEntity createLive(String url) throws DonneesInexistantException {
-		if(StringUtils.isBlank(url)){
-			throw new DonneesInexistantException("Erreur, l'url du lien est vide");
-		}
-		LiveEntity live = RGEntityFactory.getLiveEntityInstance();
-		live.setUrl(url);
-		
-		LiveService liveS = RGServiceFactory.getInstance().getLiveService();
-		liveS.persistLive(live);
-		return live;
-	}
-
-	@Override
-	public LiveEntity updateLive(LiveEntity live,String url) throws DonneesInexistantException {
-		if(live == null){
-			throw new DonneesInexistantException("Erreur, le live est vide");
-		}
-		if(StringUtils.isNoneBlank(url)){
-			live.setUrl(url);
-		}
-		LiveService liveS = RGServiceFactory.getInstance().getLiveService();
-		liveS.updateLive(live);
-		return live;
-	}
-
-	@Override
-	public LiveEntity findById(Long id) {
-		LiveService liveS = RGServiceFactory.getInstance().getLiveService();
-		LiveEntity live = liveS.findLiveById(id);
-		return live;
-	}
-
-	@Override
 	public void delete(LiveEntity live) throws DonneesInexistantException {
 		if(live == null){
 			throw new DonneesInexistantException("Erreur, le live est vide");
 		}
 		LiveService liveS = RGServiceFactory.getInstance().getLiveService();
 		liveS.deleteLive(live);
+	}
+	@Override
+	public LiveEntity ajouteUrl(String url) throws DonneesInexistantException{
+		if(StringUtils.isBlank(url)){
+			throw new DonneesInexistantException("Erreur, le lien est vide");
+		}
+		LiveEntity live = findURL();
+		LiveService liveService = RGServiceFactory.getInstance().getLiveService();
+		if(live != null){
+			liveService.deleteLive(live);
+		}
+		live = RGEntityFactory.getLiveEntityInstance();
+		live.setUrl(url);
+		
+		liveService.persistLive(live);
+		return live;
+	}
+	@Override
+	public LiveEntity findURL() {
+		LiveService liveService = RGServiceFactory.getInstance().getLiveService();
+		LiveEntity live = liveService.findLive();
+		return live;
 	}
 
 }

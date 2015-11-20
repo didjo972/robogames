@@ -12,7 +12,7 @@ import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.RGServiceFactory;
 import fr.insta.robot.services.UserService;
 
-public class ITTestRegisterService extends AbstractRgItTest {
+public class ITTestRegisterService {
 	/**
 	 * Test du service createUser cas nominal
 	 * 
@@ -22,7 +22,7 @@ public class ITTestRegisterService extends AbstractRgItTest {
 	@Test
 	public void testCreateUserNominal() throws DonneesInexistantException, FonctionnelleException {
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
-		UserEntity user = actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null);
+		UserEntity user = actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null,null);
 
 		UserService userService = RGServiceFactory.getInstance().getUserService();
 		Assert.assertEquals("kingcat", user.getInformation().getPseudo());
@@ -33,7 +33,7 @@ public class ITTestRegisterService extends AbstractRgItTest {
 	public void testCreateUserParametresNullOuVide() {
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
 		try {
-			actionService.createUser(null, null, null, null,null, null);
+			actionService.createUser(null, null, null, null,null, null,null);
 			Assert.fail();
 		} catch (DonneesInexistantException e) {
 			Assert.assertEquals("Erreur, toutes les données doivent être fournies.", e.getMessage());
@@ -42,7 +42,7 @@ public class ITTestRegisterService extends AbstractRgItTest {
 		}
 
 		try {
-			actionService.createUser("", "", "", "","","");
+			actionService.createUser("", "", "", "","","","");
 			Assert.fail();
 		} catch (DonneesInexistantException e) {
 			Assert.assertEquals("Erreur, toutes les données doivent être fournies.", e.getMessage());
@@ -54,7 +54,7 @@ public class ITTestRegisterService extends AbstractRgItTest {
 	@Test
 	public void testFindUser() throws DonneesInexistantException, FonctionnelleException{
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
-		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null);
+		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null,null);
 
 		UserEntity user = actionService.findUserbyPseudo("kingcat");
 		UserService userService = RGServiceFactory.getInstance().getUserService();
@@ -66,9 +66,9 @@ public class ITTestRegisterService extends AbstractRgItTest {
 	@Test 
 	public void testUpdateUser() throws DonneesInexistantException, FonctionnelleException{
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
-		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null);
+		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null,null);
 		UserEntity user = actionService.findUserbyPseudo("kingcat");
-		actionService.updateUser(user, "tangonu", "lam", "123456", "123456");		
+		actionService.updateUser(user, "tangonu", "lam",null, "123456", "123456");		
 		Assert.assertEquals("tangonu",user.getInformation().getNom());
 
 	}
@@ -77,7 +77,7 @@ public class ITTestRegisterService extends AbstractRgItTest {
 	public void testLoginUser() throws DonneesInexistantException, FonctionnelleException{
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
 
-		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null);
+		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null,null);
 
 		UserEntity user = actionService.loginUser("kingcat", "123456");
 		Assert.assertNotNull(user);
@@ -90,7 +90,7 @@ public class ITTestRegisterService extends AbstractRgItTest {
 	public void testDisableUser() {
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
 		try {
-			actionService.createUser("marie rose", "dimitri", "dijo", "123456", "dijo@yolo.fr", null);
+			actionService.createUser("marie rose", "dimitri", "dijo", "123456", "dijo@yolo.fr", null,null);
 		} catch (DonneesInexistantException e) {
 			Assert.assertEquals("Erreur, toutes les données doivent être fournies.", e.getMessage());
 		} catch (FonctionnelleException e) {
@@ -112,7 +112,7 @@ public class ITTestRegisterService extends AbstractRgItTest {
 	public void resetpassword() throws FonctionnelleException, DonneesInexistantException, NoSuchAlgorithmException{
 
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
-		actionService.createUser("tang", "lam", "kingcat2", "123456", "kingca8t@yolo.fr", null);
+		actionService.createUser("tang", "lam", "kingcat2", "123456", "kingca8t@yolo.fr", null,null);
 		String newpass = actionService.resetPasswordUser("kingcat@yolo.fr");
 		UserService userService = RGServiceFactory.getInstance().getUserService();
 		UserEntity user = actionService.findUserbyPseudo("kingcat2");

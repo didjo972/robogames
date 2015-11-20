@@ -28,4 +28,9 @@ public interface LiveService {
 	 * @param live le live
 	 */
 	void deleteLive(LiveEntity live);
+	/**
+	 * Retourne le live
+	 * @return
+	 */
+	LiveEntity findLive();
 }
