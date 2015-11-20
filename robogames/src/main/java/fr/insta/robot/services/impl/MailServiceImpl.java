@@ -1,7 +1,9 @@
 package fr.insta.robot.services.impl;
 
+import java.util.List;
 import java.util.Properties;
 
+import javax.mail.Address;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -15,10 +17,10 @@ import fr.insta.robot.services.MailService;
 public class MailServiceImpl implements MailService {
 
 	@Override
-	public void sendMail(String subject, String text, String destinataire, String copyDest) {
+	public void sendMail(String subject, String text, List<String> destinataire) {
 		
-		final String username = "didjo972@gmail.com";
-		final String password = "pwwdkkr19111993";
+		final String username = "robogames75@gmail.com";
+		final String password = "insta_rg";
 
 		Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -34,11 +36,19 @@ public class MailServiceImpl implements MailService {
 		  });
 
 		try {
-
+			Address[] tableauAdresse = new Address[destinataire.size()];
+			int i = 0;
+			Address adresse = null;
+			for (String dest : destinataire) {
+				adresse = new InternetAddress(dest);
+				tableauAdresse[i] = adresse;
+				i++;
+			}
+			
+			
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("didjo972@gmail.com"));
-			message.setRecipients(Message.RecipientType.TO,
-				InternetAddress.parse("didjo972@gmail.com"));
+			message.setFrom(new InternetAddress("nepasrepondre@nepasrepondre"));
+			message.setRecipients(Message.RecipientType.TO, tableauAdresse);
 			message.setSubject("Testing Subject");
 			message.setText("Dear Mail Crawler,"
 				+ "\n\n No spam to my email, please!");
