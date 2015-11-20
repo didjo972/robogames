@@ -83,6 +83,14 @@ public class ITTestEvenementService {
 		ActionEvenementService eventService = new ActionEvenementServiceImpl();
 		System.out.println(eventService.findAllEventByUser(user));
 	}
+	public void testEvenementAdd(){
+		ActionUserService userService = new ActionUserServiceImpl();
+		UserEntity user = userService.findUserById(new Long(103));
+		ActionEvenementService eventService = new ActionEvenementServiceImpl();
+		Calendar c = Calendar.getInstance();
+		c.set(2015, 12, 1, 12, 00, 00);
+		c.set(2015, 12, 1, 14, 00, 00);
+	}
 	
 
 
