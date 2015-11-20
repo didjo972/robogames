@@ -1,5 +1,6 @@
 package fr.insta.robot.dao.impl;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -7,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.insta.robot.bo.LiveEntity;
 import fr.insta.robot.dao.LiveDAO;
+import fr.insta.robot.entities.EvenementEntityImpl;
 import fr.insta.robot.entities.LiveEntityImpl;
 
 @Repository("liveDAO")
@@ -36,6 +38,13 @@ public class LiveDAOImpl implements LiveDAO {
 	@Transactional
 	public void delete(LiveEntity live) {
 		sessionFactory.getCurrentSession().delete(live);
-
 	}
+
+	@Override
+	@Transactional
+	public LiveEntity findLive() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(EvenementEntityImpl.class);
+		return (LiveEntity) criteria.uniqueResult();
+	}
+	
 }

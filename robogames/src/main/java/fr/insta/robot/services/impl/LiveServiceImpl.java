@@ -37,4 +37,10 @@ public class LiveServiceImpl implements LiveService {
 	public void deleteLive(LiveEntity live) {
 		liveDAO.delete(live);
 	}
+
+	@Override
+	@Transactional
+	public LiveEntity findLive() {
+		return liveDAO.findLive();
+	}
 }

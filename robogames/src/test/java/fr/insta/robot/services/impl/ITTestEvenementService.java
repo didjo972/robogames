@@ -19,7 +19,7 @@ public class ITTestEvenementService {
 
 	@Test
 	public void testCreateEvenement() throws DonneesInexistantException, FonctionnelleException{
-		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
+	/*	ActionUserServiceImpl actionService = new ActionUserServiceImpl();
 		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr",null);
 
 		UserEntity user = actionService.findUserbyPseudo("kingcat");
@@ -36,7 +36,7 @@ public class ITTestEvenementService {
 		Assert.assertEquals("Paris", evenement.getVille());
 		//UserService userService = RGServiceFactory.getInstance().getUserService();
 
-		//userService.deleteUser(user);
+		//userService.deleteUser(user);*/
 
 	}
 	@Test 
@@ -83,13 +83,18 @@ public class ITTestEvenementService {
 		ActionEvenementService eventService = new ActionEvenementServiceImpl();
 		System.out.println(eventService.findAllEventByUser(user));
 	}
-	public void testEvenementAdd(){
+	@Test
+	public void testEvenementAdd() throws DonneesInexistantException, FonctionnelleException{
 		ActionUserService userService = new ActionUserServiceImpl();
 		UserEntity user = userService.findUserById(new Long(103));
 		ActionEvenementService eventService = new ActionEvenementServiceImpl();
 		Calendar c = Calendar.getInstance();
 		c.set(2015, 12, 1, 12, 00, 00);
-		c.set(2015, 12, 1, 14, 00, 00);
+		Calendar d = Calendar.getInstance();
+		d.set(2015, 12, 1, 14, 00, 00);
+	
+		eventService.createEvenement(user,"Lego Ope123n",c.getTime(), d.getTime(), "17, rue Linné", "Paris", 75011, 100, 15, "combat de robots evenement");
+
 	}
 	
 
