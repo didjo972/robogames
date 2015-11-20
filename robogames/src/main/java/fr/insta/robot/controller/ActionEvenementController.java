@@ -129,7 +129,7 @@ public class ActionEvenementController {
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
 		EvenementEntity evenement = RGEntityFactory.getEvenementEntityInstance();
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
 			Date d_Debut = sdf.parse(dateDebut);
 			Date d_Fin = sdf.parse(dateFin);
 			evenement = actionEvenement.createEvenement(userEntity, nomEvent, d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
@@ -255,15 +255,12 @@ public class ActionEvenementController {
 
 		// Modification de l'évènement
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
-		EvenementEntity evenement = RGEntityFactory.getEvenementEntityInstance();
+		EvenementEntity evenement = null;
 		try {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date d_Debut = sdf.parse(dateDebut);
 			Date d_Fin = sdf.parse(dateFin);
-			// TODO Ajouter le retour de l'update
-			//evenement = 
-			// TODO Modification de l'update (by id)
-			actionEvenement.updateEvenement(userEntity, Long.parseLong(nomEvent), d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
+			evenement = actionEvenement.updateEvenement(userEntity, Long.parseLong(nomEvent), d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
 		} catch (NumberFormatException e) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, une donnée n'est pas correct");
@@ -379,7 +376,8 @@ public class ActionEvenementController {
 		// Récupération des évènements
 		List<EvenementDTO> listEvenement = new ArrayList<EvenementDTO>();
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
-		// TODO Faire la récupération des évènements et trier pour ne renvoyer que les évènements valider
+		// TODO Récupération des évènements et trier pour ne renvoyer que les évènements valider
+		// actionEvenement.findAllEventByUser();
 		// TODO Fake retour		
 		EvenementDTO evenement = new EvenementDTO();
 		evenement.setAdresse("17 rue linné");
@@ -530,7 +528,7 @@ public class ActionEvenementController {
 		}
 		
 		
-		// Recherche de l'évènement par son id
+		// Recherche de l'utilisateur par son id
 		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
 		UserEntity userEntity = actionUser.findUserById(Long.parseLong(idUser));
 		if (userEntity == null) {
@@ -544,27 +542,9 @@ public class ActionEvenementController {
 		
 		// Récupération des évènements créé de l'utilisateur
 		List<EvenementDTO> listEvenement = new ArrayList<EvenementDTO>();
-		EvenementDTO evenement = new EvenementDTO();
-		evenement.setAdresse("17 rue linné");
-		evenement.setCodePostal(75005);
-		Date date = new Date();
-		evenement.setDateDebut(date.toString());
-		evenement.setDateFin(date.toString());
-		evenement.setDebrief("Aucun");
-		evenement.setEtat(0);
-		evenement.setIdEvent("103");
-		evenement.setIdUser("10001");
-		evenement.setInfos("Venez avec un parapluie.");
-		evenement.setNbPlace(50);
-		evenement.setNomEvent("Premier Combat");
-		evenement.setPrix(15);
-		evenement.setValide(true);
-		evenement.setVille("Paris");
-		evenement.setNbPlaceRestant(5);
-		listEvenement.add(evenement);
-		/*for (EvenementEntity evenement : userEntity.getEvenements()) {
+		for (EvenementEntity evenement : userEntity.getEvenements()) {
 			listEvenement.add(fillEvenementDTO(evenement));
-		}*/
+		}
 		
 		RetourDTO retour = new RetourDTO();
 		LOG.info("OK");
