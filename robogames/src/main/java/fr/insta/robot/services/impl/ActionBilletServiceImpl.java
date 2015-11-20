@@ -10,6 +10,7 @@ import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.ActionBilletService;
 import fr.insta.robot.services.BilletService;
 import fr.insta.robot.services.RGServiceFactory;
+import fr.insta.robot.services.RoleConstantService;
 
 public class ActionBilletServiceImpl implements ActionBilletService{
 
@@ -39,10 +40,14 @@ public class ActionBilletServiceImpl implements ActionBilletService{
 		
 	}
 	@Override
-	public List<BilletEntity> findAllBillets(UserEntity admin) {
+	public List<BilletEntity> findAllBillets(UserEntity admin) throws FonctionnelleException {
+		if(admin.getHabilitation().getRole().getLibelle().equals(RoleConstantService.ADMIN)){
 		BilletService billetService = RGServiceFactory.getInstance().getBilletService();
 		return billetService.findAllBillets();
-		
+		}
+		else{
+			throw new FonctionnelleException("Erreur, votre compte n'est pas eligible.");
+		}
 	}
 	@Override
 	public List<BilletEntity> findAllbilletsByUser(UserEntity user){

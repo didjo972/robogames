@@ -18,8 +18,9 @@ public interface ActionBilletService {
 	 * tous les infos sur les billets
 	 * @param admin
 	 * @return
+	 * @throws FonctionnelleException 
 	 */
-	List<BilletEntity> findAllBillets(UserEntity admin);
+	List<BilletEntity> findAllBillets(UserEntity admin) throws FonctionnelleException;
 	/**
 	 * tous les billets par user
 	 * @param user
