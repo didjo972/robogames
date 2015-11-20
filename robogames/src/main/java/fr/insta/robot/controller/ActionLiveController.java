@@ -1,6 +1,7 @@
 package fr.insta.robot.controller;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,8 @@ import fr.insta.robot.entities.RGEntityFactory;
 
 @Controller
 public class ActionLiveController {
+	
+	Logger LOG = Logger.getLogger(ActionLiveController.class);
 
 	/**
 	 * Récupération de l'url du live
@@ -31,6 +34,7 @@ public class ActionLiveController {
 		// TODO Remplissage du DTO
 		ReponseDTO reponse = new ReponseDTO();
 		RetourDTO retour = new RetourDTO();
+		LOG.info("OK");
 		retour.setMessage("OK");
 		LiveDTO liveDTO = new LiveDTO();
 		// TODO A supprimer
@@ -43,7 +47,7 @@ public class ActionLiveController {
 	@RequestMapping(value = "/ADM/updateUrlLive", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ReponseDTO setUrlLive(@RequestBody String infoUrl) {
-		System.out.println(infoUrl);
+		LOG.info(infoUrl);
 		// Récupération des informations de création de compte
 		String[] tableau = infoUrl.split("&");
 		String url = null;
@@ -79,6 +83,7 @@ public class ActionLiveController {
 		
 		ReponseDTO reponseDTO = new ReponseDTO();
 		RetourDTO retour = new RetourDTO();
+		LOG.info("OK");
 		retour.setMessage("OK");
 		reponseDTO.setRetour(retour);
 		return reponseDTO;

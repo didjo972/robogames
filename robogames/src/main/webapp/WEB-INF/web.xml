@@ -20,7 +20,7 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
 	
 	<!-- Listener Verif -->
 	<listener>
-		<listener-class>fr.insta.robot.listener.MonListener</listener-class>
+		<listener-class>fr.insta.robot.listener.ContextLoadListener</listener-class>
 	</listener>
 
 	<filter>
