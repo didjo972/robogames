@@ -43,6 +43,8 @@ public class ActionsUserController {
 		String password = null;
 		String email = null;
 		String infos = null;
+		String image = null;
+		
 		try {
 			for (int i = 0; i <= tableau.length - 1; i++) {
 				String map = tableau[i];
@@ -66,6 +68,9 @@ public class ActionsUserController {
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("infos")) {
 					infos = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("image")) {
+					image = tableauCleValue[1];
 				}
 			}
 		} catch (Exception e) {
@@ -94,7 +99,7 @@ public class ActionsUserController {
 		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
 		UserEntity userEntity = null;
 		try {
-			userEntity = actionUser.createUser(nom, prenom, pseudo, password, email, infos);
+			userEntity = actionUser.createUser(nom, prenom, pseudo, password, email, infos, image);
 		} catch (DonneesInexistantException e) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error(e.getMessage());

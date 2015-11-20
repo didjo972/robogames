@@ -74,16 +74,7 @@ public class ActionAdminController {
 		List<EvenementDTO> listEvenement = new ArrayList<EvenementDTO>();
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
 		List<EvenementEntity> listEvenementEntity;
-		try {
-			listEvenementEntity = actionEvenement.findAllEnvenement(userEntityAdmin);
-		} catch (FonctionnelleException e) {
-			RetourDTO retour = new RetourDTO();
-			LOG.error(e.getMessage());
-			retour.setMessage(e.getMessage());
-			ReponseDTO reponse = new ReponseDTO();
-			reponse.setRetour(retour);
-			return reponse;
-		}
+		listEvenementEntity = actionEvenement.findAllEnvenement();
 		
 		// Remplissage de l'évènementDTO
 		for (EvenementEntity evenementEntity : listEvenementEntity) {

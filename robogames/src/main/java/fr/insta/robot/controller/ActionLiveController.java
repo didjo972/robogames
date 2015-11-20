@@ -67,6 +67,7 @@ public class ActionLiveController {
 		// Récupération du live
 		LiveEntity liveEntity = null;
 		ActionLiveServiceImpl actionLive = new ActionLiveServiceImpl();
+		//actionLive.createLive(url);
 		
 		// TODO Remplissage du DTO
 		ReponseDTO reponse = new ReponseDTO();

@@ -129,7 +129,7 @@ public class ActionEvenementController {
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
 		EvenementEntity evenement = RGEntityFactory.getEvenementEntityInstance();
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 			Date d_Debut = sdf.parse(dateDebut);
 			Date d_Fin = sdf.parse(dateFin);
 			evenement = actionEvenement.createEvenement(userEntity, nomEvent, d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
@@ -257,7 +257,7 @@ public class ActionEvenementController {
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
 		EvenementEntity evenement = null;
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 			Date d_Debut = sdf.parse(dateDebut);
 			Date d_Fin = sdf.parse(dateFin);
 			evenement = actionEvenement.updateEvenement(userEntity, Long.parseLong(nomEvent), d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
@@ -374,52 +374,18 @@ public class ActionEvenementController {
 	@ResponseBody
 	public ReponseDTO getAllEvenement() {
 		// Récupération des évènements
-		List<EvenementDTO> listEvenement = new ArrayList<EvenementDTO>();
+		List<EvenementDTO> listEvenementDTO = new ArrayList<EvenementDTO>();
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
-		// TODO Récupération des évènements et trier pour ne renvoyer que les évènements valider
-		// actionEvenement.findAllEventByUser();
-		// TODO Fake retour		
-		EvenementDTO evenement = new EvenementDTO();
-		evenement.setAdresse("17 rue linné");
-		evenement.setCodePostal(75005);
-		Date date = new Date();
-		evenement.setDateDebut(date.toString());
-		evenement.setDateFin(date.toString());
-		evenement.setDebrief("Aucun");
-		evenement.setEtat(0);
-		evenement.setIdEvent("103");
-		evenement.setIdUser("10001");
-		evenement.setInfos("Venez avec un parapluie.");
-		evenement.setNbPlace(50);
-		evenement.setNomEvent("Premier Combat");
-		evenement.setPrix(15);
-		evenement.setValide(true);
-		evenement.setVille("Paris");
-		evenement.setNbPlaceRestant(5);
-		listEvenement.add(evenement);
-		
-		// 2ème itération test
-		evenement = new EvenementDTO();
-		evenement.setAdresse("36 rue du faubourg");
-		evenement.setCodePostal(75003);
-		date = new Date();
-		evenement.setDateDebut(date.toString());
-		evenement.setDateFin(date.toString());
-		evenement.setDebrief("Aucun");
-		evenement.setEtat(0);
-		evenement.setIdEvent("103");
-		evenement.setIdUser("10001");
-		evenement.setInfos("Venez comme vous êtes");
-		evenement.setNbPlace(50);
-		evenement.setNomEvent("Deuxième Combat");
-		evenement.setPrix(15);
-		evenement.setValide(true);
-		evenement.setVille("Paris");
-		evenement.setNbPlaceRestant(45);
-		listEvenement.add(evenement);
+		// Récupération des évènements et trie pour ne renvoyer que les évènements valider
+		List<EvenementEntity> listEvenementEntity = actionEvenement.findAllEnvenement();
+		for (EvenementEntity evenement : listEvenementEntity) {
+			if (evenement.getValide()) {
+				listEvenementDTO.add(fillEvenementDTO(evenement));
+			}
+		}
 		
 		ReponseDTO reponse = new ReponseDTO();
-		reponse.setObject(listEvenement);
+		reponse.setObject(listEvenementDTO);
 		RetourDTO retour = new RetourDTO();
 		LOG.info("OK");
 		retour.setMessage("OK");
