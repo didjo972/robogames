@@ -40,8 +40,12 @@ public class ContextLoadListener extends ContextLoaderListener {
 				LOG.info("batch de vérification des états des évènements terminé...");
 				
 				// Envoie des mails si création d'un évent
-				LOG.info("Envoie des mails d'informations aux admin");
+				LOG.info("Envoie des mails d'informations aux admin...");
 				envoieMailCreationEvent();
+				
+				// Vérification de l'état de l'habilitation des USERs
+				LOG.info("Vérification des habilitations...");
+				verificationHabilitation();
 				
 			}
 		};
@@ -74,6 +78,10 @@ public class ContextLoadListener extends ContextLoaderListener {
 	private void verificationEtatEvenement() {
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
 		actionEvenement.updateStateEvenement();
+	}
+	
+	private void verificationHabilitation() {
+		// TODO Faire la vérification des habilitations
 	}
 	
 }

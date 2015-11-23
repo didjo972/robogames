@@ -102,9 +102,9 @@ public class ActionEvenementController {
 		// Vérification
 		if (StringUtils.isBlank(adresse) || StringUtils.isBlank(codePostal)
 				|| StringUtils.isBlank(ville) || StringUtils.isBlank(nbPlace)
-				|| StringUtils.isBlank(prix) || StringUtils.isBlank(infos)
-				|| StringUtils.isBlank(idUser) || StringUtils.isBlank(dateDebut)
-				|| StringUtils.isBlank(dateFin) || StringUtils.isBlank(nomEvent)) {
+				|| StringUtils.isBlank(prix) || StringUtils.isBlank(idUser)
+				|| StringUtils.isBlank(dateDebut) || StringUtils.isBlank(dateFin)
+				|| StringUtils.isBlank(nomEvent)) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
