@@ -2,6 +2,7 @@ package fr.insta.robot.listener;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -11,10 +12,12 @@ import org.apache.log4j.Logger;
 import org.springframework.web.context.ContextLoaderListener;
 
 import fr.insta.robot.bo.EvenementEntity;
+import fr.insta.robot.bo.HabilitationEntity;
 import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.services.RoleConstantService;
 import fr.insta.robot.services.impl.ActionEvenementServiceImpl;
 import fr.insta.robot.services.impl.ActionUserServiceImpl;
+import fr.insta.robot.services.impl.HabilitationServiceImpl;
 import fr.insta.robot.services.impl.MailServiceImpl;
 
 /**
@@ -81,7 +84,21 @@ public class ContextLoadListener extends ContextLoaderListener {
 	}
 	
 	private void verificationHabilitation() {
-		// TODO Faire la vérification des habilitations
+		HabilitationServiceImpl habilitationService = new HabilitationServiceImpl();
+		List<HabilitationEntity> listHabilitation = habilitationService.findAll();
+		if (listHabilitation != null) {
+			for (HabilitationEntity habilitation : listHabilitation) {
+				if (!habilitation.getEtat()) {
+					Calendar c = Calendar.getInstance();
+					c.setTime(habilitation.getDateFin()); 
+					c.add(Calendar.DATE, 1);
+//					habilitation = c.getTime();
+//					if (habilitation.getBanTime()+habilitation.getDateFin() == new Date()) {
+//						
+//					}
+				}
+			}
+		}
 	}
 	
 }

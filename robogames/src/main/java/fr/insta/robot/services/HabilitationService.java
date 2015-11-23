@@ -1,5 +1,7 @@
 package fr.insta.robot.services;
 
+import java.util.List;
+
 import fr.insta.robot.bo.HabilitationEntity;
 
 public interface HabilitationService {
@@ -28,5 +30,11 @@ public interface HabilitationService {
 	 * @param habilitation l'habilitation
 	 */
 	void deleteHabilitation(HabilitationEntity habilitation);
+	
+	/**
+	 * Retourne toutes les habilitations
+	 * @return toutes les habilitations
+	 */
+	List<HabilitationEntity> findAll();
 	
 }

@@ -1,5 +1,8 @@
 package fr.insta.robot.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -37,6 +40,14 @@ public class HabilitationDAOImpl implements HabilitationDAO {
 	public void delete(HabilitationEntity habilitation) {
 		sessionFactory.getCurrentSession().delete(habilitation);
 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<HabilitationEntity> findAll() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(HabilitationEntityImpl.class);
+		return criteria.list();
 	}
 	
 }

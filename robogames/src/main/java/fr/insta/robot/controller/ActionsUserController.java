@@ -11,12 +11,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import fr.insta.robot.bo.LiveDTO;
+import fr.insta.robot.bo.LiveEntity;
 import fr.insta.robot.bo.ReponseDTO;
 import fr.insta.robot.bo.RetourDTO;
 import fr.insta.robot.bo.UserDTO;
 import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.exceptions.FonctionnelleException;
+import fr.insta.robot.services.impl.ActionLiveServiceImpl;
 import fr.insta.robot.services.impl.ActionUserServiceImpl;
 
 @Controller
@@ -328,6 +331,30 @@ public class ActionsUserController {
 		ReponseDTO reponse = new ReponseDTO();
 		reponse.setRetour(retour);
 		reponse.setObject(userDTO);
+		return reponse;
+	}
+	
+	/**
+	 * Récupération de l'url du live
+	 * @return
+	 */
+	@RequestMapping(value = "/USER/recupererUrlLive", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO getUrlLive() {		
+		// Récupération du live
+		ActionLiveServiceImpl actionLive = new ActionLiveServiceImpl();
+		LiveEntity liveEntity = actionLive.findURL();
+		
+		// Remplissage du DTO
+		LiveDTO liveDTO = new LiveDTO();
+		liveDTO.setUrl(liveEntity.getUrl());
+		
+		ReponseDTO reponse = new ReponseDTO();
+		RetourDTO retour = new RetourDTO();
+		LOG.info("OK");
+		retour.setMessage("OK");
+		reponse.setObject(liveDTO);
+		reponse.setRetour(retour);
 		return reponse;
 	}
 

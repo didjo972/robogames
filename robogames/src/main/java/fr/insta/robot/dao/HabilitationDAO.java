@@ -1,5 +1,7 @@
 package fr.insta.robot.dao;
 
+import java.util.List;
+
 import fr.insta.robot.bo.HabilitationEntity;
 
 public interface HabilitationDAO {
@@ -28,6 +30,12 @@ public interface HabilitationDAO {
 	 * @param habilitationEntity l'habilitationEntity
 	 */
 	void delete(HabilitationEntity habilitationEntity);
+
+	/**
+	 * Retourne toutes les habilitations
+	 * @return retourne toutes les habilitations
+	 */
+	List<HabilitationEntity> findAll();
 	
 	
 	
