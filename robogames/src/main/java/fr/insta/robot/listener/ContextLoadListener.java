@@ -34,18 +34,15 @@ public class ContextLoadListener extends ContextLoaderListener {
 		Timer monTimer = new Timer();
 		TimerTask taskAExec = new TimerTask(){
 			public void run(){
+				// Vérification des états des évents
 				LOG.info("lancement du batch de vérification des états des évènements...");
-				ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
-				actionEvenement.updateStateEvenement();
+				verificationEtatEvenement();
 				LOG.info("batch de vérification des états des évènements terminé...");
 				
 				// Envoie des mails si création d'un évent
 				LOG.info("Envoie des mails d'informations aux admin");
 				envoieMailCreationEvent();
 				
-				// Vérification des états des évents
-				LOG.info("Vérification des états des évènements");
-				verificationEtatEvenement();
 			}
 		};
 		Calendar c = Calendar.getInstance();
