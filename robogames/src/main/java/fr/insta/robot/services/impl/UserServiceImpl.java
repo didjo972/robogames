@@ -1,5 +1,6 @@
 package fr.insta.robot.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,19 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public List<UserEntity> findAllUser() {
 		return userDAO.findAllUser();
+	}
+
+	@Override
+	public List<UserEntity> findAllUserByType(String typeRole) {
+		List<UserEntity> listUser = userDAO.findAllUser();
+		List<UserEntity> listAdmin = new ArrayList<UserEntity>();
+		for (UserEntity user : listUser) {
+			if (user.getHabilitation().getRole().getLibelle().equalsIgnoreCase(typeRole)) {
+				listAdmin.add(user);
+			}
+		}
+		 
+		 return listAdmin;
 	}
 
 
