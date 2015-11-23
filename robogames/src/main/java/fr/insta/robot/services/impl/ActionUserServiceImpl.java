@@ -31,10 +31,9 @@ public class ActionUserServiceImpl implements ActionUserService {
 
 	// A rajouter habilitation date fin
 	@Override
-	public UserEntity createUser(String nom, String prenom, String pseudo, String password, String mail, String infos,
-			String image) throws DonneesInexistantException, FonctionnelleException {
-		if (StringUtils.isBlank(nom) || StringUtils.isBlank(prenom) || StringUtils.isBlank(pseudo)
-				|| StringUtils.isBlank(password) || StringUtils.isBlank(mail)) {
+	public UserEntity createUser(String pseudo, String password, String mail)
+			throws DonneesInexistantException, FonctionnelleException {
+		if (StringUtils.isBlank(pseudo) || StringUtils.isBlank(password) || StringUtils.isBlank(mail)) {
 			throw new DonneesInexistantException("Erreur, toutes les données doivent être fournies.");
 		}
 		// Habilitation
@@ -47,15 +46,9 @@ public class ActionUserServiceImpl implements ActionUserService {
 		InformationsEntity informations = RGEntityFactory.getInformationsEntityInstance();
 
 		// Affectation des valeurs
-		informations.setNom(nom);
-		informations.setPrenom(prenom);
 		informations.setPseudo(pseudo);
 		informations.setEmail(mail);
 
-		// Image facultatif
-		if (StringUtils.isNoneBlank(image)) {
-			informations.setImage(image);
-		}
 		// Cryptage du mot de passe en md5
 		try {
 			informations.setPassword(encodeMd5(password));
@@ -87,9 +80,6 @@ public class ActionUserServiceImpl implements ActionUserService {
 		// Affectation du role
 		hab.setDateDebut(new Date());
 		hab.setDateFin(null);
-		if (StringUtils.isNotBlank(infos)) {
-			hab.setInfos(infos);
-		}
 		hab.setEtat(true);
 		hab.setRole(role);
 
@@ -184,15 +174,13 @@ public class ActionUserServiceImpl implements ActionUserService {
 				throw new FonctionnelleException("Erreur, le pseudo est pris par un autre utilisateur.");
 			}
 		}
-		if(StringUtils.isNoneBlank(role)){
-			if(role.equals(RoleConstantService.ADMIN)){
+		if (StringUtils.isNoneBlank(role)) {
+			if (role.equals(RoleConstantService.ADMIN)) {
 				user.getHabilitation().setRole(roleService.findRoleByString(RoleConstantService.ADMIN));
-			}
-			else if(role.equals(RoleConstantService.USER)){
+			} else if (role.equals(RoleConstantService.USER)) {
 				user.getHabilitation().setRole(roleService.findRoleByString(RoleConstantService.USER));
 
-			}
-			else{
+			} else {
 				throw new FonctionnelleException("Erreur, impossible de créer l'habilitation demandée");
 			}
 		}
@@ -213,7 +201,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 		// Retrouver les infos par pseudo
 		InformationsEntity infos = infosService.findInformationsByEmail(email);
 		if (infos == null) {
-				throw new FonctionnelleException("Erreur, l'email est incorrect");
+			throw new FonctionnelleException("Erreur, l'email est incorrect");
 		}
 		// test du mot de passe
 		try {
@@ -245,24 +233,24 @@ public class ActionUserServiceImpl implements ActionUserService {
 			user.getHabilitation().setDateFin(new Date());
 			user.getHabilitation().setInfos(infos);
 			user.getHabilitation().setBanTime(ban_time);
-		
+
 			UserService userService = RGServiceFactory.getInstance().getUserService();
 			userService.updateUser(user);
 		}
 	}
+
 	@Override
-	public void enableUser(UserEntity user){
+	public void enableUser(UserEntity user) {
 		if (user != null) {
 			user.getHabilitation().setEtat(true);
 			user.getHabilitation().setDateFin(null);
 			user.getHabilitation().setInfos(null);
 			user.getHabilitation().setBanTime(0);
-		
+
 			UserService userService = RGServiceFactory.getInstance().getUserService();
 			userService.updateUser(user);
 		}
 	}
-	
 
 	@Override
 	public String resetPasswordUser(String email) throws FonctionnelleException {
@@ -283,12 +271,19 @@ public class ActionUserServiceImpl implements ActionUserService {
 
 	}
 
+	public void deleteUser(UserEntity user) {
+
+	}
+
 	@Override
 	public UserEntity findUserbyPseudo(String pseudo) {
 		UserService userService = RGServiceFactory.getInstance().getUserService();
 		InformationsService infosService = RGServiceFactory.getInstance().getInformationsService();
 
 		InformationsEntity infos = infosService.findInformationsByPseudo(pseudo);
+		if (infos == null) {
+			return null;
+		}
 		UserEntity user = userService.findUserById(infos.getUser().getId());
 		return user;
 	}

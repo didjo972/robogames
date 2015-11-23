@@ -53,7 +53,7 @@ public class InformationsEntityImpl implements InformationsEntity {
 	}
 
 	@Override
-	@Column(name = "INF_NOM", unique = false, nullable = false, length = 100)
+	@Column(name = "INF_NOM", unique = false, nullable = true, length = 100)
 	public String getNom() {
 		return nom;
 	}
@@ -64,7 +64,7 @@ public class InformationsEntityImpl implements InformationsEntity {
 	}
 
 	@Override
-	@Column(name = "INF_PRENOM", unique = false, nullable = false, length = 100)
+	@Column(name = "INF_PRENOM", unique = false, nullable = true, length = 100)
 	public String getPrenom() {
 		return prenom;
 	}

@@ -9,18 +9,15 @@ import fr.insta.robot.exceptions.FonctionnelleException;
 
 public interface ActionUserService {
 	/**
-	 * Créer un user
-	 * @param nom
-	 * @param prenom
+	 * Creer un user avec pseudo, password et mail
 	 * @param pseudo
 	 * @param password
 	 * @param mail
-	 * @param infos
 	 * @return
 	 * @throws DonneesInexistantException
 	 * @throws FonctionnelleException
 	 */
-	UserEntity createUser(String nom, String prenom, String pseudo, String password, String mail, String infos, String image) throws DonneesInexistantException, FonctionnelleException;
+	UserEntity createUser(String pseudo, String password, String mail) throws DonneesInexistantException, FonctionnelleException;
 	/**
 	 * Retourne une chaine crypté en md5
 	 * @param password
