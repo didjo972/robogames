@@ -1,5 +1,7 @@
 package fr.insta.robot.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -38,6 +40,16 @@ public class ActionAdminController {
 	@ResponseBody
 	public ReponseDTO getAllEvenement(@RequestBody String infoAdmin) {
 		LOG.info(infoAdmin);
+		try {
+			infoAdmin = URLDecoder.decode(infoAdmin, "UTF-8");
+			LOG.info(infoAdmin);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération de l'id de l'admin
 		String[] tableau = infoAdmin.split("&");
 		String idAdmin = null;
@@ -102,6 +114,16 @@ public class ActionAdminController {
 	@ResponseBody
 	public ReponseDTO modifierEvenement(@RequestBody String infoEvenement) {
 		LOG.info(infoEvenement);
+		try {
+			infoEvenement = URLDecoder.decode(infoEvenement, "UTF-8");
+			LOG.info(infoEvenement);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoEvenement.split("&");
 		String adresse = null;
@@ -278,6 +300,16 @@ public class ActionAdminController {
 	@ResponseBody
 	public ReponseDTO getAllUtilisateur(@RequestBody String infoAdmin) {
 		LOG.info(infoAdmin);
+		try {
+			infoAdmin = URLDecoder.decode(infoAdmin, "UTF-8");
+			LOG.info(infoAdmin);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération de l'id de l'admin
 		String[] tableau = infoAdmin.split("&");
 		String idAdmin = null;
@@ -361,6 +393,16 @@ public class ActionAdminController {
 	@ResponseBody
 	public ReponseDTO modifierUser(@RequestBody String infoUser) {
 		LOG.info(infoUser);
+		try {
+			infoUser = URLDecoder.decode(infoUser, "UTF-8");
+			LOG.info(infoUser);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de modification de compte
 		String[] tableau = infoUser.split("&");
 		String nom = null;
@@ -449,6 +491,16 @@ public class ActionAdminController {
 	@ResponseBody
 	public ReponseDTO bannirUser(@RequestBody String infoBanne) {
 		LOG.info(infoBanne);
+		try {
+			infoBanne = URLDecoder.decode(infoBanne, "UTF-8");
+			LOG.info(infoBanne);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de modification de compte
 		String[] tableau = infoBanne.split("&");
 		String idUser = null;
@@ -520,6 +572,16 @@ public class ActionAdminController {
 	@ResponseBody
 	public ReponseDTO debannirUser(@RequestBody String infoDebanne) {
 		LOG.info(infoDebanne);
+		try {
+			infoDebanne = URLDecoder.decode(infoDebanne, "UTF-8");
+			LOG.info(infoDebanne);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de modification de compte
 		String[] tableau = infoDebanne.split("&");
 		String idUser = null;

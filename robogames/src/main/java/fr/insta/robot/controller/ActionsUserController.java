@@ -1,5 +1,8 @@
 package fr.insta.robot.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
@@ -38,6 +41,16 @@ public class ActionsUserController {
 	@ResponseBody
 	public ReponseDTO creerCompte(@RequestBody String infoCompte) {
 		LOG.info(infoCompte);
+		try {
+			infoCompte = URLDecoder.decode(infoCompte, "UTF-8");
+			LOG.info(infoCompte);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoCompte.split("&");
 		String nom = null;
@@ -58,7 +71,6 @@ public class ActionsUserController {
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("email")) {
 					email = tableauCleValue[1];
-					email = email.replace("%40", "@");
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("pseudo")) {
 					pseudo = tableauCleValue[1];
@@ -161,6 +173,16 @@ public class ActionsUserController {
 	@ResponseBody
 	public ReponseDTO logIn(@RequestBody String info, HttpSession session) {
 		LOG.info(info);
+		try {
+			info = URLDecoder.decode(info, "UTF-8");
+			LOG.info(info);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de création de compte
 		String[] tableau = info.split("&");
 		String pseudo = null;
@@ -279,6 +301,16 @@ public class ActionsUserController {
 	@ResponseBody
 	public ReponseDTO getUtilisateur(@RequestBody String infoUser) {
 		LOG.info(infoUser);
+		try {
+			infoUser = URLDecoder.decode(infoUser, "UTF-8");
+			LOG.info(infoUser);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoUser.split("&");
 		String idUser = null;

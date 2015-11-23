@@ -1,5 +1,8 @@
 package fr.insta.robot.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.http.MediaType;
@@ -31,6 +34,16 @@ public class ActionLiveController {
 	@ResponseBody
 	public ReponseDTO getUrlLive(@RequestBody String infoAdmin) {
 		LOG.info(infoAdmin);
+		try {
+			infoAdmin = URLDecoder.decode(infoAdmin, "UTF-8");
+			LOG.info(infoAdmin);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération de l'id de l'admin
 		String[] tableau = infoAdmin.split("&");
 		String idAdmin = null;
@@ -86,6 +99,16 @@ public class ActionLiveController {
 	@ResponseBody
 	public ReponseDTO setUrlLive(@RequestBody String infoUrl) {
 		LOG.info(infoUrl);
+		try {
+			infoUrl = URLDecoder.decode(infoUrl, "UTF-8");
+			LOG.info(infoUrl);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoUrl.split("&");
 		String url = null;
