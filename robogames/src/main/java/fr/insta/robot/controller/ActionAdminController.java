@@ -426,8 +426,17 @@ public class ActionAdminController {
 			return reponse;
 		}
 		
-		// TODO Modification de l'user
-		 //actionUser.updateUserByAdmin(userEntity, nom, prenom, null, pseudo, role);
+		// Modification de l'user
+		try {
+			actionUser.updateUserByAdmin(userEntity, nom, prenom, null, pseudo, role);
+		} catch (FonctionnelleException e) {
+			ReponseDTO reponse = new ReponseDTO();
+			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
+			retour.setMessage(e.getMessage());
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		
 		RetourDTO retour = new RetourDTO();
 		retour.setMessage("OK");
@@ -497,7 +506,7 @@ public class ActionAdminController {
 			return reponse;
 		}
 		
-		// A corriger Suppression de l'USER
+		// Suppression de l'USER
 		 actionUser.disableUser(userEntity, infos, Integer.parseInt(nbJourBan));
 		
 		RetourDTO retour = new RetourDTO();
@@ -560,7 +569,8 @@ public class ActionAdminController {
 			return reponse;
 		}
 		
-		// TODO Enable User		
+		// Enable User
+		actionUser.enableUser(userEntity);
 		
 		RetourDTO retour = new RetourDTO();
 		retour.setMessage("OK");
