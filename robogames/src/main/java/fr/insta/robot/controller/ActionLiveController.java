@@ -90,7 +90,7 @@ public class ActionLiveController {
 		String[] tableau = infoUrl.split("&");
 		String url = null;
 		String idAdmin = null;
-		
+
 		try {
 			for (int i = 0; i <= tableau.length - 1; i++) {
 				String map = tableau[i];
@@ -98,6 +98,10 @@ public class ActionLiveController {
 
 				if (tableauCleValue[0].equalsIgnoreCase("url")) {
 					url = tableauCleValue[1];
+					if (url.contains("%3A")) {
+						url = url.replaceAll("%3A", ":");
+						url = url.replaceAll("%2F", "/");
+					}
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
 					idAdmin = tableauCleValue[1];
