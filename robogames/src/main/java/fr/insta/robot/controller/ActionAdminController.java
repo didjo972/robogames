@@ -380,7 +380,7 @@ public class ActionAdminController {
 		} else {
 			userDTO.setEtat("false");
 		}
-		userDTO.setId(userEntity.getId());
+		userDTO.setIdUser(userEntity.getId());
 		userDTO.setLibelleHabilitation(userEntity.getHabilitation().getRole().getLibelle());
 		userDTO.setNom(userEntity.getInformation().getNom());
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
