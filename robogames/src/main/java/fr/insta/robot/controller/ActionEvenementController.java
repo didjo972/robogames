@@ -45,9 +45,14 @@ public class ActionEvenementController {
 	public ReponseDTO creerUnEvenement(@RequestBody String infoEvenement) {
 		LOG.info(infoEvenement);
 		try {
-			LOG.info(URLDecoder.decode("%C3%A9", "UTF-8"));
+			infoEvenement = URLDecoder.decode(infoEvenement, "UTF-8");
+			LOG.info(infoEvenement);
 		} catch (UnsupportedEncodingException e1) {
-			LOG.error(e1);
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
 		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoEvenement.split("&");
@@ -83,30 +88,18 @@ public class ActionEvenementController {
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("infos")) {
 					infos = tableauCleValue[1];
-					if (infos.contains("+")) {
-						infos = infos.replaceAll("+", " ");
-					}
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
 					idUser = tableauCleValue[1];
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("dateDebut")) {
 					dateDebut = tableauCleValue[1];
-					if (dateDebut.contains("%2F")) {
-						dateDebut = dateDebut.replaceAll("%2F", "/");
-					}
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("dateFin")) {
 					dateFin = tableauCleValue[1];
-					if (dateFin.contains("%2F")) {
-						dateFin = dateFin.replaceAll("%2F", "/");
-					}
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("nomEvent")) {
 					nomEvent = tableauCleValue[1];
-					if (nomEvent.contains("+")) {
-						nomEvent = nomEvent.replaceAll("+", " ");
-					}
 				}
 			}
 		} catch (Exception e) {
@@ -203,6 +196,16 @@ public class ActionEvenementController {
 	@ResponseBody
 	public ReponseDTO modifierEvenement(@RequestBody String infoEvenement) {
 		LOG.info(infoEvenement);
+		try {
+			infoEvenement = URLDecoder.decode(infoEvenement, "UTF-8");
+			LOG.info(infoEvenement);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoEvenement.split("&");
 		String adresse = null;
@@ -331,6 +334,16 @@ public class ActionEvenementController {
 	@ResponseBody
 	public ReponseDTO supprimerEvenement(@RequestBody String infoEvenement) {
 		LOG.info(infoEvenement);
+		try {
+			infoEvenement = URLDecoder.decode(infoEvenement, "UTF-8");
+			LOG.info(infoEvenement);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoEvenement.split("&");
 		String idEvent = null;
@@ -416,6 +429,16 @@ public class ActionEvenementController {
 	@ResponseBody
 	public ReponseDTO getEvenement(@RequestBody String infoEvenement) {
 		LOG.info(infoEvenement);
+		try {
+			infoEvenement = URLDecoder.decode(infoEvenement, "UTF-8");
+			LOG.info(infoEvenement);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoEvenement.split("&");
 		String idEvent = null;
@@ -491,6 +514,16 @@ public class ActionEvenementController {
 	@ResponseBody
 	public ReponseDTO getEvenementsUtilisateur(@RequestBody String infoIdUser) {
 		LOG.info(infoIdUser);
+		try {
+			infoIdUser = URLDecoder.decode(infoIdUser, "UTF-8");
+			LOG.info(infoIdUser);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoIdUser.split("&");
 		String idUser = null;
@@ -544,6 +577,16 @@ public class ActionEvenementController {
 	@ResponseBody
 	public ReponseDTO modifierDebrief(@RequestBody String infoDebrief) {
 		LOG.info(infoDebrief);
+		try {
+			infoDebrief = URLDecoder.decode(infoDebrief, "UTF-8");
+			LOG.info(infoDebrief);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoDebrief.split("&");
 		String idEvent = null;
