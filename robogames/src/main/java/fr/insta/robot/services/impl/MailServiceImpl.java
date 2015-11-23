@@ -49,9 +49,8 @@ public class MailServiceImpl implements MailService {
 			Message message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("nepasrepondre@nepasrepondre"));
 			message.setRecipients(Message.RecipientType.TO, tableauAdresse);
-			message.setSubject("Testing Subject");
-			message.setText("Dear Mail Crawler,"
-				+ "\n\n No spam to my email, please!");
+			message.setSubject(subject);
+			message.setText(text);
 
 			Transport.send(message);
 
