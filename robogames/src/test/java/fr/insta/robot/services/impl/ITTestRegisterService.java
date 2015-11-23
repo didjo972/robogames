@@ -5,7 +5,6 @@ import java.security.NoSuchAlgorithmException;
 import org.junit.Assert;
 import org.junit.Test;
 
-import fr.insta.robot.AbstractRgItTest;
 import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.exceptions.FonctionnelleException;

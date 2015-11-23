@@ -1,9 +1,11 @@
 package fr.insta.robot.services.impl;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateUtils;
 
 import fr.insta.robot.bo.DebriefEntity;
 import fr.insta.robot.bo.EvenementEntity;
@@ -14,6 +16,7 @@ import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.ActionEvenementService;
 import fr.insta.robot.services.EvenementService;
 import fr.insta.robot.services.RGServiceFactory;
+import fr.insta.robot.util.DateUtil;
 
 public class ActionEvenementServiceImpl implements ActionEvenementService {
 
@@ -28,7 +31,9 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 		}
 		// Verifier la date
 		Date tmp = new Date();
-		if (d_debut.before(tmp) || d_debut.after(d_fin)) {
+		int d_debut_now = DateUtil.nbJoursEntre(d_debut, tmp);
+		
+		if (d_debut_now < 3 && d_debut.after(d_fin)) {
 			throw new FonctionnelleException("Erreur, les dates données sont incorrects");
 		}
 		// Initialisation de l'entité debrief
