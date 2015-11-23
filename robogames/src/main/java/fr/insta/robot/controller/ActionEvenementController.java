@@ -1,5 +1,7 @@
 package fr.insta.robot.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -42,6 +44,11 @@ public class ActionEvenementController {
 	@ResponseBody
 	public ReponseDTO creerUnEvenement(@RequestBody String infoEvenement) {
 		LOG.info(infoEvenement);
+		try {
+			LOG.info(URLDecoder.decode("%C3%A9", "UTF-8"));
+		} catch (UnsupportedEncodingException e1) {
+			LOG.error(e1);
+		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoEvenement.split("&");
 		String adresse = null;
