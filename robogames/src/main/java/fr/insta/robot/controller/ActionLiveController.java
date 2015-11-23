@@ -101,6 +101,8 @@ public class ActionLiveController {
 					if (url.contains("%3A")) {
 						url = url.replaceAll("%3A", ":");
 						url = url.replaceAll("%2F", "/");
+						url = url.replaceAll("%3F", "?");
+						url = url.replaceAll("%3D", "=");
 					}
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
