@@ -19,6 +19,7 @@ import fr.insta.robot.services.impl.ActionEvenementServiceImpl;
 import fr.insta.robot.services.impl.ActionUserServiceImpl;
 import fr.insta.robot.services.impl.HabilitationServiceImpl;
 import fr.insta.robot.services.impl.MailServiceImpl;
+import fr.insta.robot.util.DateUtil;
 
 /**
  * Listener du context
@@ -91,11 +92,10 @@ public class ContextLoadListener extends ContextLoaderListener {
 				if (!habilitation.getEtat()) {
 					Calendar c = Calendar.getInstance();
 					c.setTime(habilitation.getDateFin()); 
-					c.add(Calendar.DATE, 1);
-//					habilitation = c.getTime();
-//					if (habilitation.getBanTime()+habilitation.getDateFin() == new Date()) {
-//						
-//					}
+					c.add(Calendar.DATE, habilitation.getBanTime());
+					if (DateUtil.afterOrEqual(c.getTime(), new Date())) {
+						// TODO Supprimer User
+					}
 				}
 			}
 		}
