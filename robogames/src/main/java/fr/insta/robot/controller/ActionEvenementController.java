@@ -76,6 +76,9 @@ public class ActionEvenementController {
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("infos")) {
 					infos = tableauCleValue[1];
+					if (infos.contains("+")) {
+						infos = infos.replaceAll("+", " ");
+					}
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
 					idUser = tableauCleValue[1];
@@ -94,6 +97,9 @@ public class ActionEvenementController {
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("nomEvent")) {
 					nomEvent = tableauCleValue[1];
+					if (nomEvent.contains("+")) {
+						nomEvent = nomEvent.replaceAll("+", " ");
+					}
 				}
 			}
 		} catch (Exception e) {

@@ -427,7 +427,7 @@ public class ActionAdminController {
 		}
 		
 		// TODO Modification de l'user
-		// actionUser.updateUser(userEntity, nom, prenom, pseudo, null, null);
+		 //actionUser.updateUserByAdmin(userEntity, nom, prenom, null, pseudo, role);
 		
 		RetourDTO retour = new RetourDTO();
 		retour.setMessage("OK");
@@ -445,6 +445,7 @@ public class ActionAdminController {
 		String idUser = null;
 		String idAdmin = null;
 		String infos = null;
+		String nbJourBan = null;
 		
 		try {
 			for (int i = 0; i <= tableau.length - 1; i++) {
@@ -459,6 +460,9 @@ public class ActionAdminController {
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("infos")) {
 					infos = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("nbJourBan")) {
+					nbJourBan = tableauCleValue[1];
 				}
 			}
 		} catch (Exception e) {
@@ -493,8 +497,8 @@ public class ActionAdminController {
 			return reponse;
 		}
 		
-		// TODO A corriger Suppression de l'USER
-		// actionUser.disableUser(userEntity);
+		// A corriger Suppression de l'USER
+		 actionUser.disableUser(userEntity, infos, Integer.parseInt(nbJourBan));
 		
 		RetourDTO retour = new RetourDTO();
 		retour.setMessage("OK");
