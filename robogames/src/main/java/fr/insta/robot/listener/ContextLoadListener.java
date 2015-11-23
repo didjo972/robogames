@@ -16,8 +16,8 @@ import fr.insta.robot.bo.HabilitationEntity;
 import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.services.RoleConstantService;
 import fr.insta.robot.services.impl.ActionEvenementServiceImpl;
+import fr.insta.robot.services.impl.ActionHabilitationServiceImpl;
 import fr.insta.robot.services.impl.ActionUserServiceImpl;
-import fr.insta.robot.services.impl.HabilitationServiceImpl;
 import fr.insta.robot.services.impl.MailServiceImpl;
 import fr.insta.robot.util.DateUtil;
 
@@ -85,7 +85,7 @@ public class ContextLoadListener extends ContextLoaderListener {
 	}
 	
 	private void verificationHabilitation() {
-		HabilitationServiceImpl habilitationService = new HabilitationServiceImpl();
+		ActionHabilitationServiceImpl habilitationService = new ActionHabilitationServiceImpl();
 		List<HabilitationEntity> listHabilitation = habilitationService.findAll();
 		if (listHabilitation != null) {
 			for (HabilitationEntity habilitation : listHabilitation) {
