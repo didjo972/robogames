@@ -40,6 +40,8 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	private RoleEntity role;
 	/** Informations de l'habilitation */
 	private String infos;
+	/** jour de ban */
+	private int bantime;
 
 
 	@Override
@@ -85,6 +87,16 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 	public void setEtat(boolean etat) {
 		this.etat = etat;
 	}
+	@Column(name = "HAB_BAN_TIME", unique = false, nullable = true)
+	@Override
+	public int getBanTime() {
+		return bantime;
+	}
+	@Override
+	public void setBanTime(int ban_time) {
+		this.bantime = ban_time;
+	}
+	
 
 	/***********************************************************************/
 	@Override

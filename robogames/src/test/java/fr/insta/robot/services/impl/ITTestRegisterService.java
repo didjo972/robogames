@@ -89,24 +89,19 @@ public class ITTestRegisterService {
 	@Test
 	public void testDisableUser() {
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
+		UserEntity userRetour = null;
 		try {
-			actionService.createUser("marie rose", "dimitri", "dijo", "123456", "dijo@yolo.fr", null,null);
-		} catch (DonneesInexistantException e) {
-			Assert.assertEquals("Erreur, toutes les données doivent être fournies.", e.getMessage());
-		} catch (FonctionnelleException e) {
-			Assert.assertEquals("Erreur, le pseudo ou l'email existe déjà!", e.getMessage());
+			userRetour = actionService.createUser("marie rose", "dimitri", "dijo", "123456", "dijo@yolo.fr", null,null);
+			Assert.assertNotNull(userRetour);
+		} catch (DonneesInexistantException | FonctionnelleException e) {
+			Assert.fail();
 		}
 
-		UserEntity user = actionService.findUserbyPseudo("dijo");
-		if(user == null){
-			Assert.assertNull(user);
-		}
-		else{
-			Assert.assertNotNull(user);
-			actionService.disableUser(user);
-		}
+		Assert.assertNotNull(userRetour);
+		actionService.disableUser(userRetour,"tu es ban", 10);
+
 		UserService userService = RGServiceFactory.getInstance().getUserService();
-		userService.deleteUser(user);
+		//userService.deleteUser(userRetour);
 	}
 	@Test
 	public void resetpassword() throws FonctionnelleException, DonneesInexistantException, NoSuchAlgorithmException{

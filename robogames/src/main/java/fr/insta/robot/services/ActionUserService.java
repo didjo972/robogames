@@ -52,7 +52,7 @@ public interface ActionUserService {
 	 * Desactive le compte par l'action de l'utilisateur.
 	 * @param user
 	 */
-	void disableUser(UserEntity user);
+	void disableUser(UserEntity user, String infos, int ban_time);
 	/**
 	 * Réinitialise le mot de passe
 	 * @param pseudo_email
