@@ -3,7 +3,7 @@ package fr.insta.robot.bo;
 public class UserDTO {
 	
 	/** L'id */
-	private Long id;
+	private Long idUser;
 
 	/** Nom */
 	private String nom;
@@ -94,17 +94,17 @@ public class UserDTO {
 	}
 
 	/**
-	 * @return the id
+	 * @return the idUser
 	 */
-	public Long getId() {
-		return id;
+	public Long getIdUser() {
+		return idUser;
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param idUser the idUser to set
 	 */
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdUser(Long idUser) {
+		this.idUser = idUser;
 	}
 
 	/**

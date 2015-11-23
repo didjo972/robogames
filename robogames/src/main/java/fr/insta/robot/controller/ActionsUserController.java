@@ -151,7 +151,7 @@ public class ActionsUserController {
 		userDTO.setNom(userEntity.getInformation().getNom());
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
-		userDTO.setId(userEntity.getId());
+		userDTO.setIdUser(userEntity.getId());
 		userDTO.setDateInscription(userEntity.getHabilitation().getDateFin().toString());
 
 		RetourDTO retour = new RetourDTO();
@@ -240,7 +240,7 @@ public class ActionsUserController {
 		userDTO.setNom(userEntity.getInformation().getNom());
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
-		userDTO.setId(userEntity.getId());
+		userDTO.setIdUser(userEntity.getId());
 		userDTO.setDateInscription(userEntity.getHabilitation().getDateDebut().toString());
 
 		// Création de la session
@@ -354,7 +354,7 @@ public class ActionsUserController {
 		userDTO.setNom(userEntity.getInformation().getNom());
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
-		userDTO.setId(userEntity.getId());
+		userDTO.setIdUser(userEntity.getId());
 		userDTO.setDateInscription(userEntity.getHabilitation().getDateDebut().toString());
 		
 		RetourDTO retour = new RetourDTO();
