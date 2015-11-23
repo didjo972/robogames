@@ -239,6 +239,19 @@ public class ActionUserServiceImpl implements ActionUserService {
 			userService.updateUser(user);
 		}
 	}
+	@Override
+	public void enableUser(UserEntity user){
+		if (user != null) {
+			user.getHabilitation().setEtat(true);
+			user.getHabilitation().setDateFin(null);
+			user.getHabilitation().setInfos(null);
+			user.getHabilitation().setBanTime(0);
+		
+			UserService userService = RGServiceFactory.getInstance().getUserService();
+			userService.updateUser(user);
+		}
+	}
+	
 
 	@Override
 	public String resetPasswordUser(String email) throws FonctionnelleException {
