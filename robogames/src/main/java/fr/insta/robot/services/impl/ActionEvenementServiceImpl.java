@@ -23,7 +23,7 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 					throws DonneesInexistantException, FonctionnelleException {
 		if (user == null || d_debut == null || d_debut == null || StringUtils.isBlank(adresse)
 				|| StringUtils.isBlank(ville) || codePostal == 0 || nb_place <= 0 || prix < 0
-				|| StringUtils.isBlank(infos) || StringUtils.isBlank(nom)) {
+				|| StringUtils.isBlank(nom)) {
 			throw new DonneesInexistantException("Erreur, toutes les données doivent être fournies.");
 		}
 		// Verifier la date
@@ -180,6 +180,7 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();
 		return eventService.findAllEventByUser(user);
 	}
+
 	@Override
 	public void updateStateEvenement() {
 		EvenementService eventService = RGServiceFactory.getInstance().getEvenementService();

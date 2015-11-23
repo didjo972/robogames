@@ -54,6 +54,12 @@ public interface ActionUserService {
 	 */
 	void disableUser(UserEntity user, String infos, int ban_time);
 	/**
+	 * Reactive l'habilitation de l'utilisateur
+	 * @param user
+	 */
+	void enableUser(UserEntity user);
+	
+	/**
 	 * Réinitialise le mot de passe
 	 * @param pseudo_email
 	 * @throws FonctionnelleException 
@@ -91,6 +97,7 @@ public interface ActionUserService {
 	 * @return
 	 */
 	List<UserEntity> findAllUserByType(String typeRole);
+	
 	
 	
 }
