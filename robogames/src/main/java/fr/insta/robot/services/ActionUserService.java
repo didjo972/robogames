@@ -85,5 +85,12 @@ public interface ActionUserService {
 	 */
 	List<UserEntity> findAllUser(UserEntity admin) throws FonctionnelleException;
 	
+	/**
+	 * Retourne la liste des users par type
+	 * @param typeRole
+	 * @return
+	 */
+	List<UserEntity> findAllUserByType(String typeRole);
+	
 	
 }

@@ -30,10 +30,18 @@ public interface UserService {
 	 * @param user l'user
 	 */
 	void deleteUser(UserEntity user);
+	
 	/**
 	 * Retourne la liste des utilisateurs
 	 * @return
 	 */
 	List<UserEntity> findAllUser();
+
+	/**
+	 * Retourne la liste des utilisateurs par type
+	 * @param typeRole
+	 * @return
+	 */
+	List<UserEntity> findAllUserByType(String typeRole);
 	
 }

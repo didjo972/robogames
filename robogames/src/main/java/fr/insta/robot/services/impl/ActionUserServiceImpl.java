@@ -255,4 +255,10 @@ public class ActionUserServiceImpl implements ActionUserService {
 		}
 	}
 
+	@Override
+	public List<UserEntity> findAllUserByType(String typeRole) {
+		UserService userService = RGServiceFactory.getInstance().getUserService();
+		return userService.findAllUserByType(typeRole);
+	}
+
 }
