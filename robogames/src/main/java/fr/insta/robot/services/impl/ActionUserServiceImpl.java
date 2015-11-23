@@ -201,9 +201,9 @@ public class ActionUserServiceImpl implements ActionUserService {
 	}
 
 	@Override
-	public UserEntity loginUser(String pseudo, String password)
+	public UserEntity loginUser(String email, String password)
 			throws DonneesInexistantException, FonctionnelleException {
-		if (StringUtils.isBlank(pseudo) || StringUtils.isBlank(password)) {
+		if (StringUtils.isBlank(email) || StringUtils.isBlank(password)) {
 			throw new DonneesInexistantException("Erreur, veuillez remplir les champs");
 		}
 		// Initialisation des Services DAO
@@ -211,11 +211,11 @@ public class ActionUserServiceImpl implements ActionUserService {
 		InformationsService infosService = RGServiceFactory.getInstance().getInformationsService();
 
 		// Retrouver les infos par pseudo
-		InformationsEntity infos = infosService.findInformationsByPseudo(pseudo);
+		InformationsEntity infos = infosService.findInformationsByEmail(email);
 		if (infos == null) {
-			throw new FonctionnelleException("Erreur, pseudo incorrect.");
+				throw new FonctionnelleException("Erreur, l'email est incorrect");
 		}
-		// teste du mot en login
+		// test du mot de passe
 		try {
 			if (!encodeMd5(password).equalsIgnoreCase(infos.getPassword())) {
 				throw new FonctionnelleException("Erreur, mot de passe incorrect.");

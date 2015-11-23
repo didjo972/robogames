@@ -47,7 +47,7 @@ public interface ActionUserService {
 	 * @throws FonctionnelleException 
 	 * 
 	 */
-	UserEntity loginUser(String pseudo_email, String password) throws DonneesInexistantException, FonctionnelleException;
+	UserEntity loginUser(String email, String password) throws DonneesInexistantException, FonctionnelleException;
 	/**
 	 * Desactive le compte par l'action de l'utilisateur.
 	 * @param user
