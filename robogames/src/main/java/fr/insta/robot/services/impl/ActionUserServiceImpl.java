@@ -159,9 +159,10 @@ public class ActionUserServiceImpl implements ActionUserService {
 	}
 
 	public UserEntity updateUserByAdmin(UserEntity user, String nom, String prenom, String image, String pseudo,
-			RoleConstantService role) throws FonctionnelleException {
+			String role) throws FonctionnelleException {
 
 		UserService userService = RGServiceFactory.getInstance().getUserService();
+		RoleService roleService = RGServiceFactory.getInstance().getRoleService();
 		if (user == null) {
 			throw new FonctionnelleException("Erreur, utilsateur inconnu.");
 		}
@@ -183,10 +184,20 @@ public class ActionUserServiceImpl implements ActionUserService {
 				throw new FonctionnelleException("Erreur, le pseudo est pris par un autre utilisateur.");
 			}
 		}
-		if(role == null){
-			
+		if(StringUtils.isNoneBlank(role)){
+			if(role.equals(RoleConstantService.ADMIN)){
+				user.getHabilitation().setRole(roleService.findRoleByString(RoleConstantService.ADMIN));
+			}
+			else if(role.equals(RoleConstantService.USER)){
+				user.getHabilitation().setRole(roleService.findRoleByString(RoleConstantService.USER));
+
+			}
+			else{
+				throw new FonctionnelleException("Erreur, impossible de créer l'habilitation demandée");
+			}
 		}
-		return null;
+		userService.updateUser(user);
+		return user;
 	}
 
 	@Override
