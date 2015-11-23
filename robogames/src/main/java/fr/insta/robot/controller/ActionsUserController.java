@@ -53,22 +53,15 @@ public class ActionsUserController {
 		}
 		// Récupération des informations de création de compte
 		String[] tableau = infoCompte.split("&");
-		String nom = null;
-		String prenom = null;
 		String pseudo = null;
 		String password = null;
 		String email = null;
-		String infos = null;
-		String image = null;
 		
 		try {
 			for (int i = 0; i <= tableau.length - 1; i++) {
 				String map = tableau[i];
 				String[] tableauCleValue = map.split("=");
 
-				if (tableauCleValue[0].equalsIgnoreCase("prenom")) {
-					prenom = tableauCleValue[1];
-				}
 				if (tableauCleValue[0].equalsIgnoreCase("email")) {
 					email = tableauCleValue[1];
 				}
@@ -77,15 +70,6 @@ public class ActionsUserController {
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("password")) {
 					password = tableauCleValue[1];
-				}
-				if (tableauCleValue[0].equalsIgnoreCase("nom")) {
-					nom = tableauCleValue[1];
-				}
-				if (tableauCleValue[0].equalsIgnoreCase("infos")) {
-					infos = tableauCleValue[1];
-				}
-				if (tableauCleValue[0].equalsIgnoreCase("image")) {
-					image = tableauCleValue[1];
 				}
 			}
 		} catch (Exception e) {
@@ -98,8 +82,7 @@ public class ActionsUserController {
 		}
 
 		// Vérification des données
-		if (StringUtils.isBlank(nom) || StringUtils.isBlank(prenom)
-				|| StringUtils.isBlank(pseudo) || StringUtils.isBlank(password)
+		if (StringUtils.isBlank(pseudo) || StringUtils.isBlank(password)
 				|| StringUtils.isBlank(email)) {
 			// Retourne une erreur
 			RetourDTO retour = new RetourDTO();
@@ -114,7 +97,7 @@ public class ActionsUserController {
 		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
 		UserEntity userEntity = null;
 		try {
-			userEntity = actionUser.createUser(nom, prenom, pseudo, password, email, infos, image);
+			userEntity = actionUser.createUser(pseudo, password, email);
 		} catch (DonneesInexistantException e) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error(e.getMessage());
