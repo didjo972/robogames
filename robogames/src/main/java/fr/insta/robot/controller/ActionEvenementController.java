@@ -82,9 +82,15 @@ public class ActionEvenementController {
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("dateDebut")) {
 					dateDebut = tableauCleValue[1];
+					if (dateDebut.contains("%2F")) {
+						dateDebut = dateDebut.replaceAll("%2F", "/");
+					}
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("dateFin")) {
 					dateFin = tableauCleValue[1];
+					if (dateFin.contains("%2F")) {
+						dateFin = dateFin.replaceAll("%2F", "/");
+					}
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("nomEvent")) {
 					nomEvent = tableauCleValue[1];
@@ -102,9 +108,9 @@ public class ActionEvenementController {
 		// Vérification
 		if (StringUtils.isBlank(adresse) || StringUtils.isBlank(codePostal)
 				|| StringUtils.isBlank(ville) || StringUtils.isBlank(nbPlace)
-				|| StringUtils.isBlank(prix) || StringUtils.isBlank(infos)
-				|| StringUtils.isBlank(idUser) || StringUtils.isBlank(dateDebut)
-				|| StringUtils.isBlank(dateFin) || StringUtils.isBlank(nomEvent)) {
+				|| StringUtils.isBlank(prix) || StringUtils.isBlank(idUser)
+				|| StringUtils.isBlank(dateDebut) || StringUtils.isBlank(dateFin)
+				|| StringUtils.isBlank(nomEvent)) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
@@ -129,7 +135,7 @@ public class ActionEvenementController {
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
 		EvenementEntity evenement = RGEntityFactory.getEvenementEntityInstance();
 		try {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date d_Debut = sdf.parse(dateDebut);
 			Date d_Fin = sdf.parse(dateFin);
 			evenement = actionEvenement.createEvenement(userEntity, nomEvent, d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);

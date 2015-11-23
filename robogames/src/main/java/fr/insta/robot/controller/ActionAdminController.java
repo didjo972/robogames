@@ -357,4 +357,212 @@ public class ActionAdminController {
 		return userDTO;
 	}
 	
+	@RequestMapping(value = "/ADMIN/modifierUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO modifierUser(@RequestBody String infoUser) {
+		LOG.info(infoUser);
+		// Récupération des informations de modification de compte
+		String[] tableau = infoUser.split("&");
+		String nom = null;
+		String prenom = null;
+		String pseudo = null;
+		String role = null;
+		String idUser = null;
+		String idAdmin = null;
+		
+		try {
+			for (int i = 0; i <= tableau.length - 1; i++) {
+				String map = tableau[i];
+				String[] tableauCleValue = map.split("=");
+
+				if (tableauCleValue[0].equalsIgnoreCase("nom")) {
+					nom = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("prenom")) {
+					prenom = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("pseudo")) {
+					pseudo = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("role")) {
+					role = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
+					idUser = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
+					idAdmin = tableauCleValue[1];
+				}
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'admin
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
+		if (userEntityAdmin == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la modification des évènements");
+			retour.setMessage("Erreur lors de la modification des évènements");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+
+		// Récupération de l'USER
+		UserEntity userEntity = actionUser.findUserById(Long.parseLong(idUser));
+		if (userEntity == null) {
+			ReponseDTO reponse = new ReponseDTO();
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Aucun utilisateur correspondant pour l'id "+idUser);
+			retour.setMessage("Aucun utilisateur correspondant pour l'id "+idUser);
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// TODO Modification de l'user
+		// actionUser.updateUser(userEntity, nom, prenom, pseudo, null, null);
+		
+		RetourDTO retour = new RetourDTO();
+		retour.setMessage("OK");
+		ReponseDTO reponse = new ReponseDTO();
+		reponse.setRetour(retour);
+		return reponse;
+	}
+	
+	@RequestMapping(value = "/ADMIN/bannirUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO bannirUser(@RequestBody String infoBanne) {
+		LOG.info(infoBanne);
+		// Récupération des informations de modification de compte
+		String[] tableau = infoBanne.split("&");
+		String idUser = null;
+		String idAdmin = null;
+		String infos = null;
+		
+		try {
+			for (int i = 0; i <= tableau.length - 1; i++) {
+				String map = tableau[i];
+				String[] tableauCleValue = map.split("=");
+
+				if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
+					idUser = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
+					idAdmin = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("infos")) {
+					infos = tableauCleValue[1];
+				}
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'admin
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
+		if (userEntityAdmin == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la modification des évènements");
+			retour.setMessage("Erreur lors de la modification des évènements");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+
+		// Récupération de l'USER
+		UserEntity userEntity = actionUser.findUserById(Long.parseLong(idUser));
+		if (userEntity == null) {
+			ReponseDTO reponse = new ReponseDTO();
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Aucun utilisateur correspondant pour l'id "+idUser);
+			retour.setMessage("Aucun utilisateur correspondant pour l'id "+idUser);
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// TODO A corriger Suppression de l'USER
+		// actionUser.disableUser(userEntity);
+		
+		RetourDTO retour = new RetourDTO();
+		retour.setMessage("OK");
+		ReponseDTO reponse = new ReponseDTO();
+		reponse.setRetour(retour);
+		return reponse;
+	}
+	
+	@RequestMapping(value = "/ADMIN/debannirUser", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO debannirUser(@RequestBody String infoDebanne) {
+		LOG.info(infoDebanne);
+		// Récupération des informations de modification de compte
+		String[] tableau = infoDebanne.split("&");
+		String idUser = null;
+		String idAdmin = null;
+		
+		try {
+			for (int i = 0; i <= tableau.length - 1; i++) {
+				String map = tableau[i];
+				String[] tableauCleValue = map.split("=");
+
+				if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
+					idUser = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
+					idAdmin = tableauCleValue[1];
+				}
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'admin
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
+		if (userEntityAdmin == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la modification des évènements");
+			retour.setMessage("Erreur lors de la modification des évènements");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+
+		// Récupération de l'USER
+		UserEntity userEntity = actionUser.findUserById(Long.parseLong(idUser));
+		if (userEntity == null) {
+			ReponseDTO reponse = new ReponseDTO();
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Aucun utilisateur correspondant pour l'id "+idUser);
+			retour.setMessage("Aucun utilisateur correspondant pour l'id "+idUser);
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// TODO Enable User		
+		
+		RetourDTO retour = new RetourDTO();
+		retour.setMessage("OK");
+		ReponseDTO reponse = new ReponseDTO();
+		reponse.setRetour(retour);
+		return reponse;
+	}
+	
 }
