@@ -493,8 +493,8 @@ public class ActionAdminController {
 			return reponse;
 		}
 		
-		// Suppression de l'USER
-		actionUser.disableUser(userEntity);
+		// TODO A corriger Suppression de l'USER
+		// actionUser.disableUser(userEntity);
 		
 		RetourDTO retour = new RetourDTO();
 		retour.setMessage("OK");
