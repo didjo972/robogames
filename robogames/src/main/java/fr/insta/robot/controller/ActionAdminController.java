@@ -408,7 +408,7 @@ public class ActionAdminController {
 		String nom = null;
 		String prenom = null;
 		String pseudo = null;
-		String role = null;
+		String libelleHabilitation = null;
 		String idUser = null;
 		String idAdmin = null;
 		
@@ -426,8 +426,8 @@ public class ActionAdminController {
 				if (tableauCleValue[0].equalsIgnoreCase("pseudo")) {
 					pseudo = tableauCleValue[1];
 				}
-				if (tableauCleValue[0].equalsIgnoreCase("role")) {
-					role = tableauCleValue[1];
+				if (tableauCleValue[0].equalsIgnoreCase("libelleHabilitation")) {
+					libelleHabilitation = tableauCleValue[1];
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
 					idUser = tableauCleValue[1];
@@ -470,7 +470,7 @@ public class ActionAdminController {
 		
 		// Modification de l'user
 		try {
-			actionUser.updateUserByAdmin(userEntity, nom, prenom, null, pseudo, role);
+			actionUser.updateUserByAdmin(userEntity, nom, prenom, null, pseudo, libelleHabilitation);
 		} catch (FonctionnelleException e) {
 			ReponseDTO reponse = new ReponseDTO();
 			RetourDTO retour = new RetourDTO();
