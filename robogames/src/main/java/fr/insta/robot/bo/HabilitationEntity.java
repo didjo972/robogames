@@ -88,4 +88,15 @@ public interface HabilitationEntity extends Serializable {
 	 * @param infos l'infos
 	 */
 	void setInfos(String infos);
+	/**
+	 * Retourne le temps de ban
+	 * @return
+	 */
+	int getBanTime();
+	/**
+	 * Met à jour le temps de ban
+	 * @param ban_time
+	 */
+	void setBanTime(int ban_time);
+	
 }

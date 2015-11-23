@@ -158,6 +158,37 @@ public class ActionUserServiceImpl implements ActionUserService {
 		return user;
 	}
 
+	public UserEntity updateUserByAdmin(UserEntity user, String nom, String prenom, String image, String pseudo,
+			RoleConstantService role) throws FonctionnelleException {
+
+		UserService userService = RGServiceFactory.getInstance().getUserService();
+		if (user == null) {
+			throw new FonctionnelleException("Erreur, utilsateur inconnu.");
+		}
+		// Modifie le nom
+		if (StringUtils.isNotBlank(nom)) {
+			user.getInformation().setNom(nom);
+		}
+		// Modifie le prenom
+		if (StringUtils.isNotBlank(nom)) {
+			user.getInformation().setPrenom(prenom);
+		}
+		if (StringUtils.isNotBlank(image)) {
+			user.getInformation().setImage(image);
+		}
+		if (StringUtils.isNoneBlank(pseudo)) {
+			if (findUserbyPseudo(pseudo) == null) {
+				user.getInformation().setPseudo(pseudo);
+			} else {
+				throw new FonctionnelleException("Erreur, le pseudo est pris par un autre utilisateur.");
+			}
+		}
+		if(role == null){
+			
+		}
+		return null;
+	}
+
 	@Override
 	public UserEntity loginUser(String pseudo, String password)
 			throws DonneesInexistantException, FonctionnelleException {
@@ -183,17 +214,27 @@ public class ActionUserServiceImpl implements ActionUserService {
 		}
 		// Retrouver le UserEntity a partir de l'informations
 		UserEntity user = userService.findUserById(infos.getUser().getId());
-		if (user.getEtat()) {
-			return user;
-		} else {
+		if (!user.getEtat()) {
 			throw new FonctionnelleException("Erreur, votre compte n'est pas activé!");
 		}
+
+		if (!user.getHabilitation().getEtat()) {
+			throw new FonctionnelleException(
+					"Erreur, vous n'êtes plus habilité à accéder à notre site pour la raison suivante : "
+							+ user.getHabilitation().getInfos() + ".");
+		}
+
+		return user;
 	}
 
 	@Override
-	public void disableUser(UserEntity user) {
+	public void disableUser(UserEntity user, String infos, int ban_time) {
 		if (user != null) {
-			user.setEtat(false);
+			user.getHabilitation().setEtat(false);
+			user.getHabilitation().setDateFin(new Date());
+			user.getHabilitation().setInfos(infos);
+			user.getHabilitation().setBanTime(ban_time);
+		
 			UserService userService = RGServiceFactory.getInstance().getUserService();
 			userService.updateUser(user);
 		}
