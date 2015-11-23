@@ -8,6 +8,7 @@ import org.junit.Test;
 import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.exceptions.FonctionnelleException;
+import fr.insta.robot.services.ActionUserService;
 import fr.insta.robot.services.RGServiceFactory;
 import fr.insta.robot.services.UserService;
 
@@ -20,12 +21,13 @@ public class ITTestRegisterService {
 	 */
 	@Test
 	public void testCreateUserNominal() throws DonneesInexistantException, FonctionnelleException {
-		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
-		UserEntity user = actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null,null);
-
-		UserService userService = RGServiceFactory.getInstance().getUserService();
-		Assert.assertEquals("kingcat", user.getInformation().getPseudo());
-		userService.deleteUser(user);
+		ActionUserService actService = new ActionUserServiceImpl();
+		UserEntity user = null;
+		user = actService.findUserbyPseudo("kingcat77");
+		if(user == null){
+		user = actService.createUser("tang", "lam", "kingcat77", "123456", "kingcat77@yolo.fr", null,null);
+		}
+		Assert.assertNotNull(user);
 	}
 
 	@Test
@@ -53,21 +55,15 @@ public class ITTestRegisterService {
 	@Test
 	public void testFindUser() throws DonneesInexistantException, FonctionnelleException{
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
-		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null,null);
-
-		UserEntity user = actionService.findUserbyPseudo("kingcat");
-		UserService userService = RGServiceFactory.getInstance().getUserService();
-		Assert.assertEquals("kingcat@yolo.fr", user.getInformation().getEmail());
-
-		userService.deleteUser(user);
+		UserEntity user = actionService.findUserbyPseudo("kingcat77");
+		Assert.assertNotNull(user);
 	}
 
 	@Test 
 	public void testUpdateUser() throws DonneesInexistantException, FonctionnelleException{
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
-		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null,null);
-		UserEntity user = actionService.findUserbyPseudo("kingcat");
-		actionService.updateUser(user, "tangonu", "lam",null, "123456", "123456");		
+		UserEntity user = actionService.findUserbyPseudo("kingcat77");
+		actionService.updateUser(user, "tangonu", "lam", null, "123456", "123456");		
 		Assert.assertEquals("tangonu",user.getInformation().getNom());
 
 	}
@@ -75,22 +71,16 @@ public class ITTestRegisterService {
 	@Test 
 	public void testLoginUser() throws DonneesInexistantException, FonctionnelleException{
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
-
-		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr", null,null);
-
-		UserEntity user = actionService.loginUser("kingcat", "123456");
+		UserEntity user = actionService.loginUser("kingcat77", "123456");
 		Assert.assertNotNull(user);
-		UserService userService = RGServiceFactory.getInstance().getUserService();
-
-		userService.deleteUser(user);
 	}
 
 	@Test
-	public void testDisableUser() {
+	public void testDisableUser() throws InterruptedException {
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
 		UserEntity userRetour = null;
 		try {
-			userRetour = actionService.createUser("marie rose", "dimitri", "dijo", "123456", "dijo@yolo.fr", null,null);
+			userRetour = actionService.createUser("marie rose", "dimitri", "dijo77", "123456", "dijo77@yolo.fr", null,null);
 			Assert.assertNotNull(userRetour);
 		} catch (DonneesInexistantException | FonctionnelleException e) {
 			Assert.fail();
@@ -100,29 +90,25 @@ public class ITTestRegisterService {
 		actionService.disableUser(userRetour,"tu es ban", 10);
 
 		UserService userService = RGServiceFactory.getInstance().getUserService();
-		//userService.deleteUser(userRetour);
+		Thread.sleep(5000);
+		userService.deleteUser(userRetour);
 	}
 	@Test
 	public void resetpassword() throws FonctionnelleException, DonneesInexistantException, NoSuchAlgorithmException{
 
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
-		actionService.createUser("tang", "lam", "kingcat2", "123456", "kingca8t@yolo.fr", null,null);
-		String newpass = actionService.resetPasswordUser("kingcat@yolo.fr");
-		UserService userService = RGServiceFactory.getInstance().getUserService();
-		UserEntity user = actionService.findUserbyPseudo("kingcat2");
-
+		UserEntity user = actionService.loginUser("kingcat77", "123456");
+		String newpass = actionService.resetPasswordUser(user.getInformation().getEmail());
 		Assert.assertEquals(actionService.encodeMd5(newpass), user.getInformation().getPassword());
-
-		userService.deleteUser(user);
+		System.out.println(newpass);
 	}
+	
 	@Test 
 	public void testSetUser() throws DonneesInexistantException, FonctionnelleException{
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
-	//	actionService.createUser("tang", "lam", "kingcat1", "123456", "kingca1@yolo.fr", null);
-	//	actionService.createUser("tang", "lam", "kingcat2", "123456", "kingca22t@yolo.fr", null);
-	//	actionService.createUser("tang", "lam", "kingcat3", "123456", "kingca3t@yolo.fr", null);
-		
 		UserEntity user = actionService.findUserbyPseudo("didjo972");
+		Assert.assertNotNull(actionService.findAllUser(user));
 		System.out.println(actionService.findAllUser(user));
+		
 	}
 }
