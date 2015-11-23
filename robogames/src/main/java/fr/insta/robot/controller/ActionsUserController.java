@@ -185,7 +185,7 @@ public class ActionsUserController {
 		}
 		// Récupération des informations de création de compte
 		String[] tableau = info.split("&");
-		String pseudo = null;
+		String mail = null;
 		String password = null;
 
 		try {
@@ -193,8 +193,8 @@ public class ActionsUserController {
 				String map = tableau[i];
 				String[] tableauCleValue = map.split("=");
 
-				if (tableauCleValue[0].equalsIgnoreCase("pseudo")) {
-					pseudo = tableauCleValue[1];
+				if (tableauCleValue[0].equalsIgnoreCase("mail")) {
+					mail = tableauCleValue[1];
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("password")) {
 					password = tableauCleValue[1];
@@ -212,7 +212,7 @@ public class ActionsUserController {
 		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
 		UserEntity userEntity = null;
 		try {
-			userEntity = actionUser.loginUser(pseudo, password);
+			userEntity = actionUser.loginUser(mail, password);
 		} catch (DonneesInexistantException e) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error(e.getMessage());

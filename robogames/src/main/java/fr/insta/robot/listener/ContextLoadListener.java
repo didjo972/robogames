@@ -86,6 +86,7 @@ public class ContextLoadListener extends ContextLoaderListener {
 	
 	private void verificationHabilitation() {
 		ActionHabilitationServiceImpl habilitationService = new ActionHabilitationServiceImpl();
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
 		List<HabilitationEntity> listHabilitation = habilitationService.findAll();
 		if (listHabilitation != null) {
 			for (HabilitationEntity habilitation : listHabilitation) {
