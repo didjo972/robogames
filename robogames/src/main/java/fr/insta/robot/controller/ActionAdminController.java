@@ -4,7 +4,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -324,10 +326,12 @@ public class ActionAdminController {
 		}
 
 		// Remplissage de la liste de DTO
+		Set<UserDTO> setUserDTO = new HashSet<UserDTO>();
 		List<UserDTO> listUserDTO = new ArrayList<UserDTO>();
 		for (UserEntity userEntity : listUserEntity) {
-			listUserDTO.add(fillUserDTO(userEntity));
+			setUserDTO.add(fillUserDTO(userEntity));
 		}
+		listUserDTO.addAll(setUserDTO);
 		RetourDTO retour = new RetourDTO();
 		LOG.info("OK");
 		retour.setMessage("OK");
