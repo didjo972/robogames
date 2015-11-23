@@ -172,7 +172,7 @@ public class EvenementEntityImpl implements EvenementEntity {
 	public void setEtat(int etat) {
 		this.etat = etat;
 	}
-	@Column(name = "EVE_INFOS", unique = false, nullable = false, columnDefinition = "LONGTEXT")
+	@Column(name = "EVE_INFOS", unique = false, nullable = true, columnDefinition = "LONGTEXT")
 	@Override
 	public String getInfos() {
 		return infos;
