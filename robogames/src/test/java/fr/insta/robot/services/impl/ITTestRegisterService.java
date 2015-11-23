@@ -128,7 +128,7 @@ public class ITTestRegisterService {
 	//	actionService.createUser("tang", "lam", "kingcat2", "123456", "kingca22t@yolo.fr", null);
 	//	actionService.createUser("tang", "lam", "kingcat3", "123456", "kingca3t@yolo.fr", null);
 		
-		UserEntity user = actionService.findUserbyPseudo("kingcat1");
+		UserEntity user = actionService.findUserbyPseudo("didjo972");
 		System.out.println(actionService.findAllUser(user));
 	}
 }

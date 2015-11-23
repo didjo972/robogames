@@ -21,7 +21,7 @@ public class LiveEntityImpl implements LiveEntity {
 	@Override
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "LIVE_ID",unique = true, nullable = false, precision = 20, scale = 0)	
+	@Column(name = "LIV_ID",unique = true, nullable = false, precision = 20, scale = 0)	
 	public Long getId() {
 		return id;
 	}
@@ -32,7 +32,7 @@ public class LiveEntityImpl implements LiveEntity {
 	}
 
 	@Override
-	@Column(name = "INF_NOM", unique = false, nullable = false, columnDefinition = "LONGTEXT")
+	@Column(name = "LIV_URL", unique = false, nullable = false, columnDefinition = "LONGTEXT")
 	public String getUrl() {
 		return url;
 	}

@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import fr.insta.robot.bo.LiveEntity;
 import fr.insta.robot.dao.LiveDAO;
-import fr.insta.robot.entities.EvenementEntityImpl;
 import fr.insta.robot.entities.LiveEntityImpl;
 
 @Repository("liveDAO")
@@ -43,7 +42,7 @@ public class LiveDAOImpl implements LiveDAO {
 	@Override
 	@Transactional
 	public LiveEntity findLive() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(EvenementEntityImpl.class);
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(LiveEntityImpl.class);
 		return (LiveEntity) criteria.uniqueResult();
 	}
 	
