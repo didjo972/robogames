@@ -1,6 +1,7 @@
 package fr.insta.robot.listener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -119,6 +120,21 @@ public class ContextLoadListener extends ContextLoaderListener {
 	}
 	
 	private void verificationPasswordUser() {
+		// Récupération des users
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		List<UserEntity> listUser = actionUser.findAllUserByType(RoleConstantService.USER);
+		
+		if (listUser != null) {
+			for (UserEntity userEntity : listUser) {
+				// Si l'utilisateur est actif et que celà fait 6 mois qu'il n'a pas changer de mot de passe on lui envoie un mail
+				if (userEntity.getHabilitation().getEtat() && DateUtil.nbJoursEntre(userEntity.getInformation().getLastUpdate(), new Date()) >= 183) {
+					MailServiceImpl mailService = new MailServiceImpl();
+					mailService.sendMail("[RG]Mot de passe obsolète", "Bonjour,\nVotre dernière mise à jour de mot de passe remonte au"
+					+ DateUtil.formatDate(userEntity.getInformation().getLastUpdate())
+					+".\nNous vous prions de bien vouloir le changer.", Arrays.asList(userEntity.getInformation().getEmail()));
+				}
+			}
+		}
 		
 	}
 	
