@@ -31,6 +31,7 @@ import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.impl.ActionDebriefServiceImpl;
 import fr.insta.robot.services.impl.ActionEvenementServiceImpl;
 import fr.insta.robot.services.impl.ActionUserServiceImpl;
+import fr.insta.robot.util.DateUtil;
 
 @Controller
 public class ActionEvenementController {
@@ -558,12 +559,12 @@ public class ActionEvenementController {
 		return reponse;
 	}
 	
-	public EvenementDTO fillEvenementDTO(EvenementEntity evenement) {
+	private EvenementDTO fillEvenementDTO(EvenementEntity evenement) {
 		EvenementDTO evenementDTO = new EvenementDTO();
 		evenementDTO.setAdresse(evenement.getAdresse());
 		evenementDTO.setCodePostal(evenement.getCodePostal());
-		evenementDTO.setDateDebut(evenement.getDateDebut().toString());
-		evenementDTO.setDateFin(evenement.getDateFin().toString());
+		evenementDTO.setDateDebut(DateUtil.formatDate(evenement.getDateDebut()));
+		evenementDTO.setDateFin(DateUtil.formatDate(evenement.getDateFin()));
 		evenementDTO.setDebrief(evenement.getDebrief().getDebrief());
 		evenementDTO.setEtat(evenement.getEtat());
 		evenementDTO.setIdEvent(evenement.getId().toString());
