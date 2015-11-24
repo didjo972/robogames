@@ -217,7 +217,7 @@ public class ActionEvenementController {
 		String idUser = null;
 		String dateDebut = null;
 		String dateFin = null;
-		String nomEvent = null;
+		String idEvent = null;
 		try {
 			for (int i = 0; i <= tableau.length - 1; i++) {
 				String map = tableau[i];
@@ -250,11 +250,20 @@ public class ActionEvenementController {
 				if (tableauCleValue[0].equalsIgnoreCase("dateFin")) {
 					dateFin = tableauCleValue[1];
 				}
-				if (tableauCleValue[0].equalsIgnoreCase("nomEvent")) {
-					nomEvent = tableauCleValue[1];
+				if (tableauCleValue[0].equalsIgnoreCase("idEvent")) {
+					idEvent = tableauCleValue[1];
 				}
 			}
 		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		if (StringUtils.isBlank(idEvent) || StringUtils.isBlank(idUser)) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
@@ -282,7 +291,7 @@ public class ActionEvenementController {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy hh:mm:ss");
 			Date d_Debut = sdf.parse(dateDebut);
 			Date d_Fin = sdf.parse(dateFin);
-			evenement = actionEvenement.updateEvenement(userEntity, Long.parseLong(nomEvent), d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
+			evenement = actionEvenement.updateEvenement(userEntity, Long.parseLong(idEvent), d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
 		} catch (NumberFormatException e) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, une donnée n'est pas correct");
@@ -347,6 +356,7 @@ public class ActionEvenementController {
 		// Récupération des informations de création de compte
 		String[] tableau = infoEvenement.split("&");
 		String idEvent = null;
+		String idUser = null;
 		try {
 			for (int i = 0; i <= tableau.length - 1; i++) {
 				String map = tableau[i];
@@ -354,6 +364,9 @@ public class ActionEvenementController {
 
 				if (tableauCleValue[0].equalsIgnoreCase("idEvent")) {
 					idEvent = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
+					idUser = tableauCleValue[1];
 				}
 			}
 		} catch (Exception e) {
@@ -365,6 +378,25 @@ public class ActionEvenementController {
 			return reponse;
 		}
 		
+		if (StringUtils.isBlank(idUser) || StringUtils.isBlank(idEvent)) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'utilisateur
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		if (actionUser.findUserById(Long.parseLong(idUser)) == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Aucun utilisateur correspondant pour l'id "+idUser);
+			retour.setMessage("Aucun utilisateur correspondant pour l'id "+idUser);
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 
 		// Recherche de l'évènement par son id
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
@@ -442,6 +474,7 @@ public class ActionEvenementController {
 		// Récupération des informations de l'évent
 		String[] tableau = infoEvenement.split("&");
 		String idEvent = null;
+		String idUser = null;
 		try {
 			for (int i = 0; i <= tableau.length - 1; i++) {
 				String map = tableau[i];
@@ -449,6 +482,9 @@ public class ActionEvenementController {
 
 				if (tableauCleValue[0].equalsIgnoreCase("idEvent")) {
 					idEvent = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
+					idUser = tableauCleValue[1];
 				}
 			}
 		} catch (Exception e) {
@@ -458,7 +494,28 @@ public class ActionEvenementController {
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
-		}		
+		}
+		
+		if (StringUtils.isBlank(idUser) || StringUtils.isBlank(idEvent)) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'utilisateur
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntity = actionUser.findUserById(Long.parseLong(idUser));
+		if (userEntity == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Aucun utilisateur correspondant pour l'id "+idUser);
+			retour.setMessage("Aucun utilisateur correspondant pour l'id "+idUser);
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 
 		// Recherche de l'évènement par son id
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
@@ -467,6 +524,16 @@ public class ActionEvenementController {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Aucun évènement correspondant pour l'id "+idEvent);
 			retour.setMessage("Aucun évènement correspondant pour l'id "+idEvent);
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Vérification de l'appartenance de l'évènement
+		if (evenement.getUser().getId() != userEntity.getId()) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la récupération de l'évènement de cette utilisateur");
+			retour.setMessage("Erreur lors de la récupération de l'évènement de cette utilisateur");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
@@ -591,6 +658,7 @@ public class ActionEvenementController {
 		String[] tableau = infoDebrief.split("&");
 		String idEvent = null;
 		String debrief = null;
+		String idUser = null;
 		
 		try {
 			for (int i = 0; i <= tableau.length - 1; i++) {
@@ -603,11 +671,35 @@ public class ActionEvenementController {
 				if (tableauCleValue[0].equalsIgnoreCase("debrief")) {
 					debrief = tableauCleValue[1];
 				}
+				if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
+					idUser = tableauCleValue[1];
+				}
 			}
 		} catch (Exception e) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		if (StringUtils.isBlank(idUser) || StringUtils.isBlank(debrief) || StringUtils.isBlank(idEvent)) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'user
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntity = actionUser.findUserById(Long.parseLong(idUser));
+		if (userEntity == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, aucun utilisateur correspondant à l'id "+idUser);
+			retour.setMessage("Erreur, aucun utilisateur correspondant à l'id "+idUser);
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
@@ -620,6 +712,16 @@ public class ActionEvenementController {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur lors de la récupération de l'évènement");
 			retour.setMessage("Erreur lors de la récupération de l'évènement");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Vérification de l'appartenance de l'évènement et de l'id
+		if (evenement.getUser().getId() != userEntity.getId()) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la récupération de l'évènement de cette utilisateur");
+			retour.setMessage("Erreur lors de la récupération de l'évènement de cette utilisateur");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;

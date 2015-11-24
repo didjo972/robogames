@@ -30,6 +30,7 @@ import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.impl.ActionEvenementServiceImpl;
 import fr.insta.robot.services.impl.ActionUserServiceImpl;
+import fr.insta.robot.util.DateUtil;
 
 @Controller
 public class ActionAdminController {
@@ -64,6 +65,16 @@ public class ActionAdminController {
 				}
 			}
 		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Vérification des info
+		if (StringUtils.isBlank(idAdmin)) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
@@ -132,11 +143,10 @@ public class ActionAdminController {
 		String nbPlace = null;
 		String prix = null;
 		String infos = null;
-		String idUser = null;
 		String dateDebut = null;
 		String dateFin = null;
-		String nomEvent = null;
 		String idAdmin = null;
+		String idEvent = null;
 		
 		try {
 			for (int i = 0; i <= tableau.length - 1; i++) {
@@ -161,22 +171,18 @@ public class ActionAdminController {
 				if (tableauCleValue[0].equalsIgnoreCase("infos")) {
 					infos = tableauCleValue[1];
 				}
-				if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
-					idUser = tableauCleValue[1];
-				}
 				if (tableauCleValue[0].equalsIgnoreCase("dateDebut")) {
 					dateDebut = tableauCleValue[1];
 				}
 				if (tableauCleValue[0].equalsIgnoreCase("dateFin")) {
 					dateFin = tableauCleValue[1];
 				}
-				if (tableauCleValue[0].equalsIgnoreCase("nomEvent")) {
-					nomEvent = tableauCleValue[1];
-				}
 				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
 					idAdmin = tableauCleValue[1];
 				}
-				
+				if (tableauCleValue[0].equalsIgnoreCase("idEvent")) {
+					idEvent = tableauCleValue[1];
+				}
 			}
 		} catch (Exception e) {
 			RetourDTO retour = new RetourDTO();
@@ -187,7 +193,7 @@ public class ActionAdminController {
 			return reponse;
 		}
 		
-		if (StringUtils.isBlank(idAdmin)) {
+		if (StringUtils.isBlank(idAdmin) || StringUtils.isBlank(idEvent)) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
@@ -208,17 +214,6 @@ public class ActionAdminController {
 			return reponse;
 		}
 
-		// Récupération de l'USER
-		UserEntity userEntity = actionUser.findUserById(Long.parseLong(idUser));
-		if (userEntity == null) {
-			ReponseDTO reponse = new ReponseDTO();
-			RetourDTO retour = new RetourDTO();
-			LOG.error("Aucun utilisateur correspondant pour l'id "+idUser);
-			retour.setMessage("Aucun utilisateur correspondant pour l'id "+idUser);
-			reponse.setRetour(retour);
-			return reponse;
-		}
-
 		// Modification de l'évènement
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
 		EvenementEntity evenement = null;
@@ -226,7 +221,7 @@ public class ActionAdminController {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			Date d_Debut = sdf.parse(dateDebut);
 			Date d_Fin = sdf.parse(dateFin);
-			evenement = actionEvenement.updateEvenementAdmin(Long.parseLong(nomEvent), d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
+			evenement = actionEvenement.updateEvenementAdmin(Long.parseLong(idEvent), d_Debut, d_Fin, adresse, ville, Integer.parseInt(codePostal), Integer.parseInt(nbPlace), Integer.parseInt(prix), infos);
 		} catch (NumberFormatException e) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, une donnée n'est pas correct");
@@ -273,8 +268,8 @@ public class ActionAdminController {
 		EvenementDTO evenementDTO = new EvenementDTO();
 		evenementDTO.setAdresse(evenement.getAdresse());
 		evenementDTO.setCodePostal(evenement.getCodePostal());
-		evenementDTO.setDateDebut(evenement.getDateDebut().toString());
-		evenementDTO.setDateFin(evenement.getDateFin().toString());
+		evenementDTO.setDateDebut(DateUtil.formatDate(evenement.getDateDebut()));
+		evenementDTO.setDateFin(DateUtil.formatDate(evenement.getDateFin()));
 		evenementDTO.setDebrief(evenement.getDebrief().getDebrief());
 		evenementDTO.setEtat(evenement.getEtat());
 		evenementDTO.setIdEvent(evenement.getId().toString());
@@ -324,6 +319,16 @@ public class ActionAdminController {
 				}
 			}
 		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Vérification des info
+		if (StringUtils.isBlank(idAdmin)) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
@@ -447,6 +452,16 @@ public class ActionAdminController {
 			return reponse;
 		}
 		
+		// Vérification des info
+		if (StringUtils.isBlank(idAdmin) || StringUtils.isBlank(idUser)) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
 		// Récupération de l'admin
 		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
 		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
@@ -537,6 +552,16 @@ public class ActionAdminController {
 			return reponse;
 		}
 		
+		// Vérification des info
+		if (StringUtils.isBlank(idAdmin) || StringUtils.isBlank(idUser) || StringUtils.isBlank(infos) || StringUtils.isBlank(nbJourBan)) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
 		// Récupération de l'admin
 		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
 		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
@@ -602,6 +627,16 @@ public class ActionAdminController {
 				}
 			}
 		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Vérification des info
+		if (StringUtils.isBlank(idAdmin) || StringUtils.isBlank(idUser)) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
@@ -676,6 +711,16 @@ public class ActionAdminController {
 				}
 			}
 		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Vérification des info
+		if (StringUtils.isBlank(idAdmin) || StringUtils.isBlank(idEvent)) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, donnee manquante");
 			retour.setMessage("Erreur, donnee manquante");
