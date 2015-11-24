@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.springframework.web.context.ContextLoaderListener;
 
@@ -35,7 +34,6 @@ public class ContextLoadListener extends ContextLoaderListener {
 	 */
 	public ContextLoadListener() {
 		super();
-		BasicConfigurator.configure();
 		/** Différent Batch de vérification */
 		Calendar c = Calendar.getInstance();
 		c.set(2015, Calendar.NOVEMBER, 1, 0, 0, 0);
