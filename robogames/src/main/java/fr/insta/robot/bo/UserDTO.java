@@ -22,6 +22,9 @@ public class UserDTO {
 	
 	/** Date inscription */
 	private String dateInscription;
+	
+	/** Ban ou pas ban */
+	private String ban;
 
 	/**
 	 * @return the nom
@@ -119,6 +122,20 @@ public class UserDTO {
 	 */
 	public void setDateInscription(String dateInscription) {
 		this.dateInscription = dateInscription;
+	}
+
+	/**
+	 * @return the ban
+	 */
+	public String getBan() {
+		return ban;
+	}
+
+	/**
+	 * @param ban the ban to set
+	 */
+	public void setBan(String ban) {
+		this.ban = ban;
 	}
 	
 }

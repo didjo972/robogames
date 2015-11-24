@@ -393,6 +393,11 @@ public class ActionAdminController {
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
 		userDTO.setDateInscription(userEntity.getHabilitation().getDateDebut().toString());
+		if (userEntity.getHabilitation().getEtat()) {
+			userDTO.setBan("true");
+		} else {
+			userDTO.setBan("false");
+		}
 		return userDTO;
 	}
 	
