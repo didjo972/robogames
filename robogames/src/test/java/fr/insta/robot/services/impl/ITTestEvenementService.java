@@ -19,32 +19,26 @@ public class ITTestEvenementService {
 
 	@Test
 	public void testCreateEvenement() throws DonneesInexistantException, FonctionnelleException{
-	/*	ActionUserServiceImpl actionService = new ActionUserServiceImpl();
-		actionService.createUser("tang", "lam", "kingcat", "123456", "kingcat@yolo.fr",null);
-
-		UserEntity user = actionService.findUserbyPseudo("kingcat");
-
+		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
+		UserEntity user = actionService.findUserById(Long.parseLong("107"));
+	
 		//Ceation d'un evenement
 		ActionEvenementServiceImpl evenementService = new ActionEvenementServiceImpl();
 		Calendar c = Calendar.getInstance();
-		c.set(2015, Calendar.DECEMBER, 7);
+		c.set(2015, Calendar.DECEMBER, 10);
 		Calendar d = Calendar.getInstance();
-		d.set(2015,Calendar.DECEMBER, 13);
+		d.set(2015,Calendar.DECEMBER, 15);
 		//ajout d'un evenement
-		EvenementEntity evenement = evenementService.createEvenement(user,"Lego Open",c.getTime(), d.getTime(), "17, rue Linné", "Paris", 75011, 100, 15, "combat de robots evenement");
-
-		Assert.assertEquals("Paris", evenement.getVille());
-		//UserService userService = RGServiceFactory.getInstance().getUserService();
-
-		//userService.deleteUser(user);*/
-
+		EvenementEntity evenement = evenementService.createEvenement(user,"Fighting robot",c.getTime(), d.getTime(), "17, rue Linné", "Paris", 75011, 100, 15, "combat de robots evenement");
+		Assert.assertNotNull(evenement);
 	}
 	@Test 
 	public void testUpdateEvenement() throws FonctionnelleException, DonneesInexistantException{
 		ActionUserService actionService = new ActionUserServiceImpl();
-		UserEntity user = actionService.findUserbyPseudo("kingcat");
+		UserEntity user = actionService.findUserById(Long.parseLong("107"));
 		ActionEvenementService actionEveService = new ActionEvenementServiceImpl();
-		actionEveService.updateEvenement(user, 1L,null, null, "2 ruelle aux loups", "Bussy", 75000, 10, 15, "oeoeo");
+		EvenementEntity evenement = actionEveService.findByNameEvenement("Fighting robot");
+		actionEveService.updateEvenement(user, evenement.getId(),null, null, "2 ruelle aux loups", "Bussy", 75000, 10, 15, "oeoeo");
 		EvenementEntity event = actionEveService.findByNameEvenement("Lego Open");
 		Assert.assertEquals("Bussy", event.getVille());
 	}
@@ -95,6 +89,11 @@ public class ITTestEvenementService {
 	
 		eventService.createEvenement(user,"Lego Ope123n",c.getTime(), d.getTime(), "17, rue Linné", "Paris", 75011, 100, 15, "combat de robots evenement");
 
+	}
+	@Test
+	public void testListEvenement(){
+		ActionEvenementService eventService = new ActionEvenementServiceImpl();
+		System.out.println(eventService.findAllEnvenement());
 	}
 	
 
