@@ -270,9 +270,13 @@ public class ActionUserServiceImpl implements ActionUserService {
 		return generatepassword;
 
 	}
-
-	public void deleteUser(UserEntity user) {
-
+	@Override
+	public void deleteUser(UserEntity user) throws DonneesInexistantException {
+		UserService userS = RGServiceFactory.getInstance().getUserService();
+		if(user == null){
+			throw new DonneesInexistantException("Erreur, user vide");
+		}
+		userS.deleteUser(user);
 	}
 
 	@Override

@@ -39,38 +39,21 @@ public class ITTestEvenementService {
 		ActionEvenementService actionEveService = new ActionEvenementServiceImpl();
 		EvenementEntity evenement = actionEveService.findByNameEvenement("Fighting robot");
 		actionEveService.updateEvenement(user, evenement.getId(),null, null, "2 ruelle aux loups", "Bussy", 75000, 10, 15, "oeoeo");
-		EvenementEntity event = actionEveService.findByNameEvenement("Lego Open");
-		Assert.assertEquals("Bussy", event.getVille());
-	}
-
-	@Test 
-	public void testSuppressionEvenement() throws DonneesInexistantException, FonctionnelleException{
-		ActionEvenementService actionEveService = new ActionEvenementServiceImpl();
-		EvenementEntity evenement = actionEveService.findByNameEvenement("Lego Open");
-		EvenementService evenementService = RGServiceFactory.getInstance().getEvenementService();
-		evenementService.deleteEvenement(evenement);
+		Assert.assertEquals("Bussy", evenement.getVille());
 	}
 
 	@Test
 	public void testDebriefEvenement() throws DonneesInexistantException, FonctionnelleException{
 
 		ActionEvenementServiceImpl evenementService = new ActionEvenementServiceImpl();
-	/*	Calendar c = Calendar.getInstance();
-		c.set(2015, Calendar.DECEMBER, 7);
-		Calendar d = Calendar.getInstance();
-		d.set(2015,Calendar.DECEMBER, 13);
-		//ajout d'un evenement
-		EvenementEntity evenement = evenementService.createEvenement(user,"Lego Open",c.getTime(), d.getTime(), "17, rue Linné", "Paris", 75011, 100, 15, "combat de robots evenement");
-		*/
-		EvenementEntity evenement = evenementService.findByNameEvenement("Lego2 Open");
-		
+		EvenementEntity evenement = evenementService.findByNameEvenement("Fighting robot");
 		ActionDebriefService debriefService = new ActionDebriefServiceImpl();
 		
-		debriefService.addDebriefEvenement(evenement, "c'etait un match incroyable oo!");
-		Assert.assertEquals("c'etait un match incroyable oo!", evenement.getDebrief().getDebrief());
+		debriefService.addDebriefEvenement(evenement, "c'etait un match incroyable");
+		Assert.assertEquals("c'etait un match incroyable", evenement.getDebrief().getDebrief());
 	}
 	
-	@Test
+/*	@Test
 	public void testFindByUser(){
 		ActionUserService userService = new ActionUserServiceImpl();
 		UserEntity user = userService.findUserById(new Long(103));
@@ -88,8 +71,7 @@ public class ITTestEvenementService {
 		d.set(2015, 12, 1, 14, 00, 00);
 	
 		eventService.createEvenement(user,"Lego Ope123n",c.getTime(), d.getTime(), "17, rue Linné", "Paris", 75011, 100, 15, "combat de robots evenement");
-
-	}
+	}*/
 	@Test
 	public void testListEvenement(){
 		ActionEvenementService eventService = new ActionEvenementServiceImpl();
