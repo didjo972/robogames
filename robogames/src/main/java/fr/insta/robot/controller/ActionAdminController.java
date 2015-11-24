@@ -696,6 +696,17 @@ public class ActionAdminController {
 		
 		// Validation de l'évènement par son id
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
+		try {
+			actionEvenement.updateValideEvenement(Long.parseLong(idEvent));
+		} catch (NumberFormatException | FonctionnelleException
+				| DonneesInexistantException e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
+			retour.setMessage(e.getMessage());
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		
 		RetourDTO retour = new RetourDTO();
 		retour.setMessage("OK");
