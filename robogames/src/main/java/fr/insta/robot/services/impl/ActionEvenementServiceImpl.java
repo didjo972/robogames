@@ -44,10 +44,9 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 		// recherche si le nom est unique
 		if (findByNameEvenement(nom) != null) {
 			throw new FonctionnelleException("Erreur, le nom de l'evenement existe en base");
-		} else {
-			evenement.setNom(nom);
 		}
 		evenement.setNom(nom);
+		
 		evenement.setAdresse(adresse);
 		evenement.setVille(ville);
 		evenement.setCodePostal(codePostal);
@@ -197,4 +196,21 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 			}
 		}
 	}
+	
+	@Override
+	public void updateValideEvenement(Long idEvent) throws FonctionnelleException, DonneesInexistantException{
+		if(idEvent < 0){
+			throw new DonneesInexistantException("Erreur, l'id de l'evenement est invalide");
+		}
+		EvenementEntity event = findById(idEvent);
+		if(event == null){
+			throw new FonctionnelleException("Erreur, l'evenement est inconnu");
+		}
+		event.setValide(true);
+		
+		EvenementService eventS = RGServiceFactory.getInstance().getEvenementService();
+		eventS.updateEvenement(event);
+		
+	}
+	
 }

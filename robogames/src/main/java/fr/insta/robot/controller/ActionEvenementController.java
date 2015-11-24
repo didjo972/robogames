@@ -505,7 +505,7 @@ public class ActionEvenementController {
 				i++;
 			}
 		}
-		evenementDTO.setNbPlaceRestant(i);
+		evenementDTO.setNbPlaceRestant(evenement.getNbPlace()-i);
 		
 		return evenementDTO;
 	}

@@ -88,9 +88,16 @@ public interface ActionEvenementService {
 			int codePostal, int nb_place, int prix, String infos)
 					throws FonctionnelleException, DonneesInexistantException;
 	/**
-	 * Mise a jour auto des etats
+	 * Mise a jour automatique des etats
 	 */
 	void updateStateEvenement();
+	/**
+	 * Valide l'evenement
+	 * @param idEvent
+	 * @throws DonneesInexistantException 
+	 * @throws FonctionnelleException 
+	 */
+	void updateValideEvenement(Long idEvent) throws FonctionnelleException, DonneesInexistantException;
 	
 	
 }

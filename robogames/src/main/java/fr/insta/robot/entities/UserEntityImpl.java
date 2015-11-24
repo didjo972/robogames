@@ -73,7 +73,7 @@ public class UserEntityImpl implements UserEntity {
 		this.evenements = evenements;
 	}
 	@Override
-	@OneToMany(mappedBy = "user", targetEntity = BilletEntityImpl.class, cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", targetEntity = BilletEntityImpl.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	public Set<BilletEntity> getBillets() {
 		return billets;
 	}

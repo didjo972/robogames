@@ -25,7 +25,7 @@ public class ITTestRegisterService {
 		UserEntity user = null;
 		user = actService.findUserbyPseudo("kingcat77");
 		if(user == null){
-		user = actService.createUser("tang", "lam", "kingcat77", "123456", "kingcat77@yolo.fr", null,null);
+		user = actService.createUser("catman", "catman", "catman@cat.com");
 		}
 		Assert.assertNotNull(user);
 	}
@@ -34,7 +34,7 @@ public class ITTestRegisterService {
 	public void testCreateUserParametresNullOuVide() {
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
 		try {
-			actionService.createUser(null, null, null, null,null, null,null);
+			actionService.createUser(null, null, null);
 			Assert.fail();
 		} catch (DonneesInexistantException e) {
 			Assert.assertEquals("Erreur, toutes les données doivent être fournies.", e.getMessage());
@@ -43,7 +43,7 @@ public class ITTestRegisterService {
 		}
 
 		try {
-			actionService.createUser("", "", "", "","","","");
+			actionService.createUser("", "", "");
 			Assert.fail();
 		} catch (DonneesInexistantException e) {
 			Assert.assertEquals("Erreur, toutes les données doivent être fournies.", e.getMessage());
@@ -80,7 +80,7 @@ public class ITTestRegisterService {
 		ActionUserServiceImpl actionService = new ActionUserServiceImpl();
 		UserEntity userRetour = null;
 		try {
-			userRetour = actionService.createUser("marie rose", "dimitri", "dijo77", "123456", "dijo77@yolo.fr", null,null);
+			userRetour = actionService.createUser("dijo77", "123456", "dijo77@yolo.fr");
 			Assert.assertNotNull(userRetour);
 		} catch (DonneesInexistantException | FonctionnelleException e) {
 			Assert.fail();
