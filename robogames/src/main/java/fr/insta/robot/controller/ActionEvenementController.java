@@ -6,7 +6,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -440,13 +442,19 @@ public class ActionEvenementController {
 		// Récupération des évènements
 		List<EvenementDTO> listEvenementDTO = new ArrayList<EvenementDTO>();
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
-		// Récupération des évènements et trie pour ne renvoyer que les évènements valider
-		List<EvenementEntity> listEvenementEntity = actionEvenement.findAllEnvenement();
-		for (EvenementEntity evenement : listEvenementEntity) {
-			if (evenement.getValide()) {
-				listEvenementDTO.add(fillEvenementDTO(evenement));
-			}
+		
+		List<EvenementEntity> listEvenementEntity;
+		listEvenementEntity = actionEvenement.findAllEnvenement();
+		
+		// Remplissage de l'évènementDTO
+		Map<String, EvenementDTO> mapEvenement = new HashMap<String, EvenementDTO>();
+		for (EvenementEntity evenementEntity : listEvenementEntity) {
+			if (evenementEntity.getValide()) {
+				EvenementDTO evenement = fillEvenementDTO(evenementEntity);
+				mapEvenement.put(evenement.getIdEvent(), evenement);
+			}			
 		}
+		listEvenementDTO.addAll(mapEvenement.values());
 		
 		ReponseDTO reponse = new ReponseDTO();
 		reponse.setObject(listEvenementDTO);

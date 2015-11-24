@@ -64,24 +64,20 @@ public class ActionAdminController {
 					idAdmin = tableauCleValue[1];
 				}
 			}
+			// Vérification des info
+			if (StringUtils.isBlank(idAdmin)) {
+				throw new FonctionnelleException("Erreur, donnee manquante");
+			}
 		} catch (Exception e) {
 			RetourDTO retour = new RetourDTO();
-			LOG.error("Erreur, donnee manquante");
-			retour.setMessage("Erreur, donnee manquante");
+			LOG.error(e.getMessage());
+			retour.setMessage(e.getMessage());
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
 		}
 		
-		// Vérification des info
-		if (StringUtils.isBlank(idAdmin)) {
-			RetourDTO retour = new RetourDTO();
-			LOG.error("Erreur, donnee manquante");
-			retour.setMessage("Erreur, donnee manquante");
-			ReponseDTO reponse = new ReponseDTO();
-			reponse.setRetour(retour);
-			return reponse;
-		}
+		
 		
 		// Récupération de l'admin
 		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
@@ -96,15 +92,18 @@ public class ActionAdminController {
 		}
 		
 		// Récupération des évènements
-		List<EvenementDTO> listEvenement = new ArrayList<EvenementDTO>();
+		List<EvenementDTO> listEvenementDTO = new ArrayList<EvenementDTO>();
 		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
 		List<EvenementEntity> listEvenementEntity;
 		listEvenementEntity = actionEvenement.findAllEnvenement();
 		
 		// Remplissage de l'évènementDTO
+		Map<String, EvenementDTO> mapEvenement = new HashMap<String, EvenementDTO>();
 		for (EvenementEntity evenementEntity : listEvenementEntity) {
-			listEvenement.add(fillEvenementDTO(evenementEntity));
-		}		
+			EvenementDTO evenement = fillEvenementDTO(evenementEntity);
+			mapEvenement.put(evenement.getIdEvent(), evenement);
+		}
+		listEvenementDTO.addAll(mapEvenement.values());
 		
 		// Remplissage de la réponse
 		ReponseDTO reponse = new ReponseDTO();
@@ -112,7 +111,7 @@ public class ActionAdminController {
 		LOG.info("OK");
 		retour.setMessage("OK");
 		reponse.setRetour(retour);
-		reponse.setObject(listEvenement);
+		reponse.setObject(listEvenementDTO);
 		return reponse;
 	}
 	
