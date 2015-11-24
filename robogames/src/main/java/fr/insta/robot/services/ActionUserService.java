@@ -94,7 +94,11 @@ public interface ActionUserService {
 	 * @return
 	 */
 	List<UserEntity> findAllUserByType(String typeRole);
-	
-	
+	/**
+	 * Supprime l'user en paramètre
+	 * @param user
+	 * @throws DonneesInexistantException
+	 */
+	void deleteUser(UserEntity user) throws DonneesInexistantException;
 	
 }

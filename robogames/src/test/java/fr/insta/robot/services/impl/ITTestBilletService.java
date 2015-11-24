@@ -1,5 +1,6 @@
 package fr.insta.robot.services.impl;
 
+import org.junit.Assert;
 import org.junit.Test;
 
 import fr.insta.robot.bo.BilletEntity;
@@ -21,6 +22,6 @@ public class ITTestBilletService {
 		UserEntity user = actionUS.findUserById(Long.parseLong("104"));
 		EvenementEntity event = actionES.findById(Long.parseLong("19"));
 		BilletEntity billet = actionBS.createBillet(user, event);
-		
+		Assert.assertNotNull(billet);
 	}
 }
