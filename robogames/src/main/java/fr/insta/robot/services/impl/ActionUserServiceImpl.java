@@ -2,6 +2,7 @@ package fr.insta.robot.services.impl;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -89,6 +90,13 @@ public class ActionUserServiceImpl implements ActionUserService {
 
 		// Persist en base
 		userService.persistUser(user);
+		
+		// Envoie d'un mail d'information à l'utilisateur
+		MailServiceImpl mailService = new MailServiceImpl();
+		mailService.sendMail("[RG]Création de votre compte", "Bonjour"+
+				user.getInformation().getPrenom()+" "+user.getInformation().getNom()
+				+",\n Votre compte utilisateur a été créé avec le pseudo "+user.getInformation().getPseudo(), 
+				Arrays.asList(user.getInformation().getEmail()));
 
 		// retourne l'utilisateur
 		return user;
@@ -236,6 +244,13 @@ public class ActionUserServiceImpl implements ActionUserService {
 
 			UserService userService = RGServiceFactory.getInstance().getUserService();
 			userService.updateUser(user);
+			
+			// Envoie d'un mail d'information à l'utilisateur
+			MailServiceImpl mailService = new MailServiceImpl();
+			mailService.sendMail("[RG]Désactivation de votre compte", "Bonjour"+
+					user.getInformation().getPrenom()+" "+user.getInformation().getNom()
+					+",\n Votre compte utilisateur a été suspendu pour la raison suivante :"
+					+user.getHabilitation().getInfos(), Arrays.asList(user.getInformation().getEmail()));
 		}
 	}
 
@@ -249,6 +264,14 @@ public class ActionUserServiceImpl implements ActionUserService {
 
 			UserService userService = RGServiceFactory.getInstance().getUserService();
 			userService.updateUser(user);
+			
+			// Envoie d'un mail d'information à l'utilisateur
+			MailServiceImpl mailService = new MailServiceImpl();
+			mailService.sendMail("[RG]Réactivation de votre compte", "Bonjour"+
+					user.getInformation().getPrenom()+" "+user.getInformation().getNom()
+					+",\n Votre compte utilisateur a été réactivé. \nSachez qu'une récidive "
+					+ "peut entrainer une suppression définite de votre compte.", 
+					Arrays.asList(user.getInformation().getEmail()));
 		}
 	}
 
@@ -277,6 +300,12 @@ public class ActionUserServiceImpl implements ActionUserService {
 			throw new DonneesInexistantException("Erreur, user vide");
 		}
 		userS.deleteUser(user);
+		// Envoie d'un mail d'information à l'utilisateur
+		MailServiceImpl mailService = new MailServiceImpl();
+		mailService.sendMail("[RG]Suppression de votre compte", "Bonjour"+
+				user.getInformation().getPrenom()+" "+user.getInformation().getNom()
+				+",\n Votre compte utilisateur a été supprimé. \n.", 
+				Arrays.asList(user.getInformation().getEmail()));
 	}
 
 	@Override
