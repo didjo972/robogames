@@ -1,5 +1,7 @@
 package fr.insta.robot.entities;
 
+import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -36,6 +38,8 @@ public class InformationsEntityImpl implements InformationsEntity {
 	private String email;
 	/** image */
 	private String image;
+	/** date de derniere modification password */
+	private Date lastUpdate;	
 	/** Utilisateur */
 	private UserEntity user;
 
@@ -115,6 +119,15 @@ public class InformationsEntityImpl implements InformationsEntity {
 	@Override
 	public void setImage(String image) {
 		this.image = image;
+	}
+	@Override
+	@Column(name= "INF_LAST_UPDATE_PASSWORD", unique = false, nullable = false)
+	public Date getLastUpdate() {
+		return lastUpdate;
+	}
+	@Override
+	public void setLastUpdate(Date lastUpdate) {
+		this.lastUpdate = lastUpdate;
 	}
 	
 	/////////////////////////////////////////////////////////

@@ -1,6 +1,7 @@
 package fr.insta.robot.bo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public interface InformationsEntity extends Serializable {
 
@@ -94,6 +95,14 @@ public interface InformationsEntity extends Serializable {
 	 * @param image
 	 */
 	void setImage(String image);
-	
+	/**
+	 * Retourne la derniere date de modification de mot de passe
+	 * @return
+	 */
+	Date getLastUpdate();
+	/**
+	 * Met a jour la date
+	 */
+	void setLastUpdate(Date lastUpdate);
 	
 }
