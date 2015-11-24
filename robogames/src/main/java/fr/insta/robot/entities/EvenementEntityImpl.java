@@ -209,7 +209,7 @@ public class EvenementEntityImpl implements EvenementEntity {
 
 	}
 	@Override
-	@OneToMany(mappedBy = "evenement", targetEntity = BilletEntityImpl.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "evenement", targetEntity = BilletEntityImpl.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	public Set<BilletEntity> getBillets() {
 		return billets;
 	}
