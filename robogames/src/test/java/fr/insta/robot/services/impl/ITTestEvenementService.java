@@ -12,8 +12,6 @@ import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.ActionDebriefService;
 import fr.insta.robot.services.ActionEvenementService;
 import fr.insta.robot.services.ActionUserService;
-import fr.insta.robot.services.EvenementService;
-import fr.insta.robot.services.RGServiceFactory;
 
 public class ITTestEvenementService {
 
