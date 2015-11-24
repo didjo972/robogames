@@ -23,6 +23,7 @@ import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.impl.ActionUserServiceImpl;
 import fr.insta.robot.services.impl.MailServiceImpl;
+import fr.insta.robot.util.DateUtil;
 
 @Controller
 public class ActionsUserController {
@@ -407,7 +408,7 @@ public class ActionsUserController {
 		userDTO.setNom(userEntity.getInformation().getNom());
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
-		userDTO.setDateInscription(userEntity.getHabilitation().getDateDebut().toString());
+		userDTO.setDateInscription(DateUtil.formatDate(userEntity.getHabilitation().getDateDebut()));
 		if (userEntity.getHabilitation().getEtat()) {
 			userDTO.setEtatHabilitation("1");
 		} else {
