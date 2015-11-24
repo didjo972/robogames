@@ -49,6 +49,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 		// Affectation des valeurs
 		informations.setPseudo(pseudo);
 		informations.setEmail(mail);
+		informations.setLastUpdate(new Date());
 
 		// Cryptage du mot de passe en md5
 		try {
@@ -146,6 +147,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 			try {
 				if (encodeMd5(oldpass).equalsIgnoreCase(user.getInformation().getPassword())) {
 					user.getInformation().setPassword(encodeMd5(newpass));
+					user.getInformation().setLastUpdate(new Date());
 				}
 			} catch (final NoSuchAlgorithmException e) {
 				throw new FonctionnelleException("Erreur, le cryptage md5 a échoué.");
@@ -285,6 +287,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 		}
 		try {
 			user.getInformation().setPassword(encodeMd5(generatepassword));
+			user.getInformation().setLastUpdate(new Date());
 		} catch (NoSuchAlgorithmException e) {
 			throw new FonctionnelleException("Erreur, le cryptage du mot passe en parametre a échoué.");
 		}
