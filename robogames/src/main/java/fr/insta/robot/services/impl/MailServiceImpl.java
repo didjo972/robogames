@@ -50,7 +50,7 @@ public class MailServiceImpl implements MailService {
 			message.setFrom(new InternetAddress("nepasrepondre@nepasrepondre"));
 			message.setRecipients(Message.RecipientType.TO, tableauAdresse);
 			message.setSubject(subject);
-			message.setText(text);
+			message.setText(text+"\nCordialement, \nL'équipe de Robogames75.");
 
 			Transport.send(message);
 

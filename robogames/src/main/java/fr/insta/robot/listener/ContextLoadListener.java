@@ -35,7 +35,9 @@ public class ContextLoadListener extends ContextLoaderListener {
 	public ContextLoadListener() {
 		super();
 		BasicConfigurator.configure();
-		//PropertyConfigurator.configure("classpath:log4j.properties");
+		/** Différent Batch de vérification */
+		Calendar c = Calendar.getInstance();
+		c.set(2015, Calendar.NOVEMBER, 1, 0, 0, 0);
 		Timer monTimer = new Timer();
 		TimerTask taskAExec = new TimerTask(){
 			public void run(){
@@ -52,11 +54,14 @@ public class ContextLoadListener extends ContextLoaderListener {
 				LOG.info("Vérification des habilitations...");
 				verificationHabilitation();
 				
+				// Vérification des passwords utilisateurs
+				LOG.info("Vérification des mots de passe utilisateurs...");
+				verificationPasswordUser();
+				
 			}
 		};
-		Calendar c = Calendar.getInstance();
-		c.set(2015, Calendar.NOVEMBER, 1);
-		monTimer.schedule(taskAExec, c.getTime(), 2592000000L);
+		
+		monTimer.schedule(taskAExec, c.getTime(), 5184000000L);
 	}
 	
 	private void envoieMailCreationEvent() {
@@ -74,7 +79,7 @@ public class ContextLoadListener extends ContextLoaderListener {
 				if (!evenement.getValide()) {
 					MailServiceImpl mailService = new MailServiceImpl();
 					mailService.sendMail("[RG]Evènement à valider", "Bonjour, \nil y a un nouvelle évènement nommé, "
-									+evenement.getNom()+" à valider. \nCordialement.", listEmailAdmin);
+									+evenement.getNom()+" à valider.", listEmailAdmin);
 				}
 			}
 		}
@@ -95,7 +100,13 @@ public class ContextLoadListener extends ContextLoaderListener {
 					Calendar c = Calendar.getInstance();
 					c.setTime(habilitation.getDateFin()); 
 					c.add(Calendar.DATE, habilitation.getBanTime());
-					if (DateUtil.afterOrEqual(c.getTime(), new Date())) {
+					// Si la date de déban est arrivé, on déban
+					if (DateUtil.afterOrEqual(new Date(), c.getTime())) {
+						actionUser.enableUser(habilitation.getUser());
+					}
+					
+					// Si la date de déban est arrivé, on déban et on supprime le compte user
+					if (DateUtil.afterOrEqual(new Date(), c.getTime()) && habilitation.getBanTime() >= 365) {
 						try {
 							actionUser.deleteUser(habilitation.getUser());
 						} catch (DonneesInexistantException e) {
@@ -105,6 +116,10 @@ public class ContextLoadListener extends ContextLoaderListener {
 				}
 			}
 		}
+	}
+	
+	private void verificationPasswordUser() {
+		
 	}
 	
 }
