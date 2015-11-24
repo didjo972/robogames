@@ -122,24 +122,7 @@ public class ActionsUserController {
 			return reponse;
 		}
 
-		UserDTO userDTO = new UserDTO();
-		if (userEntity.getEtat()) {
-			userDTO.setEtat("true");
-		} else {
-			userDTO.setEtat("false");
-		}
-		
-		userDTO.setLibelleHabilitation(userEntity.getHabilitation().getRole().getLibelle());
-		userDTO.setNom(userEntity.getInformation().getNom());
-		userDTO.setPrenom(userEntity.getInformation().getPrenom());
-		userDTO.setPseudo(userEntity.getInformation().getPseudo());
-		userDTO.setIdUser(userEntity.getId());
-		userDTO.setDateInscription(userEntity.getHabilitation().getDateFin().toString());
-		if (userEntity.getHabilitation().getEtat()) {
-			userDTO.setBan("true");
-		} else {
-			userDTO.setBan("false");
-		}
+		UserDTO userDTO = fillUserDTO(userEntity);
 
 		RetourDTO retour = new RetourDTO();
 		LOG.info("OK");
@@ -216,24 +199,7 @@ public class ActionsUserController {
 			return reponse;
 		}
 
-		UserDTO userDTO = new UserDTO();
-		if (userEntity.getEtat()) {
-			userDTO.setEtat("true");
-		} else {
-			userDTO.setEtat("false");
-		}
-		
-		userDTO.setLibelleHabilitation(userEntity.getHabilitation().getRole().getLibelle());
-		userDTO.setNom(userEntity.getInformation().getNom());
-		userDTO.setPrenom(userEntity.getInformation().getPrenom());
-		userDTO.setPseudo(userEntity.getInformation().getPseudo());
-		userDTO.setIdUser(userEntity.getId());
-		userDTO.setDateInscription(userEntity.getHabilitation().getDateDebut().toString());
-		if (userEntity.getHabilitation().getEtat()) {
-			userDTO.setBan("true");
-		} else {
-			userDTO.setBan("false");
-		}
+		UserDTO userDTO = fillUserDTO(userEntity);
 
 		// Création de la session
 		session.setAttribute(ATTRIBUT_SESSION, userDTO.getPseudo());
@@ -336,23 +302,7 @@ public class ActionsUserController {
 			return reponse;
 		}
 
-		UserDTO userDTO = new UserDTO();
-		if (userEntity.getEtat()) {
-			userDTO.setEtat("true");
-		} else {
-			userDTO.setEtat("false");
-		}
-		userDTO.setLibelleHabilitation(userEntity.getHabilitation().getRole().getLibelle());
-		userDTO.setNom(userEntity.getInformation().getNom());
-		userDTO.setPrenom(userEntity.getInformation().getPrenom());
-		userDTO.setPseudo(userEntity.getInformation().getPseudo());
-		userDTO.setIdUser(userEntity.getId());
-		userDTO.setDateInscription(userEntity.getHabilitation().getDateDebut().toString());
-		if (userEntity.getHabilitation().getEtat()) {
-			userDTO.setBan("true");
-		} else {
-			userDTO.setBan("false");
-		}
+		UserDTO userDTO = fillUserDTO(userEntity);
 		
 		RetourDTO retour = new RetourDTO();
 		LOG.info("OK");
@@ -443,6 +393,27 @@ public class ActionsUserController {
 		reponse.setRetour(retour);
 		
 		return reponse;
+	}
+	
+	private UserDTO fillUserDTO(UserEntity userEntity) {
+		UserDTO userDTO = new UserDTO();
+		if (userEntity.getEtat()) {
+			userDTO.setEtat("true");
+		} else {
+			userDTO.setEtat("false");
+		}
+		userDTO.setIdUser(userEntity.getId());
+		userDTO.setLibelleHabilitation(userEntity.getHabilitation().getRole().getLibelle());
+		userDTO.setNom(userEntity.getInformation().getNom());
+		userDTO.setPrenom(userEntity.getInformation().getPrenom());
+		userDTO.setPseudo(userEntity.getInformation().getPseudo());
+		userDTO.setDateInscription(userEntity.getHabilitation().getDateDebut().toString());
+		if (userEntity.getHabilitation().getEtat()) {
+			userDTO.setEtatHabilitation("1");
+		} else {
+			userDTO.setEtatHabilitation("0");
+		}
+		return userDTO;
 	}
 
 }

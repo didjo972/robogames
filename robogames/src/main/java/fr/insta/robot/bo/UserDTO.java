@@ -24,7 +24,7 @@ public class UserDTO {
 	private String dateInscription;
 	
 	/** Ban ou pas ban */
-	private String ban;
+	private String etatHabilitation;
 
 	/**
 	 * @return the nom
@@ -125,17 +125,17 @@ public class UserDTO {
 	}
 
 	/**
-	 * @return the ban
+	 * @return the etatHabilitation
 	 */
-	public String getBan() {
-		return ban;
+	public String getEtatHabilitation() {
+		return etatHabilitation;
 	}
 
 	/**
-	 * @param ban the ban to set
+	 * @param etatHabilitation the etatHabilitation to set
 	 */
-	public void setBan(String ban) {
-		this.ban = ban;
+	public void setEtatHabilitation(String etatHabilitation) {
+		this.etatHabilitation = etatHabilitation;
 	}
 	
 }

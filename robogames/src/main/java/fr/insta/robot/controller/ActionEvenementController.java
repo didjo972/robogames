@@ -634,10 +634,13 @@ public class ActionEvenementController {
 		}
 		
 		// Récupération des évènements créé de l'utilisateur
+		Map<String, EvenementDTO> mapEvenement = new HashMap<String, EvenementDTO>();
 		List<EvenementDTO> listEvenement = new ArrayList<EvenementDTO>();
 		for (EvenementEntity evenement : userEntity.getEvenements()) {
-			listEvenement.add(fillEvenementDTO(evenement));
+			EvenementDTO evenementDTO = fillEvenementDTO(evenement);
+			mapEvenement.put(evenementDTO.getIdEvent(), evenementDTO);
 		}
+		listEvenement.addAll(mapEvenement.values());
 		
 		RetourDTO retour = new RetourDTO();
 		LOG.info("OK");

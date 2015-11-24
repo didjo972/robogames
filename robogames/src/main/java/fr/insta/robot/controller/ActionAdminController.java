@@ -393,9 +393,9 @@ public class ActionAdminController {
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
 		userDTO.setDateInscription(userEntity.getHabilitation().getDateDebut().toString());
 		if (userEntity.getHabilitation().getEtat()) {
-			userDTO.setBan("true");
+			userDTO.setEtatHabilitation("1");
 		} else {
-			userDTO.setBan("false");
+			userDTO.setEtatHabilitation("0");
 		}
 		return userDTO;
 	}
@@ -589,7 +589,7 @@ public class ActionAdminController {
 			return reponse;
 		}
 		
-		// Suppression de l'USER
+		// Ban de l'USER
 		 actionUser.disableUser(userEntity, infos, Integer.parseInt(nbJourBan));
 		
 		RetourDTO retour = new RetourDTO();
