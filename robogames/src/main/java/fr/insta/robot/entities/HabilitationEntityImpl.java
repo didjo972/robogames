@@ -100,7 +100,7 @@ public class HabilitationEntityImpl implements HabilitationEntity {
 
 	/***********************************************************************/
 	@Override
-	@OneToOne(fetch=FetchType.LAZY, targetEntity = UserEntityImpl.class, cascade = CascadeType.ALL)
+	@OneToOne(targetEntity = UserEntityImpl.class, cascade = CascadeType.ALL)
 	@JoinColumn(name = "HAB_USER_ID", referencedColumnName="USER_ID")
 	public UserEntity getUser() {
 		return user;
