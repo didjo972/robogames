@@ -182,4 +182,28 @@ public class ActionLiveController {
 		return reponseDTO;
 	}
 	
+	/**
+	 * Récupération de l'url du live
+	 * @return
+	 */
+	@RequestMapping(value = "/USER/recupererUrlLive", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO getUrlLive() {		
+		// Récupération du live
+		ActionLiveServiceImpl actionLive = new ActionLiveServiceImpl();
+		LiveEntity liveEntity = actionLive.findURL();
+		
+		// Remplissage du DTO
+		LiveDTO liveDTO = new LiveDTO();
+		liveDTO.setUrl(liveEntity.getUrl());
+		
+		ReponseDTO reponse = new ReponseDTO();
+		RetourDTO retour = new RetourDTO();
+		LOG.info("OK");
+		retour.setMessage("OK");
+		reponse.setObject(liveDTO);
+		reponse.setRetour(retour);
+		return reponse;
+	}
+	
 }

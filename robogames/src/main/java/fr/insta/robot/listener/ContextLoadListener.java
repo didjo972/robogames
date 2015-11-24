@@ -14,6 +14,7 @@ import org.springframework.web.context.ContextLoaderListener;
 import fr.insta.robot.bo.EvenementEntity;
 import fr.insta.robot.bo.HabilitationEntity;
 import fr.insta.robot.bo.UserEntity;
+import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.services.RoleConstantService;
 import fr.insta.robot.services.impl.ActionEvenementServiceImpl;
 import fr.insta.robot.services.impl.ActionHabilitationServiceImpl;
@@ -95,7 +96,11 @@ public class ContextLoadListener extends ContextLoaderListener {
 					c.setTime(habilitation.getDateFin()); 
 					c.add(Calendar.DATE, habilitation.getBanTime());
 					if (DateUtil.afterOrEqual(c.getTime(), new Date())) {
-						// TODO Supprimer User
+						try {
+							actionUser.deleteUser(habilitation.getUser());
+						} catch (DonneesInexistantException e) {
+							LOG.error("Erreur lors de la suppression d'un utilisateur.");
+						}
 					}
 				}
 			}

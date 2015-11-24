@@ -2,6 +2,7 @@ package fr.insta.robot.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Arrays;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,16 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import fr.insta.robot.bo.LiveDTO;
-import fr.insta.robot.bo.LiveEntity;
 import fr.insta.robot.bo.ReponseDTO;
 import fr.insta.robot.bo.RetourDTO;
 import fr.insta.robot.bo.UserDTO;
 import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.exceptions.FonctionnelleException;
-import fr.insta.robot.services.impl.ActionLiveServiceImpl;
 import fr.insta.robot.services.impl.ActionUserServiceImpl;
+import fr.insta.robot.services.impl.MailServiceImpl;
 
 @Controller
 public class ActionsUserController {
@@ -364,27 +363,85 @@ public class ActionsUserController {
 		return reponse;
 	}
 	
-	/**
-	 * Récupération de l'url du live
-	 * @return
-	 */
-	@RequestMapping(value = "/USER/recupererUrlLive", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(value = "/USER/getNewPassword", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
-	public ReponseDTO getUrlLive() {		
-		// Récupération du live
-		ActionLiveServiceImpl actionLive = new ActionLiveServiceImpl();
-		LiveEntity liveEntity = actionLive.findURL();
+	public ReponseDTO recupererPassword(@RequestBody String infoRecupPassword) {
+		LOG.info(infoRecupPassword);
+		try {
+			infoRecupPassword = URLDecoder.decode(infoRecupPassword, "UTF-8");
+			LOG.info(infoRecupPassword);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		// Récupération des informations de récupération de mot de passe
+		String[] tableau = infoRecupPassword.split("&");
+		String email = null;
 		
-		// Remplissage du DTO
-		LiveDTO liveDTO = new LiveDTO();
-		liveDTO.setUrl(liveEntity.getUrl());
+		try {
+			for (int i = 0; i <= tableau.length - 1; i++) {
+				String map = tableau[i];
+				String[] tableauCleValue = map.split("=");
+
+				if (tableauCleValue[0].equalsIgnoreCase("email")) {
+					email = tableauCleValue[1];
+				}
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+
+		// Vérification des données
+		if (StringUtils.isBlank(email)) {
+			// Retourne une erreur
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
 		
-		ReponseDTO reponse = new ReponseDTO();
+		// Récupération du mot de passe
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		String passwordGenerate = null;
+		try {
+			passwordGenerate = actionUser.resetPasswordUser(email);
+		} catch (FonctionnelleException e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la réinitialisation du mot de passe");
+			retour.setMessage("Erreur lors de la réinitialisation du mot de passe");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		if (StringUtils.isBlank(passwordGenerate)) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la réinitialisation du mot de passe");
+			retour.setMessage("Erreur lors de la réinitialisation du mot de passe");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Renvoie d'un mail avec le nouveau mot de passe
+		MailServiceImpl mailService = new MailServiceImpl();
+		mailService.sendMail("Récupération de Mot de Passe", "Voici votre nouveau mot de passe, à changer rapidement. \nMot de passe: "+passwordGenerate, Arrays.asList(email));
+		
 		RetourDTO retour = new RetourDTO();
-		LOG.info("OK");
 		retour.setMessage("OK");
-		reponse.setObject(liveDTO);
+		ReponseDTO reponse = new ReponseDTO();
 		reponse.setRetour(retour);
+		
 		return reponse;
 	}
 
