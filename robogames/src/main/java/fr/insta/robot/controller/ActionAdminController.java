@@ -641,4 +641,67 @@ public class ActionAdminController {
 		return reponse;
 	}
 	
+	@RequestMapping(value = "/ADMIN/validerEvenement", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO validerEvent(@RequestBody String infoValidation) {
+		LOG.info(infoValidation);
+		try {
+			infoValidation = URLDecoder.decode(infoValidation, "UTF-8");
+			LOG.info(infoValidation);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'id de l'admin
+		String[] tableau = infoValidation.split("&");
+		String idAdmin = null;
+		String idEvent = null;
+
+		try {
+			for (int i = 0; i <= tableau.length - 1; i++) {
+				String map = tableau[i];
+				String[] tableauCleValue = map.split("=");
+
+				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
+					idAdmin = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("idEvent")) {
+					idEvent = tableauCleValue[1];
+				}
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'admin
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
+		if (userEntityAdmin == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la récupération des utilisateurs");
+			retour.setMessage("Erreur lors de la récupération des utilisateurs");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Validation de l'évènement par son id
+		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
+		
+		RetourDTO retour = new RetourDTO();
+		retour.setMessage("OK");
+		ReponseDTO reponse = new ReponseDTO();
+		reponse.setRetour(retour);
+		return reponse;
+	}
+	
 }

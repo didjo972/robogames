@@ -439,7 +439,7 @@ public class ActionEvenementController {
 			reponse.setRetour(retour);
 			return reponse;
 		}
-		// Récupération des informations de création de compte
+		// Récupération des informations de l'évent
 		String[] tableau = infoEvenement.split("&");
 		String idEvent = null;
 		try {
