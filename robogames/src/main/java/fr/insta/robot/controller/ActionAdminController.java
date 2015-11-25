@@ -28,6 +28,7 @@ import fr.insta.robot.bo.UserDTO;
 import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.exceptions.FonctionnelleException;
+import fr.insta.robot.services.RoleConstantService;
 import fr.insta.robot.services.impl.ActionEvenementServiceImpl;
 import fr.insta.robot.services.impl.ActionUserServiceImpl;
 import fr.insta.robot.util.DateUtil;
@@ -366,8 +367,10 @@ public class ActionAdminController {
 		List<UserDTO> listUserDTO = new ArrayList<UserDTO>();
 		UserDTO userDTO = null;
 		for (UserEntity userEntity : listUserEntity) {
-			userDTO = fillUserDTO(userEntity);
-			mapUserDTO.put(userDTO.getIdUser(), userDTO);
+			if (userEntity.getHabilitation().getRole().getLibelle().equalsIgnoreCase(RoleConstantService.USER)) {
+				userDTO = fillUserDTO(userEntity);
+				mapUserDTO.put(userDTO.getIdUser(), userDTO);
+			}
 		}
 		listUserDTO.addAll(mapUserDTO.values());
 		RetourDTO retour = new RetourDTO();
@@ -571,8 +574,8 @@ public class ActionAdminController {
 		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
 		if (userEntityAdmin == null) {
 			RetourDTO retour = new RetourDTO();
-			LOG.error("Erreur lors de la modification des évènements");
-			retour.setMessage("Erreur lors de la modification des évènements");
+			LOG.error("Erreur lors du ban de l'utilisateur");
+			retour.setMessage("Erreur lors du ban de l'utilisateur");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
@@ -590,7 +593,15 @@ public class ActionAdminController {
 		}
 		
 		// Ban de l'USER
-		 actionUser.disableUser(userEntity, infos, Integer.parseInt(nbJourBan));
+		if (userEntity.getHabilitation().getRole().getLibelle().equalsIgnoreCase(RoleConstantService.ADMIN)) {
+			ReponseDTO reponse = new ReponseDTO();
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors du ban de l'utilisateur");
+			retour.setMessage("Erreur lors du ban de l'utilisateur");
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		actionUser.disableUser(userEntity, infos, Integer.parseInt(nbJourBan));
 		
 		RetourDTO retour = new RetourDTO();
 		retour.setMessage("OK");
@@ -654,8 +665,8 @@ public class ActionAdminController {
 		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
 		if (userEntityAdmin == null) {
 			RetourDTO retour = new RetourDTO();
-			LOG.error("Erreur lors de la modification des évènements");
-			retour.setMessage("Erreur lors de la modification des évènements");
+			LOG.error("Erreur lors du déban de l'utilisateur");
+			retour.setMessage("Erreur lors du déban de l'utilisateur");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
