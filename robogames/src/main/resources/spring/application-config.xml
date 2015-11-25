@@ -19,13 +19,6 @@
 	<bean class="org.springframework.context.annotation.CommonAnnotationBeanPostProcessor" />
 
 	<tx:annotation-driven />
-	
-<!-- 	<jee:jndi-lookup id="dbDataSource" jndi-name="jdbc/robogamesDS" -->
-<!-- 		expected-type="javax.sql.DataSource" /> -->
-	
-<!-- 	<bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean"> -->
-<!--         <property name="jndiName" value="java:/comp/env/jdbc/robogamesDS"/> -->
-<!--     </bean> -->
 
 	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
 		destroy-method="close">
@@ -34,27 +27,6 @@
 		<property name="username" value="insta_rg" />
 		<property name="password" value="passw0rd" />
 	</bean>
-
-	<!-- ====================================================== -->
-	<!-- import different variables according to active profile -->
-	<!-- ====================================================== -->
-	<!-- <beans profile="development"> -->
-	<!-- <context:property-placeholder -->
-	<!-- ignore-resource-not-found="true" -->
-	<!-- location="classpath*:/META-INF/development.properties" /> -->
-	<!-- </beans> -->
-
-	<!-- <beans profile="test"> -->
-	<!-- <context:property-placeholder -->
-	<!-- ignore-resource-not-found="true" location="classpath*:/META-INF/test.properties" 
-		/> -->
-	<!-- </beans> -->
-
-	<!-- <beans profile="production"> -->
-	<!-- <context:property-placeholder -->
-	<!-- ignore-resource-not-found="true" -->
-	<!-- location="classpath*:/META-INF/production.properties" /> -->
-	<!-- </beans> -->
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RoboGames | Gestion debrif</title>
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	<link href="css/jquery.dataTables.min.css" rel="stylesheet">
+
+</head>
+
+<body class="pace-done skin-3">
+
+    <div id="wrapper">
+		<nav class="navbar-default navbar-static-side" role="navigation">
+			<div class="sidebar-collapse">
+				<ul class="nav" id="side-menu">
+					<li class="nav-header">
+						<div class="dropdown profile-element"> 
+							<span> <img alt="image" class="img-circle" src="img/Admin.jpg" /> </span>
+							<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+								<span class="clear"> <span class="block m-t-xs"> <strong class="font-bold">Dimitri Marie-Rose</strong> </span> 
+								<span class="text-muted text-xs block">Administrateur <b class="caret"></b></span> </span> 
+							</a>
+							<ul class="dropdown-menu animated fadeInRight m-t-xs">
+								<li><a href="profile.html">Profile</a></li>
+								<li class="divider"></li>
+								<li><a id="btnDeco""> Déconnexion </a></li>
+							</ul>
+						</div>
+						<div class="logo-element">
+							RG
+						</div>
+					</li>
+					<li>
+						<a href="gestion_utilisateur.html"><i class="fa fa-users"></i> <span class="nav-label">Gestion des utilisateurs</span></a>
+					</li>
+					<li>
+						<a href="gestion_match.html"><i class="fa fa-bomb"></i> <span class="nav-label">Gestion des Matchs/Tournois</span></a>
+					</li>
+					<li>
+						<a href="gestion_debriefing.html"><i class="fa fa-newspaper-o"></i> <span class="nav-label">Gestion des Débriefing </span></a>
+					</li>
+					<li>
+						<a href="gestion_billeterie.html"><i class="fa fa-ticket"></i> <span class="nav-label">Billetterie</span></a>
+					</li>
+					<li>
+						<a href="gestion_live.html"><i class="fa fa-video-camera"></i> <span class="nav-label">Gestion du live</span></a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	
+        <div id="page-wrapper" class="gray-bg">
+			<div class="row border-bottom">
+				<nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+					<div class="navbar-header">
+						<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+					</div>
+					<ul class="nav navbar-top-links navbar-right">
+						<li>
+							<span class="m-r-sm text-muted welcome-message">Bienvennue Chez RoboGames #Admin.</span>
+						</li>
+						<li>
+							<a id="btnDeco">
+								<i class="fa fa-sign-out"></i> Déconnexion
+							</a>
+						</li>
+					</ul>
+				</nav>
+			</div>	
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-lg-10">
+                    <h2>Gestion Débriefing</h2>
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="wrapper wrapper-content animated fadeInUp">
+						<div class="ibox">
+							<div id="content_idbox" class="ibox-content">
+								<div class="row m-b-sm m-t-sm">
+									<div class="col-md-11">
+										<div class="input-group"><input type="text" placeholder="Search" class="input-sm form-control"> <span class="input-group-btn">
+											<button type="button" class="btn btn-sm btn-primary"> Go!</button> </span>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<div>
+					<strong>Copyright</strong> CREADREAM Company &copy; 2015-2016
+				</div>
+			</div>
+        </div>
+    </div>
+
+		<div class="modal inmodal fade" id="modal_edit" tabindex="-1" role="dialog"  aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Edit Debriefing <label id="label_info"></label></h4>
+					<small class="font-bold"></small>
+				</div>
+				<div class="modal-body">
+					<div class="form-group"><label>Id de l'evenement :</label> <input type="Http" id="idEvent_modif" class="form-control" readonly required></div>
+					<div class="form-group"><label>Nom de l'evenement:</label> <input type="Http" id="nom_modif" class="form-control" readonly required></div>
+					<div class="form-group"><label>Adress :</label> <input type="Http" id="adress_modif" class="form-control" readonly required></div>
+					<div class="form-group"><label>Date de fin de l'evenement :</label> <input type="Http" id="DTF_modif" class="form-control" readonly required></div>
+					<div class="form-group"><label>Debriefing :</label> <input type="Http" id="debrief_modif" class="form-control"  required></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">Fermer</button>
+					<button id="save_edit" type="button" class="btn btn-primary" data-dismiss="modal">Sauvegarder</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal inmodal fade" id="modal_view" tabindex="-1" role="dialog"  aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Information Debriefing <label id="label_info"></label></h4>
+					<small class="font-bold"></small>
+				</div>
+				<div class="modal-body">
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">Fermer</button>
+					<button id="btnValider" type="button" class="btn btn-primary" data-dismiss="modal">Valider</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal inmodal fade" id="modal_trueValid" tabindex="-1" role="dialog"  aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+					<h4 class="modal-title">Information</h4>
+				</div>
+					<form role="form" id="form">
+						<div class="form-group"><label>Ce debriefing à déjà été valider !</label></div>
+					</form>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">Fermer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+    <!-- Mainly scripts -->
+    <script src="js/jquery-2.1.1.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+    <!-- blueimp gallery -->
+    <script src="js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+	<script src="js/jquery.dataTables.min.js"></script>
+	<script src="js/plugins/cookie/jquery.cookie.js"></script>
+    <script src="js/layout.js"></script>
+	<script src="js/gestion_debriefing.js"></script>
+	
+</body>
+
+</html>

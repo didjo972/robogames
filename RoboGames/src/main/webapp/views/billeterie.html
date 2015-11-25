@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>RoboGames</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="css/animate.css" rel="stylesheet">
+        <link href="css/plugins/summernote/summernote.css" rel="stylesheet">
+        <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+        <link href="css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="css/plugins/steps/jquery.steps.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <div id="wrapper">
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="nav-header">
+                            <div class="logo-element">
+                                RG
+                            </div>
+                        </li>
+                        <li>
+                            <a href="live.html"><i class="fa fa-play"></i> <span class="nav-label">live</span></a>
+                        </li>
+                        <li>
+                            <a href="localisation.html"><i class="fa fa-globe"></i> <span class="nav-label">Tous les matchs</span></a>
+                        </li>
+                        <li id="pageMatch">
+                            <a href="match.html"><i class="fa fa-bomb"></i> <span class="nav-label">vos matchs</span></a>
+                        </li>
+                        <li id="pageBilleterie">
+                            <a href="billeterie.html"><i class="fa fa-shopping-cart"></i> <span class="nav-label">billeterie</span></a>
+                        </li>
+						<li id="createMatch">
+                            <a href="creatematch.html"><i class="fa fa-sitemap"></i> <span class="nav-label">Organiser un match</span></a>
+                        </li>
+                        <li id="editUser">
+                            <a href="edituser.html"><i class="fa fa-user    "></i> <span class="nav-label">Modifier votre Profil</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div id="page-wrapper" class="gray-bg">
+                <div class="row border-bottom">
+                    <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        </div>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <span class="m-r-sm text-muted welcome-message">Bienvenue chez RoboGames.</span>
+                            </li>
+                            <li>
+                                <a id="btnCo" href="login.html">
+                                    <i class="fa fa-sign-out"></i><span id="spanCo"> Connexion</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                    </nav>
+              </div>
+
+                <div class="row wrapper border-bottom white-bg page-heading">
+                    <div class="col-md-4">
+                        <h2>Bienvenue</h2>
+                        <ol class="breadcrumb">
+                            <li>
+                                <a href="index.html">RoboGames</a>
+                            </li>
+                            <li class="active">
+                                <strong>accueil</strong>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+
+
+
+	<br>
+	<div class="ibox">
+    <div class="ibox-content">
+			<div id="buyTicket" action="#">
+
+				<h3>Connection</h3>
+				<section style="position: relative;">
+				<legend>Connection</legend>
+				<div class="widget-head-color-box navy-bg p-lg text-center">
+					<div class="m-b-md">
+						<h2 class="font-bold no-margins">
+							Alex Smith
+						</h2>
+						<small>Membre du site</small>
+					</div>
+					<img src="img/a4.jpg" class="img-circle circle-border m-b-md" alt="profile">
+					<div>
+						<span>vous etes connecté</span>
+					</div>
+				</div>
+				</section>
+
+				<h3>Choix</h3>
+				<section style="position: relative;">
+                    <div class="row">
+                        <div class="col-md-10">
+                        </div>
+                        <div class="col-md-2">
+                            <a id="btnModal" class="btn btn-primary btn-rounded btn-block" href="#">Mon panier : <strong id="toPay">0</strong></a>
+                        </div>
+                    </div>
+				<legend>Liste des matchs</legend>
+					<div class="row">
+						<table id="matable" class="display" width="100%"></table>
+					</div>
+				</table>
+				</section>
+
+				<h3>Paiement</h3>
+				<section style="position: relative;">
+                    <div class="wrapper wrapper-content animated fadeInRight">
+
+
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="payment-card">
+                        <i class="fa fa-cc-visa payment-icon-big text-success"></i>
+                        <h2>
+                            **** **** **** 1060
+                        </h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="payment-card">
+                        <i class="fa fa-cc-mastercard payment-icon-big text-warning"></i>
+                        <h2>
+                            **** **** **** 7002
+                        </h2>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="payment-card">
+                        <i class="fa fa-cc-discover payment-icon-big text-danger"></i>
+                        <h2>
+                            **** **** **** 3466
+                        </h2>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+
+                <div class="col-lg-12">
+
+                    <div class="ibox">
+                        <div class="ibox-title">
+                            Methode de paiement
+                        </div>
+                        <div class="ibox-content">
+                            <div class="panel-group payments-method" id="accordion">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="pull-right">
+                                            <i class="fa fa-cc-paypal text-success"></i>
+                                        </div>
+                                        <h5 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">PayPal</a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseOne" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-10">
+                                                    <h2>Achat via paypal</h2>
+                                                    <strong>Produit:</strong> Evénement RoboGames <br/>
+                                                    <strong>Prix:</strong>: <span id="paypalPrice" class="text-navy"></span>
+                                                    <p class="m-t">
+                                                        En tant qu'établissement bancaire au sein de l'Union Européenne, PayPal vous offre
+                                                        plus de 10 ans d'expérience dans les paiements sécurisés en ligne.
+                                                        PayPal crypte et sécurise vos informations bancaires et ne les communique
+                                                        jamais au destinataire de vos paiements.
+                                                    </p>
+                                                    <a class="btn btn-success" href="https://www.paypal.com/signin/?country.x=FR&locale.x=fr_FR">
+                                                        <i class="fa fa-cc-paypal">
+                                                            Poursuivre avec PayPal
+                                                        </i>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                             </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <div class="pull-right">
+                                            <i class="fa fa-cc-amex text-success"></i>
+                                            <i class="fa fa-cc-mastercard text-warning"></i>
+                                            <i class="fa fa-cc-discover text-danger"></i>
+                                        </div>
+                                        <h5 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Credit Card</a>
+                                        </h5>
+                                    </div>
+                                    <div id="collapseTwo" class="panel-collapse collapse in">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <h2>Achat via carte bancaire</h2>
+                                                    <strong>Produit:</strong> Evénement RoboGames <br/>
+                                                    <strong>Prix:</strong>: <span id="cbPrice" class="text-navy"></span>
+                                                    <p class="m-t">
+                                                        Une carte bancaire permet de payer ses achats chez un commerçant affilié au réseau
+                                                        correspondant au logo figurant sur la carte. Elle est nationale ou internationale.
+                                                        Elle peut permettre de réaliser des achats à distance (par internet, par téléphone,
+                                                        par correspondance).
+                                                    </p>
+                                                    <p>
+                                                        <ul>Pour les commandes par téléphone, internet, vous devez indiquer :
+                                                            <li>Le numéro à 16 chiffres de la carte.</li>
+                                                            <li>La date d'échéance de la carte.</li>
+                                                            <li>Son numéro de sécurité.</li>
+                                                        </ul>
+                                                    </p>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <form role="form" id="payment-form">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>NUMERO DE CARTE</label>
+                                                                    <div class="input-group">
+                                                                        <input id="cbNumber" type="text" class="form-control" name="Number" placeholder="Numero de carte valide" required />
+                                                                        <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-7 col-md-7">
+                                                                <div class="form-group">
+                                                                    <label>DATE D'EXPIRATION</label>
+                                                                    <input id="cbDate" type="text" class="form-control" name="Expiry" placeholder="MM / YY"  required/>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-5 col-md-5 pull-right">
+                                                                <div class="form-group">
+                                                                    <label>CODE DE SECURITE</label>
+                                                                    <input id="cdCode" type="text" class="form-control" name="CVC" placeholder=""  required/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group">
+                                                                    <label>NOM DU POSSESSEUR DE LA CARTE</label>
+                                                                    <input id="cbPossessor" type="text" class="form-control" name="nameCard" placeholder="NOM ET PRENOM"/>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <button id="btnValidCb" class="btn btn-primary" type="button">Valider</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+				</section>
+
+				<h3>Validation</h3>
+				<section style="position: relative;">
+				<legend>Récapitulatif</legend>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <span class="col-lg-2 control-label"><strong>Mode de paiement :</strong></span>
+                        <div class="col-md-6">
+                            <span id="p4Pay" class="form-control-static">Aucun moyen de paiement spécifié</span>
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <br>
+                    <div class="hr-line-dashed"></div>
+                    <div class="row">
+                        <div class="col-md-2"></div>
+                        <span class="col-lg-2 control-label"><strong>Reservation :</strong></span>
+                        <div id="p4Liste" class="col-md-6">
+
+                        </div>
+                        <div class="col-md-2"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-2">
+                            <button id="btnValidAchat" class="btn btn-primary" type="submit">Valider</button>
+                        </div>
+                    </div>
+				</section>
+
+			</div>
+		</div>
+	</div>
+    <div class="footer">
+            <div class="pull-right">
+                10GB of <strong>250GB</strong> Free.
+            </div>
+            <div>
+                <strong>Copyright</strong> Example Company &copy; 2014-2015
+            </div>
+        </div>
+        <!--  MODAL  MODAL  MODAL  MODAL  MODAL  MODAL  -->
+		<div id="modalPanier" class="modal">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+						<h3 class="modal-title">Votre panier :</h3>
+					</div>
+					<div class="modal-body">
+                        <div class="row">
+    						<table id="panierTable" class="display" width="100%"></table>
+    					</div>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <button id="btnEmpty" class="btn btn-warning " type="button" data-dismiss="modal"><i class="fa fa-warning"></i> <span class="bold">Vider le panier</span></button>
+                            </div>
+                            <div class="col-md-8"></div>
+                            <div class="col-md-2">
+                                <span><h3>Total à payer :</h3><span id="resultToPay"></span>€</span>
+                            </div>
+                        </div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</div>
+
+        <!-- Mainly scripts -->
+        <script src="js/jquery-2.1.1.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+        <!-- Custom and plugin javascript -->
+        <script src="js/inspinia.js"></script>
+        <script src="js/plugins/pace/pace.min.js"></script>
+		<script src="js/jquery-steps/build/jquery.steps.min.js"></script>
+		<script src="js/jquery-validation/dist/jquery.validate.min.js"></script>
+		<script src="js/jquery.dataTables.min.js"></script>
+		<script src="js/jquery.mask.js"></script>
+		<script src="js/plugins/sweetalert/sweetalert.js"></script>
+        <script src="js/plugins/cookie/jquery.cookie.js"></script>
+		<script src="js/layout.js"></script>
+		<script src="js/billeterie.js"></script>
+
+    </body>
+
+</html>

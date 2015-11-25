@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>INSPINIA | Empty Page</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+        <link href="css/animate.css" rel="stylesheet">
+		<link href="css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="css/plugins/datepicker/bootstrap-datepicker3.min.css" rel="stylesheet">
+        <link href="css/plugins/datepicker/bootstrap-datepicker3.standalone.min.css " rel="stylesheet">
+        <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+    <body>
+        <div id="wrapper">
+            <nav class="navbar-default navbar-static-side" role="navigation">
+                <div class="sidebar-collapse">
+                    <ul class="nav" id="side-menu">
+                        <li class="nav-header">
+                            <div class="logo-element">
+                                RG
+                            </div>
+                        </li>
+                        <li>
+                            <a href="live.html"><i class="fa fa-play"></i> <span class="nav-label">live</span></a>
+                        </li>
+                        <li>
+                            <a href="localisation.html"><i class="fa fa-globe"></i> <span class="nav-label">Tous les matchs</span></a>
+                        </li>
+                        <li id="pageMatch">
+                            <a href="match.html"><i class="fa fa-bomb"></i> <span class="nav-label">vos matchs</span></a>
+                        </li>
+                        <li id="pageBilleterie">
+                            <a href="billeterie.html"><i class="fa fa-shopping-cart"></i> <span class="nav-label">billeterie</span></a>
+                        </li>
+                        <li id="createMatch">
+                            <a href="creatematch.html"><i class="fa fa-sitemap"></i> <span class="nav-label">Organiser un match</span></a>
+                        </li>
+                        <li id="editUser">
+                            <a href="edituser.html"><i class="fa fa-user    "></i> <span class="nav-label">Modifier votre Profil</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <div id="page-wrapper" class="gray-bg">
+                <div class="row border-bottom">
+                    <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+                        <div class="navbar-header">
+                            <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        </div>
+                        <ul class="nav navbar-top-links navbar-right">
+                            <li>
+                                <span class="m-r-sm text-muted welcome-message">Bienvenue chez RoboGames.</span>
+                            </li>
+                            <li>
+                                <a href="login.html">
+                                    <i class="fa fa-sign-out"></i> Log in
+                                </a>
+                            </li>
+                        </ul>
+
+                    </nav>
+                </div>
+
+                <div class="row  border-bottom white-bg dashboard-header">
+                    <form method="post" class="form-horizontal">
+                        <div class="form-group">
+                            <h3>&nbsp;&nbsp;&nbsp;Formulaire de création d'un événement</h3>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Nom de l'événement</label>
+                            <div class="col-md-9"><input id="eventName" class="form-control" type="text"></div>
+                            <div class="col-md-offset-1"></div>
+
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Nombre places</label>
+                            <div class="col-md-4"><input id="nbPlace" class="form-control" type="text"></div>
+
+                            <label class=" col-md-2 control-label">Prix places</label>
+                            <div class="input-group m-b col-md-3    ">
+                                <input id="prixPlace" class="form-control" type="text">
+                                <span class="input-group-addon"><i class="fa fa-eur"></i></span>
+                            </div>
+
+                            <div class="col-md-offset-1"></div>
+
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Date debut</label>
+                            <div class="col-md-2"><input id="dateStart" class="form-control" type="text" placeholder="jj/mm/aaaa" ></div>
+
+                            <div class="col-md-offset-2"></div>
+
+                            <label class="col-md-2 control-label">Date fin</label>
+                            <div class="col-md-2"><input id="dateEnd" class="form-control" type="text" placeholder="jj/mm/aaaa" ></div>
+
+                            <div class="col-md-offset-1"></div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Adresse</label>
+                            <div class="col-md-9"><input id="adresse" class="form-control" type="text"></div>
+                            <div class="col-md-offset-1"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Code Postal</label>
+                            <div class="col-md-2"><input id="codePostal" class="form-control" type="text"></div>
+                            <label class="col-md-2 control-label">Ville</label>
+                            <div class="col-md-5"><input id="ville" class="form-control" type="text"></div>
+                            <div class="col-md-offset-1"></div>
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-md-2 control-label">Infos</label>
+                            <div class="col-md-9"><input id="infos" class="form-control" type="text"></div>
+                            <div class="col-md-offset-1"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-10 col-md-2">
+                                <button id="btn"class="btn btn-primary" type="button">Créer</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+
+
+
+
+                <div class="footer">
+                    <div>
+                        <strong>Copyright</strong> Example Company &copy; 2014-2015
+                    </div>
+                </div>
+
+            </div>
+		</div>
+
+        <!-- Mainly scripts -->
+        <script src="js/jquery-2.1.1.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+        <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+        <!-- Custom and plugin javascript -->
+        <script src="js/inspinia.js"></script>
+        <script src="js/plugins/pace/pace.min.js"></script>
+		<script src="js/jquery.dataTables.min.js"></script>
+        <script src="js/plugins/datapicker/bootstrap-datepicker.js"></script>
+        <script src="js/jquery.mask.js"></script>
+        <script src="js/plugins/datepicker/bootstrap-datepicker.min.js"></script>
+        <script src="js/plugins/sweetalert/sweetalert.js"></script>
+        <script src="js/plugins/cookie/jquery.cookie.js"></script>
+		<script src="js/layout.js"></script>
+		<script src="js/createMatch.js"></script>
+    </body>
+</html>
