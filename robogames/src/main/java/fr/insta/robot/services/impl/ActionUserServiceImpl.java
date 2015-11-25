@@ -124,8 +124,6 @@ public class ActionUserServiceImpl implements ActionUserService {
 	public UserEntity updateUser(UserEntity user, String nom, String prenom, String image, String oldpass,
 			String newpass) throws DonneesInexistantException, FonctionnelleException {
 		// Initialisation des services
-		// InformationsService infoService =
-		// RGServiceFactory.getInstance().getInformationsService();
 		UserService userService = RGServiceFactory.getInstance().getUserService();
 		if (user == null) {
 			throw new FonctionnelleException("Erreur, utilsateur inconnu.");
@@ -153,7 +151,6 @@ public class ActionUserServiceImpl implements ActionUserService {
 				throw new FonctionnelleException("Erreur, le cryptage md5 a échoué.");
 			}
 		}
-		// infoService.updateInformations(user.getInformation());
 		userService.updateUser(user);
 		return user;
 	}

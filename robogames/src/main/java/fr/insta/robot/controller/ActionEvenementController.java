@@ -447,6 +447,16 @@ public class ActionEvenementController {
 		List<EvenementEntity> listEvenementEntity;
 		listEvenementEntity = actionEvenement.findAllEnvenement();
 		
+		if (listEvenementEntity == null) {
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setObject(listEvenementDTO);
+			RetourDTO retour = new RetourDTO();
+			LOG.info("Erreur lors de la récupération des évènements");
+			retour.setMessage("Erreur lors de la récupération des évènements");
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
 		// Remplissage de l'évènementDTO
 		Map<String, EvenementDTO> mapEvenement = new HashMap<String, EvenementDTO>();
 		for (EvenementEntity evenementEntity : listEvenementEntity) {

@@ -417,5 +417,102 @@ public class ActionsUserController {
 		}
 		return userDTO;
 	}
+	
+	@RequestMapping(value = "/USER/modifierCompte", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO modiferCompte(@RequestBody String infoModifCompte) {
+		LOG.info(infoModifCompte);
+		try {
+			infoModifCompte = URLDecoder.decode(infoModifCompte, "UTF-8");
+			LOG.info(infoModifCompte);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		// Récupération des informations de création de compte
+		String[] tableau = infoModifCompte.split("&");
+		String idUser = null;
+		String nom = null;
+		String prenom = null;
+		String oldpass = null;
+		String newPassword = null;
+		String image = null;
+		
+		try {
+			for (int i = 0; i <= tableau.length - 1; i++) {
+				String map = tableau[i];
+				String[] tableauCleValue = map.split("=");
+
+				if (tableauCleValue[0].equalsIgnoreCase("nom")) {
+					nom = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("prenom")) {
+					prenom = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("oldpass")) {
+					oldpass = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("newPassword")) {
+					newPassword = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("image")) {
+					image = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("idUser")) {
+					idUser = tableauCleValue[1];
+				}
+			}
+			if (StringUtils.isBlank(idUser)) {
+				throw new FonctionnelleException();
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+
+		// Récupération de l'utilisateur
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntity = null;
+		try {
+			userEntity = actionUser.findUserById(Long.parseLong(idUser));
+			if (userEntity == null) {
+				throw new FonctionnelleException();
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, aucun utilisateur connu pour cet id :"+idUser);
+			retour.setMessage("Erreur, aucun utilisateur connu pour cet id :"+idUser);
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Modification des informations de l'utilisateur
+		try {
+			userEntity = actionUser.updateUser(userEntity, nom, prenom, image, oldpass, newPassword);
+		} catch (DonneesInexistantException | FonctionnelleException e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
+			retour.setMessage(e.getMessage());
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Remplissage du DTO
+		RetourDTO retour = new RetourDTO();
+		retour.setMessage("OK");
+		ReponseDTO reponse = new ReponseDTO();
+		reponse.setRetour(retour);
+		reponse.setObject(fillUserDTO(userEntity));
+		return reponse;
+	}
 
 }

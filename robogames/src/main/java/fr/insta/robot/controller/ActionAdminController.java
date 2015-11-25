@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import fr.insta.robot.bo.BilletEntity;
+import fr.insta.robot.bo.BilletterieDTO;
 import fr.insta.robot.bo.EvenementDTO;
 import fr.insta.robot.bo.EvenementEntity;
 import fr.insta.robot.bo.ReponseDTO;
@@ -287,7 +288,7 @@ public class ActionAdminController {
 				i++;
 			}
 		}
-		evenementDTO.setNbPlaceRestant(i);
+		evenementDTO.setNbPlaceRestant(evenement.getNbPlace()-i);
 		
 		return evenementDTO;
 	}
@@ -933,8 +934,8 @@ public class ActionAdminController {
 		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
 		if (userEntityAdmin == null) {
 			RetourDTO retour = new RetourDTO();
-			LOG.error("Erreur lors de la récupération des utilisateurs");
-			retour.setMessage("Erreur lors de la récupération des utilisateurs");
+			LOG.error("Erreur lors de la modification du débrief");
+			retour.setMessage("Erreur lors de la modification du débrief");
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
 			return reponse;
@@ -969,6 +970,121 @@ public class ActionAdminController {
 		ReponseDTO reponse = new ReponseDTO();
 		reponse.setRetour(retour);
 		return reponse;
+	}
+	
+	@RequestMapping(value = "/ADMIN/getAllBillets", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO getAllBillets(@RequestBody String infoAdmin) {
+		LOG.info(infoAdmin);
+		try {
+			infoAdmin = URLDecoder.decode(infoAdmin, "UTF-8");
+			LOG.info(infoAdmin);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'id de l'admin
+		String[] tableau = infoAdmin.split("&");
+		String idAdmin = null;
+
+		try {
+			for (int i = 0; i <= tableau.length - 1; i++) {
+				String map = tableau[i];
+				String[] tableauCleValue = map.split("=");
+
+				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
+					idAdmin = tableauCleValue[1];
+				}
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Vérification des info
+		if (StringUtils.isBlank(idAdmin)) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'admin
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
+		if (userEntityAdmin == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la récupération des billets");
+			retour.setMessage("Erreur lors de la récupération des billets");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération des évènements
+		ActionEvenementServiceImpl actionEvent = new ActionEvenementServiceImpl();
+		List<EvenementEntity> listEvenementEntity = null;
+		try {
+			listEvenementEntity = actionEvent.findAllEnvenement();
+			if (listEvenementEntity == null) {
+				throw new FonctionnelleException("Erreur lors de la récupération des évènements");
+			}
+		} catch (FonctionnelleException e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
+			retour.setMessage(e.getMessage());
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Remplissage de l'évènementDTO
+		List<BilletterieDTO> listEvenementDTO = new ArrayList<BilletterieDTO>();
+		Map<String, BilletterieDTO> mapEvenement = new HashMap<String, BilletterieDTO>();
+		for (EvenementEntity evenementEntity : listEvenementEntity) {
+			if (evenementEntity.getValide()) {
+				BilletterieDTO BilletterieDTO = fillEvenementDTOForBilletterie(evenementEntity);
+				mapEvenement.put(BilletterieDTO.getIdEvent(), BilletterieDTO);
+			}			
+		}
+		listEvenementDTO.addAll(mapEvenement.values());
+		
+		RetourDTO retour = new RetourDTO();
+		retour.setMessage("OK");
+		ReponseDTO reponse = new ReponseDTO();
+		reponse.setRetour(retour);
+		reponse.setObject(listEvenementDTO);
+		return reponse;
+	}
+
+	private BilletterieDTO fillEvenementDTOForBilletterie(EvenementEntity evenement) {
+		BilletterieDTO billetterieDTO = new BilletterieDTO();
+		billetterieDTO.setNom(evenement.getUser().getInformation().getNom());
+		billetterieDTO.setPrenom(evenement.getUser().getInformation().getPrenom());
+		billetterieDTO.setPseudo(evenement.getUser().getInformation().getPseudo());
+		billetterieDTO.setIdUser(evenement.getUser().getId().toString());
+		billetterieDTO.setIdEvent(evenement.getId().toString());
+		billetterieDTO.setNbPlace(evenement.getNbPlace());
+		int i = 0;
+		for (BilletEntity billet : evenement.getBillets()) {
+			if (billet != null && billet.getUser() != null) {
+				i++;
+			}
+		}
+		billetterieDTO.setNbPlaceRestant(evenement.getNbPlace()-i);
+		billetterieDTO.setNomEvent(evenement.getNom());
+		billetterieDTO.setPrix(evenement.getPrix());
+		return billetterieDTO;
 	}
 	
 }
