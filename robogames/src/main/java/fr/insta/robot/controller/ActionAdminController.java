@@ -29,6 +29,7 @@ import fr.insta.robot.bo.UserEntity;
 import fr.insta.robot.exceptions.DonneesInexistantException;
 import fr.insta.robot.exceptions.FonctionnelleException;
 import fr.insta.robot.services.RoleConstantService;
+import fr.insta.robot.services.impl.ActionDebriefServiceImpl;
 import fr.insta.robot.services.impl.ActionEvenementServiceImpl;
 import fr.insta.robot.services.impl.ActionUserServiceImpl;
 import fr.insta.robot.util.DateUtil;
@@ -765,6 +766,104 @@ public class ActionAdminController {
 				| DonneesInexistantException e) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error(e.getMessage());
+			retour.setMessage(e.getMessage());
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		RetourDTO retour = new RetourDTO();
+		retour.setMessage("OK");
+		ReponseDTO reponse = new ReponseDTO();
+		reponse.setRetour(retour);
+		return reponse;
+	}
+	
+	@RequestMapping(value = "/ADMIN/modifierDebrief", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO modifierDebrief(@RequestBody String infoModifDebrief) {
+		LOG.info(infoModifDebrief);
+		try {
+			infoModifDebrief = URLDecoder.decode(infoModifDebrief, "UTF-8");
+			LOG.info(infoModifDebrief);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'id de l'admin
+		String[] tableau = infoModifDebrief.split("&");
+		String idAdmin = null;
+		String idEvent = null;
+		String debrief = null;
+
+		try {
+			for (int i = 0; i <= tableau.length - 1; i++) {
+				String map = tableau[i];
+				String[] tableauCleValue = map.split("=");
+
+				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
+					idAdmin = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("idEvent")) {
+					idEvent = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("debrief")) {
+					debrief = tableauCleValue[1];
+				}
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Vérification des info
+		if (StringUtils.isBlank(idAdmin) || StringUtils.isBlank(idEvent) || StringUtils.isBlank(debrief)) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'admin
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
+		if (userEntityAdmin == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la récupération des utilisateurs");
+			retour.setMessage("Erreur lors de la récupération des utilisateurs");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'évènement
+		ActionEvenementServiceImpl actionEvenement = new ActionEvenementServiceImpl();
+		EvenementEntity evenement = actionEvenement.findById(Long.parseLong(idEvent));
+		if (evenement == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de la récupération de l'évènement");
+			retour.setMessage("Erreur lors de la récupération de l'évènement");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Modification du débrief
+		ActionDebriefServiceImpl actionDebrief = new ActionDebriefServiceImpl();
+		try {
+			actionDebrief.addDebriefEvenement(evenement, debrief);
+		} catch (DonneesInexistantException e) {
+			RetourDTO retour = new RetourDTO();
 			retour.setMessage(e.getMessage());
 			ReponseDTO reponse = new ReponseDTO();
 			reponse.setRetour(retour);
