@@ -25,6 +25,9 @@ public class UserDTO {
 	
 	/** Ban ou pas ban */
 	private String etatHabilitation;
+	
+	/** Infos sur l'habilitation */
+	private String infosHabilitation;
 
 	/**
 	 * @return the nom
@@ -136,6 +139,20 @@ public class UserDTO {
 	 */
 	public void setEtatHabilitation(String etatHabilitation) {
 		this.etatHabilitation = etatHabilitation;
+	}
+
+	/**
+	 * @return the infosHabilitation
+	 */
+	public String getInfosHabilitation() {
+		return infosHabilitation;
+	}
+
+	/**
+	 * @param infosHabilitation the infosHabilitation to set
+	 */
+	public void setInfosHabilitation(String infosHabilitation) {
+		this.infosHabilitation = infosHabilitation;
 	}
 	
 }

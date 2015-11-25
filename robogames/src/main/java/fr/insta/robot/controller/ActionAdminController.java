@@ -395,6 +395,7 @@ public class ActionAdminController {
 		userDTO.setPrenom(userEntity.getInformation().getPrenom());
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
 		userDTO.setDateInscription(DateUtil.formatDate(userEntity.getHabilitation().getDateDebut()));
+		userDTO.setInfosHabilitation(userEntity.getHabilitation().getInfos());
 		if (userEntity.getHabilitation().getEtat()) {
 			userDTO.setEtatHabilitation("1");
 		} else {
