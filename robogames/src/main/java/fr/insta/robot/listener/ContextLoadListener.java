@@ -77,7 +77,7 @@ public class ContextLoadListener extends ContextLoaderListener {
 			for (EvenementEntity evenement : listEvenement) {
 				if (!evenement.getValide()) {
 					MailServiceImpl mailService = new MailServiceImpl();
-					mailService.sendMail("[RG]Evènement à valider", "Bonjour, \nil y a un nouvelle évènement nommé, "
+					mailService.sendMail("[RG]Evènement à valider", "Bonjour, \nIl y a un nouvelle évènement nommé, "
 									+evenement.getNom()+" à valider.", listEmailAdmin);
 				}
 			}
