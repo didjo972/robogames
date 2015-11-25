@@ -743,7 +743,7 @@ public class ActionEvenementController {
 		ActionDebriefServiceImpl actionDebrief = new ActionDebriefServiceImpl();
 		try {
 			actionDebrief.addDebriefEvenement(evenement, debrief);
-		} catch (DonneesInexistantException e) {
+		} catch (DonneesInexistantException | FonctionnelleException e) {
 			RetourDTO retour = new RetourDTO();
 			retour.setMessage(e.getMessage());
 			ReponseDTO reponse = new ReponseDTO();

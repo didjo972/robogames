@@ -1,5 +1,6 @@
 package fr.insta.robot.services.impl;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -211,6 +212,29 @@ public class ActionEvenementServiceImpl implements ActionEvenementService {
 		EvenementService eventS = RGServiceFactory.getInstance().getEvenementService();
 		eventS.updateEvenement(event);
 		
+	}
+	
+	@Override
+	public void updateInvalideEvenement(Long idEvent, String raison) throws FonctionnelleException, DonneesInexistantException {
+		if (idEvent < 0) {
+			throw new DonneesInexistantException("Erreur, l'id de l'evenement est invalide");
+		}
+		if (StringUtils.isBlank(raison)) {
+			throw new DonneesInexistantException("Erreur, la raison est incorrect");
+		}
+		EvenementEntity event = findById(idEvent);
+		if (event == null) {
+			throw new FonctionnelleException("Erreur, l'evenement est inconnu");
+		}
+		
+		EvenementService eventS = RGServiceFactory.getInstance().getEvenementService();
+		eventS.deleteEvenement(event);
+		
+		MailServiceImpl mailService = new MailServiceImpl();
+		mailService.sendMail("[RG]Suppression de votre évènement", "Bonjour "+
+					event.getUser().getInformation().getPrenom()+" "+event.getUser().getInformation().getNom()
+					+",\nVotre évènement "+event.getNom()+" a été supprimé pour la raison suivante :"+raison, 
+					Arrays.asList(event.getUser().getInformation().getEmail()));
 	}
 	
 }

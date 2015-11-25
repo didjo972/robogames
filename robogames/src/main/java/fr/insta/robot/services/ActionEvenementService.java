@@ -99,5 +99,14 @@ public interface ActionEvenementService {
 	 */
 	void updateValideEvenement(Long idEvent) throws FonctionnelleException, DonneesInexistantException;
 	
+	/**
+	 * Invalide l'evenement
+	 * @param idEvent
+	 * @param raison
+	 * @throws DonneesInexistantException 
+	 * @throws FonctionnelleException 
+	 */
+	void updateInvalideEvenement(Long idEvent, String raison) throws FonctionnelleException, DonneesInexistantException;
+	
 	
 }

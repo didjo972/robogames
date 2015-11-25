@@ -779,6 +779,100 @@ public class ActionAdminController {
 		return reponse;
 	}
 	
+	@RequestMapping(value = "/ADMIN/invaliderEvenement", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ResponseBody
+	public ReponseDTO invaliderEvent(@RequestBody String infoInvalidation) {
+		LOG.info(infoInvalidation);
+		try {
+			infoInvalidation = URLDecoder.decode(infoInvalidation, "UTF-8");
+			LOG.info(infoInvalidation);
+		} catch (UnsupportedEncodingException e1) {
+			RetourDTO retour = new RetourDTO();
+			retour.setMessage("Erreur d'encodage, veuillez contacter l'administrateur du site.");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'id de l'admin
+		String[] tableau = infoInvalidation.split("&");
+		String idAdmin = null;
+		String idEvent = null;
+		String raison = null;
+
+		try {
+			for (int i = 0; i <= tableau.length - 1; i++) {
+				String map = tableau[i];
+				String[] tableauCleValue = map.split("=");
+
+				if (tableauCleValue[0].equalsIgnoreCase("idAdmin")) {
+					idAdmin = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("idEvent")) {
+					idEvent = tableauCleValue[1];
+				}
+				if (tableauCleValue[0].equalsIgnoreCase("raison")) {
+					raison = tableauCleValue[1];
+				}
+			}
+		} catch (Exception e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Vérification des info
+		if (StringUtils.isBlank(idAdmin) || StringUtils.isBlank(idEvent)) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur, donnee manquante");
+			retour.setMessage("Erreur, donnee manquante");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Récupération de l'admin
+		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
+		UserEntity userEntityAdmin = actionUser.findUserById(Long.parseLong(idAdmin));
+		if (userEntityAdmin == null) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de l'invalidation de l'évènement");
+			retour.setMessage("Erreur lors de l'invalidation de l'évènement");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		// Invalidation de l'évènement
+		ActionEvenementServiceImpl actionEvent = new ActionEvenementServiceImpl();
+		try {
+			actionEvent.updateInvalideEvenement(Long.parseLong(idEvent), raison);
+		} catch (FonctionnelleException | DonneesInexistantException e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error(e.getMessage());
+			retour.setMessage(e.getMessage());
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		} catch (NumberFormatException e) {
+			RetourDTO retour = new RetourDTO();
+			LOG.error("Erreur lors de l'invalidation de l'évènement");
+			retour.setMessage("Erreur lors de l'invalidation de l'évènement");
+			ReponseDTO reponse = new ReponseDTO();
+			reponse.setRetour(retour);
+			return reponse;
+		}
+		
+		RetourDTO retour = new RetourDTO();
+		retour.setMessage("OK");
+		ReponseDTO reponse = new ReponseDTO();
+		reponse.setRetour(retour);
+		return reponse;
+	}
+	
 	@RequestMapping(value = "/ADMIN/modifierDebrief", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public ReponseDTO modifierDebrief(@RequestBody String infoModifDebrief) {
@@ -862,7 +956,7 @@ public class ActionAdminController {
 		ActionDebriefServiceImpl actionDebrief = new ActionDebriefServiceImpl();
 		try {
 			actionDebrief.addDebriefEvenement(evenement, debrief);
-		} catch (DonneesInexistantException e) {
+		} catch (DonneesInexistantException | FonctionnelleException e) {
 			RetourDTO retour = new RetourDTO();
 			retour.setMessage(e.getMessage());
 			ReponseDTO reponse = new ReponseDTO();

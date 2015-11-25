@@ -3,6 +3,7 @@ package fr.insta.robot.services;
 import fr.insta.robot.bo.DebriefEntity;
 import fr.insta.robot.bo.EvenementEntity;
 import fr.insta.robot.exceptions.DonneesInexistantException;
+import fr.insta.robot.exceptions.FonctionnelleException;
 
 public interface ActionDebriefService {
 	/**
@@ -10,8 +11,9 @@ public interface ActionDebriefService {
 	 * @param evenement
 	 * @param debrief
 	 * @throws DonneesInexistantException 
+	 * @throws FonctionnelleException 
 	 */
-	void addDebriefEvenement(EvenementEntity evenement, String debrief) throws DonneesInexistantException;
+	void addDebriefEvenement(EvenementEntity evenement, String debrief) throws DonneesInexistantException, FonctionnelleException;
 	/**
 	 * Supprime le contenu du debrief
 	 * @param evenement
