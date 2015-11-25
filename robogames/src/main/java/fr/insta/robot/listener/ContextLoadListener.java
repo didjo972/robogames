@@ -105,7 +105,7 @@ public class ContextLoadListener extends ContextLoaderListener {
 					}
 					
 					// Si la date de déban est arrivé, on déban et on supprime le compte user
-					if (DateUtil.afterOrEqual(new Date(), c.getTime()) && habilitation.getBanTime() >= -1) {
+					if (DateUtil.afterOrEqual(new Date(), c.getTime()) && habilitation.getBanTime() >= 365) {
 						try {
 							actionUser.deleteUser(habilitation.getUser());
 						} catch (DonneesInexistantException e) {
