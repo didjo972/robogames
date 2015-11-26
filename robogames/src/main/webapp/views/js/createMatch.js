@@ -26,11 +26,10 @@ $('#btn').on('click', function(){
     if($('#infos').val() !== ''){
       obj.infos = $('#infos').val();
     }
-    obj.idUser = '' //todo
+    obj.idUser = $.cookie('rgid')
     obj.dateDebut = $('#dateStart').val();
     obj.dateFin = $('#dateEnd').val();
     obj.nomEvent = $('#eventName').val();
-    console.log('todo id user');
     console.log('obj =',obj);
     rgBdd('172.16.15.42', obj, '/USER/creerEvenement');
   }else{
