@@ -522,8 +522,9 @@ public class ActionsUserController {
 	
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
 	@ResponseBody
-    public String handleFileUpload(@RequestParam("name") String name, @RequestParam("file") MultipartFile file) {
+    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
         if (!file.isEmpty()) {
+        	String name = file.getName();
             try {
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream stream =
@@ -536,7 +537,7 @@ public class ActionsUserController {
                 return "You failed to upload " + name + " => " + e.getMessage();
             }
         } else {
-            return "You failed to upload " + name + " because the file was empty.";
+            return "You failed to upload because the file was empty.";
         }
     }
 

@@ -173,6 +173,13 @@
 			<artifactId>mail</artifactId>
 			<version>1.4</version>
 		</dependency>
+		
+		<!-- Upload -->
+		<dependency>
+			<groupId>com.sun.jersey.contribs</groupId>
+			<artifactId>jersey-multipart</artifactId>
+			<version>1.8</version>
+		</dependency>
 
 	</dependencies>
 </project>
