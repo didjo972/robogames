@@ -1,14 +1,25 @@
-$('.i-checks').iCheck({
-    checkboxClass: 'icheckbox_square-green',
-    radioClass: 'iradio_square-green',
-});
-
 $('#btnSave').on('click', function(){
-var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+(\.[a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]+)*|"((([ \t]*\r\n)?[ \t]+)?([\x01-\x08\x0b\x0c\x0e-\x1f\x7f\x21\x23-\x5b\x5d-\x7e\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|\\[\x01-\x09\x0b\x0c\x0d-\x7f\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))*(([ \t]*\r\n)?[ \t]+)?")@(([a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\d\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.)+([a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]|[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF][a-z\d\-._~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]*[a-z\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])\.?$/i;
-  if($('#inputPass').val() === $('#inputConfirm').val() && $('#inputPass').val() !== ''){
-    if( pattern.test($('#inputMail').val())){
-      request('172.16.15.42','creerCompte', function(a,b,c){
-        console.console.log('a = ',a);
+var mail = $('#inputMail').val();
+var pseudo = $('#inputPseudo').val();
+var mdp = $('#inputPass').val();
+var confirm = $('#inputConfirm').val();
+var pattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  console.log("click");
+  if(mdp === confirm && mdp !== ''){
+  if(pseudo === "insta"){
+    swal("Erreur", "Pseudo 'insta' interdit", "error")
+    return;
+  }
+    console.log("mdp === confirm && mdp !== ''");
+    if( pattern.test(mail) && pseudo !== ''){
+      console.log("pattern.test(mail && pseudo !== '')");
+      var obj = {};
+      obj['email'] = mail;
+      obj['pseudo'] = pseudo;
+      obj['password'] = mdp;
+      obj['image'] = 'http://letsmakerobots.com/files/userpics/picture-1442.gif';
+      request('creerCompte', obj , function(a,b,c){
+        console.log('a = ',a);
         getResult(a);
       });
     }
@@ -17,14 +28,13 @@ var pattern = /^([a-z\d!#$%&'*+\-\/=?^_`{|}~\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uF
   }
 });
 
-function request (url, requete, callback){
-	var xurl =  'http://'+url+':8080/robobogames/'+requete;
-	console.log('url =',xurl);
+function request ( requete, mdata, callback){
+	var xurl =  'http://172.16.15.42:8080/robobogames/'+requete;
 	$.ajax({
 		type : 'POST',
 		url : xurl,
 		dataType : 'json',
-		data: {"idUser": "2"},
+		data: mdata,
 		success : function(output, status, xhr) {
 			callback(output, status, xhr);
 		},
@@ -37,12 +47,17 @@ function request (url, requete, callback){
 function getResult(a){
   if(a.object){
     var idUser = a['object'].idUser;
-    $.cookie('RGId', idUser);
+    $.cookie('rgid', a['object'].idUser);
+    $.cookie('rgrole', a['object'].libelleHabilitation);
+    $.cookie('rgname', a['object'].nom);
+    $.cookie('rgfirst', a['object'].prenom);
+    $.cookie('rgpseudo', a['object'].pseudo);
+    $.cookie('rgimage', a['object'].image);
     if(a['object'].libelleHabilitation === 'Utilisateur'){
-      document.location.href="http://www.web.site/";
+      document.location.href="accueil.html";
     }
     if(a['object'].libelleHabilitation === 'Administrateur'){
-      document.location.href="http://www.web.site/";
+      document.location.href="accueil_administration.html";
     }
   }
 }

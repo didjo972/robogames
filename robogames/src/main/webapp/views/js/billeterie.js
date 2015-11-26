@@ -32,7 +32,7 @@ mSteps.steps({
 		{
 				if(!moyenPaiement){
 					mSteps.steps("previous");
-					alert("Aucun moyen de paiement");
+					swal("Erreur", "Aucun moyen de paiement précisé", "error");
 				}
 				if(cb.cbNumber){
 					console.log(cb);
@@ -198,11 +198,11 @@ function valideCb(){
 		cb.cdCode = cdCode;
 		cb.cbPossessor = cbPossessor;
 		moyenPaiement = true;
-			swal("Succes", "", "Paiement pas carte bancaire");
+			swal("Valide", "Paiement par carte bancaire", "success");
 	}else{
 		cb = {};
 		moyenPaiement = false;
-		swal("Erreur", "Carte bancaire non valide", "error")
+		swal("Erreur", "Carte bancaire non valide", "error");
 	}
 }
 
@@ -225,7 +225,7 @@ function valideAchat(){
 		var match = panier[i];
 		console.log(match);
 		var obj = {};
-		obj.idUser = $.cookie('rgid');
+		obj.idUser = '105';
 		obj.idEvent = match.idEvent;
 		obj.nbPlace = match.reservation;
 		rgBdd(obj,'/USER/acheterBillet', function(a,b,c){

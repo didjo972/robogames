@@ -1,5 +1,6 @@
 $('#inputName').attr('placeholder',$.cookie('rgname'));
 $('#inputFirst').attr('placeholder',$.cookie('rgfirst'));
+$('#inputImage').attr('placeholder',$.cookie('rgimage'));
 $('#smallName').html($.cookie('rgpseudo'));
 $('#btnModif').on('click', function(){
 	verifModif();
@@ -25,11 +26,18 @@ function verifModif(){
 	obj = {};
 	obj['idUser'] = $.cookie('rgid');
 		if($('#inputName').val()){
+			$.cookie('rgname', $('#inputName').val());
 			obj['nom'] = $('#inputName').val();
 			modif = true;
 		}
-		if($('#inputName').val()){
+		if($('#inputFirst').val()){
+			$.cookie('rgfirst', $('#inputFirst').val());
 			obj['prenom'] = $('#inputFirst').val();
+			modif = true;
+		}
+		if($('#inputImage').val()){
+			$.cookie('rgimage', $('#inputImage').val());
+			obj['image'] = $('#inputImage').val();
 			modif = true;
 		}
 		if($('#inputMdp').val() !== '' && $('#inputMdp').val() === $('#inputConfirm').val() && $('#inputMdp').val() !== '' ){
@@ -43,6 +51,7 @@ function verifModif(){
 		if(modif){
 			rgBdd (obj, '/USER/modifierCompte', function(){
 				swal("Modifiaction faite", "", "success");
+				document.location.href='edituser.html'
 			});
 		}else{
 			swal("Erreur", "Aucune modification demandé", "error")

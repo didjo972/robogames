@@ -1,43 +1,66 @@
 <!DOCTYPE html>
 <html>
 
-<head>
+	<head>
+	
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>RoboGames</title>
+		
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="font-awesome/css/font-awesome.css" rel="stylesheet">
+		<link href="css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+		<link href="css/animate.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+		<link href="css/jquery.dataTables.min.css" rel="stylesheet">
+		<link href="css/accueil.css" rel="stylesheet">
+		
+	</head>
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>RoboGames</title>
-
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-
-</head>
-
-<body class="gray-bg">
-
-
-    <div class="middle-box text-center animated fadeInDown">
-        <h2 class="font-bold">RoboGames</h2>
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="ibox">
-
-					The server encountered something unexpected that didn't allow it to complete the request. We apologize.<br/>
-					You can go back to main page: <br/><a href="localisation.html" class="btn btn-primary m-t">Dashboard</a>
-				</div>
+	<body>
+		<div id="wrapper">
+			<div id="logo_robogames">
+				<img id="logo" src="img/logo_robogames.png"></img>
+			</div>
+			<div id="content_text">
+				<p id="text">
+					Bienvenue sur RoboGames, une application réserver au tout personne fan ou futur fan de robot.
+				</p>
+			</div>
+			<div id="yolo_btn">
+				<p id="bouton_aligne">
+					<button id="btn_application" type="button" href="live.html" target="_blank" class="btn btn-primary" >Accès application</button>
+				</p>
+			</div>
+			<div id="content_text">
+				<p id="text">
+					<br>
+					A partir d'ici vous pouvez accès directement à l'application, vous inscrire ou directement passer par la case " Connexion " !
+				</p>
+			</div>	
+			<div id="groupe_btn">
+				<p id="bouton_aligne">
+					<button id="btn_inscription" type="button" class="btn btn-primary" >Inscription</button>
+					<button id="btn_connexion" type="button" class="btn btn-primary" >Connexion</button>
+				</p>
 			</div>
 		</div>
-    </div>
+			
+			<!-- Mainly scripts -->
+			<script src="js/jquery-2.1.1.js"></script>
+			<script src="js/bootstrap.min.js"></script>
+			<script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+			<script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
 
-    <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="js/plugins/cookie/jquery.cookie.js"></script>
-    <script src="js/layout.js"></script>
+			<!-- Custom and plugin javascript -->
+			<script src="js/inspinia.js"></script>
+			<script src="js/plugins/pace/pace.min.js"></script>
 
-</body>
-
+			<!-- blueimp gallery -->
+			<script src="js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+			<script src="js/jquery.dataTables.min.js"></script>
+			<script src="js/accueil.js"></script>
+		
+	</body>
+	
 </html>

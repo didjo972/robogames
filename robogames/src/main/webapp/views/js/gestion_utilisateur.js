@@ -14,7 +14,7 @@ function rgBdd (url, mdata, requete, callback)
 	var xurl =  'http://'+url+':8080/robobogames/'+requete;
 	console.log('url =',xurl);
 	console.log('data =',mdata);
-	mdata.idAdmin = $.cookie('rgid');
+	mdata.idAdmin = '107';
 	$.ajax({
 		type : 'POST',
 		url : xurl,
@@ -51,8 +51,8 @@ function parseRetour(retour)
 function goDatatable(obj){
 	 $('#tableUser').DataTable().row.add( [
 			obj.idUser,
-            verifVar(obj.nom),
-            verifVar(obj.prenom),
+            obj.nom,
+            obj.prenom,
             obj.pseudo,
 			obj.dateInscription,
 			'<a id="edit" class="btn btn-white btn-pencil"><i class="fa fa-pencil"></i></a> <a id="ban" class="btn btn-white btn-ban"><i class="fa fa-ban"></i></a>'
@@ -82,14 +82,6 @@ function goDatatable(obj){
 		$('#ban').removeAttr('id');
 		$('#supp').removeAttr('id');
 };
-
-function verifVar(maVariable) {
-	if (maVariable){
-		return maVariable;
-	} else {
-		return '';
-	}
-}
 
 function edit(utilisateur)
 {

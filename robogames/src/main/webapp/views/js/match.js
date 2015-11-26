@@ -31,7 +31,7 @@ $('#close').on('click', function(){
 
 function rgBdd (url, mdata, requete, callback){
 	mdata.idUser = $.cookie('rgid');
-	var xurl =  'http://'+url+':8080/robobogames/'+requete;
+	var xurl =  'http://'+url+':8080/robobogames'+requete;
 	console.log('url =',xurl);
 	$.ajax({
 		type : 'POST',
@@ -81,18 +81,20 @@ function goDatatable(obj){
 		$('#temp').removeAttr('id');
 };
 
-function toModal(event){
-
-	$('#mnom').html("Tournoi : "+event.nomEvent);
-	$('#minfos').html(event.infos);
-	$('#mstart').html(event.dateDebut);
-	$('#mend').html(event.dateFin);
-	$('#mcoord').html(event.adresse+", "+event.codePostal+" "+event.ville);
-	if(event.etat === '2'){
+function toModal(evenement){
+	console.log('ludoDEBUG = ',evenement);
+	console.log(evenement.etat);
+	$('#mnom').html("Tournoi : "+evenement.nomEvent);
+	$('#minfos').html(evenement.infos);
+	$('#mstart').html(evenement.dateDebut);
+	$('#mend').html(evenement.dateFin);
+	$('#mcoord').html(evenement.adresse+", "+evenement.codePostal+" "+evenement.ville);
+	if(evenement.etat === 2){
+		console.log('evenement.etat === "2"');
 		$('#makeDebrief').css('display','inline');
 		$('#btnMakeDebrief').unbind();
 		$('#btnMakeDebrief').on('click', function(){
-			fillModal(event);
+			fillModal(evenement);
 		});
 	}else{
 		$('#makeDebrief').css('display','none');
@@ -112,8 +114,8 @@ function toModal(event){
         },
         panControl: false
     });
-	var rue = event.adresse;
-	var url = "http://maps.googleapis.com/maps/api/geocode/json?address="+event.adresse+"%20"+event.ville+"&sensor=true"
+	var rue = evenement.adresse;
+	var url = "http://maps.googleapis.com/maps/api/geocode/json?address="+evenement.adresse+"%20"+evenement.ville+"&sensor=true"
 	$.ajax({
 		url:  url,
 		success: function(data){
@@ -132,15 +134,20 @@ function toModal(event){
 	});
 };
 
-function fillModal(event){
-	$('#summernote').html(event.debrief);
+function fillModal(evenement){
+	$('#summernote').html(evenement.debrief);
 	summernote = $('#summernote').summernote();
 	$('#maModal').modal();
 }
 
 function saveDebrief(text){
-	rgBdd('172.16.15.42',{}, '/USER/modifierDebrief', function(a,b,c){
-		if(a.retour.message === 'ok'){
+	var obj = {};
+	obj['idEvent'] = thisEvent.idEvent;
+	obj['debrief'] = text;
+	console.log('obj = ',obj);
+	rgBdd('172.16.15.42',obj, '/USER/modifierDebrief', function(a,b,c){
+		console.log("retour = ",a);
+		if(a['retour'].message === 'OK'){
 			swal("Modification faite", "", "success")
 		}else{
 			swal("Erreur", "Modification invalide", "error")

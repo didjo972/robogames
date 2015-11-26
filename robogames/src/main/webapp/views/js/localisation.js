@@ -67,18 +67,19 @@ function goDatatable(obj){
 		$('#temp').removeAttr('id');
 };
 
-function toModal(event){
+function toModal(evenement){
 
-	$('#mnom').html("Tournoi : "+event.nomEvent);
-	$('#minfos').html(event.infos);
-	$('#mstart').html(event.dateDebut);
-	$('#mend').html(event.dateFin);
-	$('#mcoord').html(event.adresse+", "+event.codePostal+" "+event.ville);
-	if(event.debrief !== '' && event.etat === '2'){
+	$('#mnom').html("Tournoi : "+evenement.nomEvent);
+	$('#minfos').html(evenement.infos);
+	$('#mstart').html(evenement.dateDebut);
+	$('#mend').html(evenement.dateFin);
+	$('#mcoord').html(evenement.adresse+", "+evenement.codePostal+" "+evenement.ville);
+	if(evenement['debrief'] !== '' && evenement['etat'] === 2){
+		console.log('+++++++++++++++++++++++++++++++++++++++++++++++++++++');
 		$('#forDebrief').css('display','inline');
 		$('#btnDebrief').unbind();
 		$('#btnDebrief').on('click', function(){
-			fillModal(event);
+			fillModal(evenement);
 		});
 	}else{
 		$('#forDebrief').css('display','none');
@@ -98,8 +99,8 @@ function toModal(event){
         },
         panControl: false
     });
-	var rue = event.adresse;
-	var url = "http://maps.googleapis.com/maps/api/geocode/json?address="+event.adresse+"%20"+event.ville+"&sensor=true"
+	var rue = evenement.adresse;
+	var url = "http://maps.googleapis.com/maps/api/geocode/json?address="+evenement.adresse+"%20"+evenement.ville+"&sensor=true"
 	$.ajax({
 		url:  url,
 		success: function(data){
@@ -118,7 +119,7 @@ function toModal(event){
 	});
 };
 
-function fillModal(event){
-	$('#mcontenue').html(event.debrief);
+function fillModal(evenement){
+	$('#mcontenue').html(evenement.debrief);
 	$('#maModal').modal();
 }

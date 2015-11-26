@@ -13,7 +13,7 @@ function rgBdd (url, mdata, requete, callback)
 	var xurl =  'http://'+url+':8080/robobogames/'+requete;
 	console.log('url =',xurl);
 	console.log('data =',mdata);
-	mdata.idAdmin = $.cookie('rgid');
+	mdata.idAdmin = '107';
 	$.ajax({
 		type : 'POST',
 		url : xurl,

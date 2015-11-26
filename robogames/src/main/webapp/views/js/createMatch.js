@@ -26,10 +26,11 @@ $('#btn').on('click', function(){
     if($('#infos').val() !== ''){
       obj.infos = $('#infos').val();
     }
-    obj.idUser = $.cookie('rgid')
+    obj.idUser = '' //todo
     obj.dateDebut = $('#dateStart').val();
     obj.dateFin = $('#dateEnd').val();
     obj.nomEvent = $('#eventName').val();
+    console.log('todo id user');
     console.log('obj =',obj);
     rgBdd('172.16.15.42', obj, '/USER/creerEvenement');
   }else{
@@ -38,8 +39,8 @@ $('#btn').on('click', function(){
 })
 
 function rgBdd (url, mdata, requete, callback){
-	var xurl =  'http://'+url+':8080/robobogames/'+requete;
-  mdata.idUser = $.cookie('rgid');
+	var xurl =  'http://172.16.15.42:8080/robobogames/'+requete;
+  mdata['idUser'] = $.cookie('rgid');
 	$.ajax({
 		type : 'POST',
 		url : xurl,

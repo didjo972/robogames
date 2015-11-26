@@ -22,6 +22,18 @@
                 <div class="sidebar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="nav-header">
+                            <div class="dropdown profile-element">
+                                <span>
+                                    <img id="profileImage" alt="image" class="img-circle">
+                                </span>
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <span class="clear">
+                                        <span class="block m-t-xs">
+                                            <strong id="profilName" class="font-bold">Invité</strong>
+                                        </span>
+                                    </span>
+                                </a>
+                            </div>
                             <div class="logo-element">
                                 RG
                             </div>
@@ -60,7 +72,7 @@
                           </li>
                           <li>
                               <a href="login.html">
-                                  <i class="fa fa-sign-out"></i> Log in
+                                  <i class="fa fa-sign-out"></i><span id="spanCo"> Connexion</span>
                               </a>
                           </li>
                       </ul>
@@ -87,7 +99,7 @@
 	<br>
 	<div class="ibox">
         <div class="ibox-title">
-            <h5 >Bonjour <small id="smallName"></small></h5>
+            <h4 id="smallName"></h4>
         </div>
         <div class="ibox-content">
              <div class="row">
@@ -103,16 +115,23 @@
                     <input id="inputFirst" class="form-control" type="text">
                 </div>
             </div>
+            <br>
+            <div class="row">
+                <label class="col-md-2">Image :</label>
+                <div class="col-md-6">
+                    <input id="inputImage" class="form-control" type="text">
+                </div>
+            </div>
             <div class="hr-line-dashed"></div>
             <div class="row">
-                <label class="col-md-2">Ancien mot de passe :</label>
+                <label class="col-md-2">Ancien mot de passe </label>
                 <div class="col-md-6">
                     <input id="inputOld" class="form-control" type="text">
                 </div>
             </div>
             <br>
             <div class="row">
-                <label class="col-md-2">Nouveau Mot de passe :</label>
+                <label class="col-md-2">Nouveau Mot de passe</label>
                 <div class="col-md-6">
                     <input id="inputMdp" class="form-control" type="text">
                 </div>
@@ -132,14 +151,6 @@
             </div>
 		</div>
 	</div>
-    <div class="footer">
-            <div class="pull-right">
-                10GB of <strong>250GB</strong> Free.
-            </div>
-            <div>
-                <strong>Copyright</strong> Example Company &copy; 2014-2015
-            </div>
-        </div>
     </div>
 </div>
 

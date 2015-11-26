@@ -16,7 +16,7 @@ $('#btn_live').on('click', function ()
 function rgBdd (url, mdata, requete, callback)
 {
 	var data = {};
-	data.idAdmin = $.cookie('rgid');
+	data.idAdmin = '107';
 	if(mdata !== ''){
 		data.url = mdata;
 	}

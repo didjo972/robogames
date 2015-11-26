@@ -13,7 +13,7 @@
     <link href="css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <link href="css/animate.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
+    <script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 
 <body class="gray-bg">
@@ -51,7 +51,7 @@
                             <input id="inputPass" type="password" class="form-control" placeholder="mot de passe" required="">
                         </div>
                         <button id="btnLogin" type="button" class="btn btn-primary block full-width m-b">Connexion</button>
-
+                        <div class="g-recaptcha" data-callback="backCaptcha" style="width: 100%;" data-sitekey="6Ldw0xETAAAAAHQgIkU74sBEMJetoOIfccy1m6cP"></div>
                         <a href="#">
                             <small>Mot de passe oublié ?</small>
                         </a>
@@ -60,6 +60,7 @@
                             <small>Vous n'avez pas de compte ?</small>
                         </p>
                         <a class="btn btn-sm btn-white btn-block" href="createLogin.html">Creer un compte</a>
+
                     </form>
                     <br>
                     <a class="btn btn-sm btn-white btn-block" href="accueil.html">Retour accueil</a>
