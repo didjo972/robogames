@@ -40,7 +40,7 @@ $('#btn').on('click', function(){
 
 function rgBdd (url, mdata, requete, callback){
 	var xurl =  'http://'+url+':8080/robobogames/'+requete;
-  mdata.idUser = '105';
+  mdata.idUser = $.cookie('rgid');
 	$.ajax({
 		type : 'POST',
 		url : xurl,

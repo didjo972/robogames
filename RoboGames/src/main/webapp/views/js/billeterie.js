@@ -225,7 +225,7 @@ function valideAchat(){
 		var match = panier[i];
 		console.log(match);
 		var obj = {};
-		obj.idUser = '105';
+		obj.idUser = $.cookie('rgid');
 		obj.idEvent = match.idEvent;
 		obj.nbPlace = match.reservation;
 		rgBdd(obj,'/USER/acheterBillet', function(a,b,c){
