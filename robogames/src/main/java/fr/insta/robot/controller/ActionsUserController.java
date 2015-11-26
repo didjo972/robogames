@@ -56,6 +56,7 @@ public class ActionsUserController {
 		String pseudo = null;
 		String password = null;
 		String email = null;
+		String image = null;
 		
 		try {
 			for (int i = 0; i <= tableau.length - 1; i++) {
@@ -71,6 +72,9 @@ public class ActionsUserController {
 				if (tableauCleValue[0].equalsIgnoreCase("password")) {
 					password = tableauCleValue[1];
 				}
+				if (tableauCleValue[0].equalsIgnoreCase("image")) {
+					image = tableauCleValue[1];
+				}
 			}
 		} catch (Exception e) {
 			RetourDTO retour = new RetourDTO();
@@ -83,7 +87,7 @@ public class ActionsUserController {
 
 		// Vérification des données
 		if (StringUtils.isBlank(pseudo) || StringUtils.isBlank(password)
-				|| StringUtils.isBlank(email)) {
+				|| StringUtils.isBlank(email) || StringUtils.isBlank(image)) {
 			// Retourne une erreur
 			RetourDTO retour = new RetourDTO();
 			LOG.error("Erreur, donnee manquante");
@@ -97,7 +101,7 @@ public class ActionsUserController {
 		ActionUserServiceImpl actionUser = new ActionUserServiceImpl();
 		UserEntity userEntity = null;
 		try {
-			userEntity = actionUser.createUser(pseudo, password, email);
+			userEntity = actionUser.createUser(pseudo, password, email, image);
 		} catch (DonneesInexistantException e) {
 			RetourDTO retour = new RetourDTO();
 			LOG.error(e.getMessage());
@@ -410,6 +414,7 @@ public class ActionsUserController {
 		userDTO.setPseudo(userEntity.getInformation().getPseudo());
 		userDTO.setDateInscription(DateUtil.formatDate(userEntity.getHabilitation().getDateDebut()));
 		userDTO.setInfosHabilitation(userEntity.getHabilitation().getInfos());
+		userDTO.setImage(userEntity.getInformation().getImage());
 		if (userEntity.getHabilitation().getEtat()) {
 			userDTO.setEtatHabilitation("1");
 		} else {

@@ -28,6 +28,9 @@ public class UserDTO {
 	
 	/** Infos sur l'habilitation */
 	private String infosHabilitation;
+	
+	/** Image de profil */
+	private String image;
 
 	/**
 	 * @return the nom
@@ -153,6 +156,20 @@ public class UserDTO {
 	 */
 	public void setInfosHabilitation(String infosHabilitation) {
 		this.infosHabilitation = infosHabilitation;
+	}
+
+	/**
+	 * @return the image
+	 */
+	public String getImage() {
+		return image;
+	}
+
+	/**
+	 * @param image the image to set
+	 */
+	public void setImage(String image) {
+		this.image = image;
 	}
 	
 }
