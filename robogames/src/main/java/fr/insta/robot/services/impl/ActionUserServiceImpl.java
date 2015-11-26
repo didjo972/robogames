@@ -95,9 +95,8 @@ public class ActionUserServiceImpl implements ActionUserService {
 		// Envoie d'un mail d'information à l'utilisateur
 		MailServiceImpl mailService = new MailServiceImpl();
 		mailService.sendMail("[RG]Création de votre compte", "Bonjour "+
-				user.getInformation().getPrenom()+" "+user.getInformation().getNom()
-				+",\nVotre compte utilisateur a été créé avec le pseudo "+user.getInformation().getPseudo(), 
-				Arrays.asList(user.getInformation().getEmail()));
+				user.getInformation().getPseudo()+",\nVotre compte utilisateur a été créé avec le pseudo "
+				+user.getInformation().getPseudo(), Arrays.asList(user.getInformation().getEmail()));
 
 		// retourne l'utilisateur
 		return user;
@@ -245,11 +244,20 @@ public class ActionUserServiceImpl implements ActionUserService {
 			userService.updateUser(user);
 			
 			// Envoie d'un mail d'information à l'utilisateur
+			String nom = user.getInformation().getNom();
+			String prenom = user.getInformation().getPrenom();
+			String pseudo = user.getInformation().getPseudo();
 			MailServiceImpl mailService = new MailServiceImpl();
-			mailService.sendMail("[RG]Désactivation de votre compte", "Bonjour "+
-					user.getInformation().getPrenom()+" "+user.getInformation().getNom()
-					+",\nVotre compte utilisateur a été suspendu pour la raison suivante :"
-					+user.getHabilitation().getInfos(), Arrays.asList(user.getInformation().getEmail()));
+			if (StringUtils.isNotBlank(prenom) && StringUtils.isNotBlank(nom)) {
+				mailService.sendMail("[RG]Désactivation de votre compte", "Bonjour "
+						+prenom+" "+nom+",\nVotre compte utilisateur a été suspendu pour la raison suivante :"
+						+user.getHabilitation().getInfos(), Arrays.asList(user.getInformation().getEmail()));
+			} else {
+				mailService.sendMail("[RG]Désactivation de votre compte", "Bonjour "
+						+pseudo+",\nVotre compte utilisateur a été suspendu pour la raison suivante :"
+						+user.getHabilitation().getInfos(), Arrays.asList(user.getInformation().getEmail()));
+			}
+			
 		}
 	}
 
@@ -265,12 +273,21 @@ public class ActionUserServiceImpl implements ActionUserService {
 			userService.updateUser(user);
 			
 			// Envoie d'un mail d'information à l'utilisateur
+			String nom = user.getInformation().getNom();
+			String prenom = user.getInformation().getPrenom();
+			String pseudo = user.getInformation().getPseudo();
 			MailServiceImpl mailService = new MailServiceImpl();
-			mailService.sendMail("[RG]Réactivation de votre compte", "Bonjour "+
-					user.getInformation().getPrenom()+" "+user.getInformation().getNom()
-					+",\nVotre compte utilisateur a été réactivé. \nSachez qu'une récidive "
-					+ "peut entrainer une suppression définite de votre compte.", 
-					Arrays.asList(user.getInformation().getEmail()));
+			if (StringUtils.isNotBlank(prenom) && StringUtils.isNotBlank(nom)) {
+				mailService.sendMail("[RG]Réactivation de votre compte", "Bonjour "
+						+prenom+" "+nom+",\nVotre compte utilisateur a été réactivé. \nSachez qu'une récidive "
+								+ "peut entrainer une suppression définite de votre compte.", 
+								Arrays.asList(user.getInformation().getEmail()));
+			} else {
+				mailService.sendMail("[RG]Réactivation de votre compte", "Bonjour "
+						+pseudo+",\nVotre compte utilisateur a été réactivé. \nSachez qu'une récidive "
+						+ "peut entrainer une suppression définite de votre compte.", 
+						Arrays.asList(user.getInformation().getEmail()));
+			}
 		}
 	}
 
@@ -300,12 +317,21 @@ public class ActionUserServiceImpl implements ActionUserService {
 			throw new DonneesInexistantException("Erreur, user vide");
 		}
 		userS.deleteUser(user);
+		
 		// Envoie d'un mail d'information à l'utilisateur
+		String nom = user.getInformation().getNom();
+		String prenom = user.getInformation().getPrenom();
+		String pseudo = user.getInformation().getPseudo();
 		MailServiceImpl mailService = new MailServiceImpl();
-		mailService.sendMail("[RG]Suppression de votre compte", "Bonjour "+
-				user.getInformation().getPrenom()+" "+user.getInformation().getNom()
-				+",\nVotre compte utilisateur a été supprimé. \n.", 
-				Arrays.asList(user.getInformation().getEmail()));
+		if (StringUtils.isNotBlank(prenom) && StringUtils.isNotBlank(nom)) {
+			mailService.sendMail("[RG]Suppression de votre compte", "Bonjour "+
+					prenom+" "+nom+",\nVotre compte utilisateur a été supprimé. \n.", 
+					Arrays.asList(user.getInformation().getEmail()));
+		} else {
+			mailService.sendMail("[RG]Suppression de votre compte", "Bonjour "+
+					pseudo+",\nVotre compte utilisateur a été supprimé. \n.", 
+					Arrays.asList(user.getInformation().getEmail()));
+		}
 	}
 
 	@Override

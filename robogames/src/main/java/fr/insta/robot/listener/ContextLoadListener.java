@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.web.context.ContextLoaderListener;
 
@@ -126,10 +127,20 @@ public class ContextLoadListener extends ContextLoaderListener {
 			for (UserEntity userEntity : listUser) {
 				// Si l'utilisateur est actif et que celà fait 6 mois qu'il n'a pas changer de mot de passe on lui envoie un mail
 				if (userEntity.getHabilitation().getEtat() && DateUtil.nbJoursEntre(userEntity.getInformation().getLastUpdate(), new Date()) >= 183) {
+					String pseudo = userEntity.getInformation().getPseudo();
+					String nom = userEntity.getInformation().getNom();
+					String prenom = userEntity.getInformation().getPrenom();
 					MailServiceImpl mailService = new MailServiceImpl();
-					mailService.sendMail("[RG]Mot de passe obsolète", "Bonjour,\nVotre dernière mise à jour de mot de passe remonte au"
-					+ DateUtil.formatDate(userEntity.getInformation().getLastUpdate())
-					+".\nNous vous prions de bien vouloir le changer.", Arrays.asList(userEntity.getInformation().getEmail()));
+					if (StringUtils.isNotBlank(prenom) && StringUtils.isNotBlank(nom)) {
+						mailService.sendMail("[RG]Mot de passe obsolète", "Bonjour "+prenom+" "+nom+","+"\nVotre dernière mise à "
+								+ "jour de mot de passe remonte au"+DateUtil.formatDate(userEntity.getInformation().getLastUpdate())
+								+".\nNous vous prions de bien vouloir le changer.", Arrays.asList(userEntity.getInformation().getEmail()));
+					} else {
+						mailService.sendMail("[RG]Mot de passe obsolète", "Bonjour "+pseudo+","+"\nVotre dernière mise à "
+								+ "jour de mot de passe remonte au"+DateUtil.formatDate(userEntity.getInformation().getLastUpdate())
+								+".\nNous vous prions de bien vouloir le changer.", Arrays.asList(userEntity.getInformation().getEmail()));
+					}
+					
 				}
 			}
 		}
