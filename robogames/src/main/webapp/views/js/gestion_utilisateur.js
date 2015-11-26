@@ -51,8 +51,8 @@ function parseRetour(retour)
 function goDatatable(obj){
 	 $('#tableUser').DataTable().row.add( [
 			obj.idUser,
-            obj.nom,
-            obj.prenom,
+            verifVar(obj.nom),
+            verifVar(obj.prenom),
             obj.pseudo,
 			obj.dateInscription,
 			'<a id="edit" class="btn btn-white btn-pencil"><i class="fa fa-pencil"></i></a> <a id="ban" class="btn btn-white btn-ban"><i class="fa fa-ban"></i></a>'
@@ -82,6 +82,14 @@ function goDatatable(obj){
 		$('#ban').removeAttr('id');
 		$('#supp').removeAttr('id');
 };
+
+function verifVar(maVariable) {
+	if (maVariable){
+		return maVariable;
+	} else {
+		return '';
+	}
+}
 
 function edit(utilisateur)
 {
