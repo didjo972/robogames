@@ -3,7 +3,8 @@ $('#iframe').attr('height',
 );
 document.body.style.overflow = 'hidden';
 
-rgBdd('172.16.15.42','USER/recupererUrlLive',function(a,b,c){
+//rgBdd('172.16.15.42','USER/recupererUrlLive',function(a,b,c){
+rgBdd('localhost','USER/recupererUrlLive',function(a,b,c){
 	$('#iframe').attr('src',a['object'].url);
 });
 

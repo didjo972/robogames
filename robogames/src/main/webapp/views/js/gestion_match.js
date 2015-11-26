@@ -1,5 +1,6 @@
 //lance AJAX
-rgBdd('172.16.15.42',{} , 'ADMIN/getAllEvenement', function(a,b,c)
+//rgBdd('172.16.15.42',{} , 'ADMIN/getAllEvenement', function(a,b,c)
+rgBdd('localhost',{} , 'ADMIN/getAllEvenement', function(a,b,c)
 {
 	console.log('a =',a);
 	console.log('b =',b);
@@ -18,7 +19,7 @@ function rgBdd (url, mdata, requete, callback)
 	var xurl =  'http://'+url+':8080/robobogames/'+requete;
 	console.log('url =',xurl);
 	console.log('data =',mdata);
-	mdata.idAdmin = '107';
+	mdata.idAdmin = $.cookie('rgid');
 	$.ajax({
 		type : 'POST',
 		url : xurl,

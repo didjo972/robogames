@@ -11,7 +11,9 @@ $('#btnLogin').on('click', function(){
     obj.mail = $('#inputMail').val();
     obj.password = $('#inputPass').val();
 		obj.image = 'http://letsmakerobots.com/files/userpics/picture-1442.gif';
-    request  ('172.16.15.42',obj,'login',function(a,b,c){
+		
+    //request  ('172.16.15.42',obj,'login',function(a,b,c){
+	 request  ('localhost',obj,'login',function(a,b,c){	
       console.log('a = ',a);
       if(a['object']){
 				if(a['object'].etatHabilitation === "1"){

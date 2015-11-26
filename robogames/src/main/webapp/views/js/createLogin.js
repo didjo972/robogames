@@ -29,7 +29,8 @@ var pattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(
 });
 
 function request ( requete, mdata, callback){
-	var xurl =  'http://172.16.15.42:8080/robobogames/'+requete;
+	//var xurl =  'http://172.16.15.42:8080/robobogames/'+requete;
+	var xurl =  'http://localhost:8080/robobogames/'+requete;
 	$.ajax({
 		type : 'POST',
 		url : xurl,

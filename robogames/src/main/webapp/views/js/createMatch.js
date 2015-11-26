@@ -26,20 +26,21 @@ $('#btn').on('click', function(){
     if($('#infos').val() !== ''){
       obj.infos = $('#infos').val();
     }
-    obj.idUser = '' //todo
+    obj.idUser = $.cookie('rgid');
     obj.dateDebut = $('#dateStart').val();
     obj.dateFin = $('#dateEnd').val();
     obj.nomEvent = $('#eventName').val();
-    console.log('todo id user');
     console.log('obj =',obj);
-    rgBdd('172.16.15.42', obj, '/USER/creerEvenement');
+    //rgBdd('172.16.15.42', obj, '/USER/creerEvenement');
+	rgBdd('localhost', obj, '/USER/creerEvenement');
   }else{
     swal("Erreur", "Au moins un champs est incorrect.", "error")
   }
 })
 
 function rgBdd (url, mdata, requete, callback){
-	var xurl =  'http://172.16.15.42:8080/robobogames/'+requete;
+	//var xurl =  'http://172.16.15.42:8080/robobogames/'+requete;
+	var xurl =  'http://localhost:8080/robobogames'+requete;
   mdata['idUser'] = $.cookie('rgid');
 	$.ajax({
 		type : 'POST',
