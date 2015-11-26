@@ -1,0 +1,88 @@
+body
+{
+	height: 100%;
+	width: 100%;
+	background-image: url("../img/fond_1.png");
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+
+#wrapper
+{
+	height: 550px;
+	width: 500px;
+	background: #FFFFFF;
+	position: relative;
+	top: 80px;
+	left: 550px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
+#logo_robogames
+{
+	background: black;
+	height: 100px;
+	width: 500px;
+}
+
+#logo
+{
+	position: relative;
+	left: 5px;
+	top: 20px;
+}
+
+#content_text
+{
+	height: 100px;
+	width: 450px;
+	position: relative;
+	left: 20px;
+	top: 30px;
+}
+
+#text
+{
+	font-size: 17px;
+	position: relative;
+	left: 10px;
+}
+
+#yolo_btn
+{
+	width: 500px;
+	height: 50px;
+	position: relative;
+	top: 10px;
+}
+
+#btn_application
+{
+	height: 40px;
+	width: 140px;
+}
+
+#groupe_btn
+{
+	position: relative;
+	top: 60px;
+}
+
+#btn_inscription
+{
+	height: 40px;
+	width: 100px;
+}
+
+#btn_connexion
+{
+	height: 40px;
+	width: 100px;
+}
+
+#bouton_aligne
+{
+	text-align: center;
+}
