@@ -1,8 +1,5 @@
 package fr.insta.robot.controller;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.Arrays;
@@ -16,9 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import fr.insta.robot.bo.ReponseDTO;
 import fr.insta.robot.bo.RetourDTO;
@@ -519,26 +514,4 @@ public class ActionsUserController {
 		reponse.setObject(fillUserDTO(userEntity));
 		return reponse;
 	}
-	
-	@RequestMapping(value="/upload", method=RequestMethod.POST)
-	@ResponseBody
-    public String handleFileUpload(@RequestParam("file") MultipartFile file) {
-        if (!file.isEmpty()) {
-        	String name = file.getName();
-            try {
-                byte[] bytes = file.getBytes();
-                BufferedOutputStream stream =
-                        new BufferedOutputStream(new FileOutputStream(new File(name)));
-                stream.write(bytes);
-                stream.close();
-                LOG.info("FichierUpload");
-                return "You successfully uploaded " + name + "!";
-            } catch (Exception e) {
-                return "You failed to upload " + name + " => " + e.getMessage();
-            }
-        } else {
-            return "You failed to upload because the file was empty.";
-        }
-    }
-
 }
