@@ -17,7 +17,7 @@ public interface ActionUserService {
 	 * @throws DonneesInexistantException
 	 * @throws FonctionnelleException
 	 */
-	UserEntity createUser(String pseudo, String password, String mail) throws DonneesInexistantException, FonctionnelleException;
+	UserEntity createUser(String pseudo, String password, String mail, String image) throws DonneesInexistantException, FonctionnelleException;
 	/**
 	 * Retourne une chaine crypté en md5
 	 * @param password

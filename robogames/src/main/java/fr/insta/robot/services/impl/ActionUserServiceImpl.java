@@ -32,9 +32,9 @@ public class ActionUserServiceImpl implements ActionUserService {
 
 	// A rajouter habilitation date fin
 	@Override
-	public UserEntity createUser(String pseudo, String password, String mail)
+	public UserEntity createUser(String pseudo, String password, String mail, String image)
 			throws DonneesInexistantException, FonctionnelleException {
-		if (StringUtils.isBlank(pseudo) || StringUtils.isBlank(password) || StringUtils.isBlank(mail)) {
+		if (StringUtils.isBlank(pseudo) || StringUtils.isBlank(password) || StringUtils.isBlank(mail) || StringUtils.isBlank(mail)) {
 			throw new DonneesInexistantException("Erreur, toutes les données doivent être fournies.");
 		}
 		// Habilitation
@@ -50,7 +50,7 @@ public class ActionUserServiceImpl implements ActionUserService {
 		informations.setPseudo(pseudo);
 		informations.setEmail(mail);
 		informations.setLastUpdate(new Date());
-
+		informations.setImage(image);
 		// Cryptage du mot de passe en md5
 		try {
 			informations.setPassword(encodeMd5(password));
