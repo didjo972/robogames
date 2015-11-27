@@ -1,4 +1,3 @@
-//rgBdd('172.16.15.42',{}, '/USER/getEvenementByUser', function(a,b,c){
 rgBdd('localhost',{}, '/USER/getEvenementByUser', function(a,b,c){
 	console.log('a =',a);
 	console.log('b =',b);
@@ -147,7 +146,6 @@ function saveDebrief(text){
 	obj['debrief'] = text;
 	console.log('obj = ',obj);
 	
-	//rgBdd('172.16.15.42',obj, '/USER/modifierDebrief', function(a,b,c){
 	rgBdd('localhost',obj, '/USER/modifierDebrief', function(a,b,c){
 		console.log("retour = ",a);
 		if(a['retour'].message === 'OK'){

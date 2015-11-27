@@ -1,5 +1,4 @@
 //lance AJAX
-//rgBdd('172.16.15.42', function(a,b,c){
 rgBdd('localhost', function(a,b,c){	
 	
 	console.log('a =',a);

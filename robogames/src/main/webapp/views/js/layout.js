@@ -16,9 +16,15 @@ if(role === 'Administrateur'){
   $('#pageMatch').css('display','inline');
   $('#createMatch').css('display','inline');
   $('#editUser').css('display','inline');
-  $('#profilName').html($.cookie('rgname')+" "+$.cookie('rgfirst'));
+  $('#profilName').html(verifParam($.cookie('rgname'), $.cookie('rgfirst')));
+  $('#profilName2').html(verifParam($.cookie('rgname'), $.cookie('rgfirst')));
   $('#profileImage').attr('src', $.cookie('rgimage'));
   $('#btnDeco').on('click', function (){
+    console.log('test');
+    $.cookie('rgrole', 'none');
+    document.location.href="accueil.html";
+  })
+  $('#btnDeco2').on('click', function (){
     console.log('test');
     $.cookie('rgrole', 'none');
     document.location.href="accueil.html";
@@ -43,8 +49,10 @@ if(role === 'Administrateur'){
   $('#pageBilleterie').css('display','inline');
   $('#editUser').css('display','inline');
   $('#spanCo').html('Deconnexion');
-  $('#profilName').html($.cookie('rgname')+" "+$.cookie('rgfirst'));
+  $('#profilName').html(verifParam($.cookie('rgname'), $.cookie('rgfirst')));
+  $('#profilName2').html(verifParam($.cookie('rgname'), $.cookie('rgfirst')));
   $('#profileImage').attr('src', $.cookie('rgimage'));
+  $('#profileImage2').attr('src', $.cookie('rgimage'));
   $('#btnCo').on('click', function(){
     $.cookie('rgrole', 'none');
     document.location.href="accueil.html";
@@ -79,4 +87,13 @@ if(role === 'Administrateur'){
   if(fail){
     //document.location.href="accueil.html"
   }
+}
+
+function verifParam(name, firstname) {
+	if (name && firstname && firstname != 'undefined' && name != 'undefined') {
+		console.log(name+' '+firstname);
+		return name+' '+firstname;
+	} else {
+		return $.cookie('rgpseudo');
+	}
 }

@@ -18,7 +18,7 @@ $('#debug').on('click', function(){
 function uploadFile(file){
 var xhr = new XMLHttpRequest();
 var fd = new FormData();
-xhr.open("POST", 'http://172.16.15.42:8080/robobogames/upload', true);
+xhr.open("POST", 'http://localhost:8080/robobogames/upload', true);
 xhr.onreadystatechange = function() {
     if (xhr.readyState == 4 && xhr.status == 200) {
         console.log(xhr.responseText); // handle response.
@@ -30,7 +30,7 @@ xhr.send(fd);
 
 function request( requete, mdata){
     test = JSON.stringify(getBase64Image(mdata));
-	var xurl =  'http://172.16.15.42:8080/robobogames/'+requete;
+	var xurl =  'http://localhost:8080/robobogames/'+requete;
 	$.ajax({
 		type : 'POST',
 		url : xurl,

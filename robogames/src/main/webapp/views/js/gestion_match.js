@@ -1,5 +1,4 @@
 //lance AJAX
-//rgBdd('172.16.15.42',{} , 'ADMIN/getAllEvenement', function(a,b,c)
 rgBdd('localhost',{} , 'ADMIN/getAllEvenement', function(a,b,c)
 {
 	console.log('a =',a);
@@ -132,7 +131,7 @@ function ValidEvent(idEvent)
 	console.log('idEvent = ',idEvent)
 	var obj = {};
 	obj.idEvent = idEvent;
-	rgBdd('172.16.15.42', obj, 'ADMIN/validerEvenement', function(a,b,c)
+	rgBdd('localhost', obj, 'ADMIN/validerEvenement', function(a,b,c)
 	{
 		console.log(a);
 	});
@@ -156,7 +155,7 @@ function inValidEvent(evenement)
 	var obj = {};
 	obj.idEvent = $('#label_idRaison').val();
 	obj.raison = $('#label_raison').val();
-	rgBdd('172.16.15.42', obj, 'ADMIN/invaliderEvenement', function(a,b,c)
+	rgBdd('localhost', obj, 'ADMIN/invaliderEvenement', function(a,b,c)
 	{
 		console.log(a);
 	});

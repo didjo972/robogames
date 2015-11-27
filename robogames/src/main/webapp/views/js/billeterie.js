@@ -87,7 +87,6 @@ function rgBdd (mdata, request, callback){
 	$.ajax({
 		type : 'POST',
 		data : mdata,
-		//url : 'http://172.16.15.42:8080/robobogames/'+request,
 		url : 'http://localhost:8080/robobogames/'+request,
 		dataType : 'json',
 		success : function(output, status, xhr) {

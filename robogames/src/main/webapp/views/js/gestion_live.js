@@ -1,5 +1,5 @@
 //lance AJAX
-rgBdd('172.16.15.42', '', 'ADMIN/recupererUrlLive', function(a,b,c)
+rgBdd('localhost', '', 'ADMIN/recupererUrlLive', function(a,b,c)
 {
 	console.log('a =',a.object.url);
 	console.log('b =',b);
@@ -16,7 +16,7 @@ $('#btn_live').on('click', function ()
 function rgBdd (url, mdata, requete, callback)
 {
 	var data = {};
-	data.idAdmin = '107';
+	data.idAdmin = $.cookie('rgid');
 	if(mdata !== ''){
 		data.url = mdata;
 	}
@@ -40,7 +40,7 @@ function rgBdd (url, mdata, requete, callback)
 
 function setUrl(url)
 {
-	rgBdd('172.16.15.42', url, 'ADMIN/updateUrlLive', function(a,b,c)
+	rgBdd('localhost', url, 'ADMIN/updateUrlLive', function(a,b,c)
 	{
 		console.log(a);
 	});

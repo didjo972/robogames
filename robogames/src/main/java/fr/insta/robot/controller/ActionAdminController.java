@@ -272,7 +272,9 @@ public class ActionAdminController {
 		evenementDTO.setCodePostal(evenement.getCodePostal());
 		evenementDTO.setDateDebut(DateUtil.formatDate(evenement.getDateDebut()));
 		evenementDTO.setDateFin(DateUtil.formatDate(evenement.getDateFin()));
-		evenementDTO.setDebrief(evenement.getDebrief().getDebrief());
+		if (evenement.getDebrief() != null) {
+			evenementDTO.setDebrief(evenement.getDebrief().getDebrief());
+		}
 		evenementDTO.setEtat(evenement.getEtat());
 		evenementDTO.setIdEvent(evenement.getId().toString());
 		evenementDTO.setIdUser(evenement.getUser().getId().toString());

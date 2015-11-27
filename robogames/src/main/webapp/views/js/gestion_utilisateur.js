@@ -1,5 +1,4 @@
 //lance AJAX
-//rgBdd('172.16.15.42',{} ,'ADMIN/getAllUtilisateur', function(a,b,c)
 rgBdd('localhost',{} ,'ADMIN/getAllUtilisateur', function(a,b,c)
 {
 	console.log('a =',a);
@@ -52,8 +51,8 @@ function parseRetour(retour)
 function goDatatable(obj){
 	 $('#tableUser').DataTable().row.add( [
 			obj.idUser,
-            obj.nom,
-            obj.prenom,
+            verifParam(obj.nom),
+            verifParam(obj.prenom),
             obj.pseudo,
 			obj.dateInscription,
 			'<a id="edit" class="btn btn-white btn-pencil"><i class="fa fa-pencil"></i></a> <a id="ban" class="btn btn-white btn-ban"><i class="fa fa-ban"></i></a>'
@@ -83,6 +82,15 @@ function goDatatable(obj){
 		$('#ban').removeAttr('id');
 		$('#supp').removeAttr('id');
 };
+
+function verifParam(valeur)
+{
+	if (valeur) {
+		return valeur;
+	} else {
+		return '';
+	}
+}
 
 function edit(utilisateur)
 {
@@ -168,7 +176,7 @@ function modifier_deBan(utilisateur)
 
 function setUser(obj)
 {
-	rgBdd('172.16.15.42', obj, 'ADMIN/modifierUser', function(a,b,c)
+	rgBdd('localhost', obj, 'ADMIN/modifierUser', function(a,b,c)
 	{
 		console.log(a);
 	});
@@ -176,7 +184,7 @@ function setUser(obj)
 
 function setBan(obj)
 {
-	rgBdd('172.16.15.42', obj, 'ADMIN/bannirUser', function(a,b,c)
+	rgBdd('localhost', obj, 'ADMIN/bannirUser', function(a,b,c)
 	{
 		console.log(a);
 	});
@@ -184,7 +192,7 @@ function setBan(obj)
 
 function setDeBan(obj)
 {
-	rgBdd('172.16.15.42', obj, 'ADMIN/debannirUser', function(a,b,c)
+	rgBdd('localhost', obj, 'ADMIN/debannirUser', function(a,b,c)
 	{
 		console.log(a);
 	});
@@ -214,7 +222,7 @@ function refresh()
 {
 	$('#tableUser').remove();
 	createDatatable();
-	rgBdd('172.16.15.42',{} ,'ADMIN/getAllUtilisateur', function(a,b,c)
+	rgBdd('localhost',{} ,'ADMIN/getAllUtilisateur', function(a,b,c)
 	{
 		parseRetour(a);
 	});

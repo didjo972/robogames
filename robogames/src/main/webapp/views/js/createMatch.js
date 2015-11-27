@@ -31,7 +31,6 @@ $('#btn').on('click', function(){
     obj.dateFin = $('#dateEnd').val();
     obj.nomEvent = $('#eventName').val();
     console.log('obj =',obj);
-    //rgBdd('172.16.15.42', obj, '/USER/creerEvenement');
 	rgBdd('localhost', obj, '/USER/creerEvenement');
   }else{
     swal("Erreur", "Au moins un champs est incorrect.", "error")
@@ -39,8 +38,7 @@ $('#btn').on('click', function(){
 })
 
 function rgBdd (url, mdata, requete, callback){
-	//var xurl =  'http://172.16.15.42:8080/robobogames/'+requete;
-	var xurl =  'http://localhost:8080/robobogames'+requete;
+	var xurl =  'http://'+url+':8080/robobogames'+requete;
   mdata['idUser'] = $.cookie('rgid');
 	$.ajax({
 		type : 'POST',

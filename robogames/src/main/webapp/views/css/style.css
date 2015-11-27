@@ -1465,6 +1465,14 @@ table.dataTable thead .sorting:after {
 .img-circle {
   border-radius: 50%;
 }
+
+.img-circle-profil {
+	width: 55%;
+}
+
+.img-circle-billet {
+	width: 10%;
+}
 .btn-circle {
   width: 30px;
   height: 30px;

@@ -84,7 +84,12 @@ public class ActionLiveController {
 		
 		// Remplissage du DTO
 		LiveDTO liveDTO = new LiveDTO();
-		liveDTO.setUrl(liveEntity.getUrl());
+		if (liveEntity != null) {
+			liveDTO.setUrl(liveEntity.getUrl());
+		} else {
+			liveDTO.setUrl("");
+		}
+		
 		
 		ReponseDTO reponse = new ReponseDTO();
 		RetourDTO retour = new RetourDTO();

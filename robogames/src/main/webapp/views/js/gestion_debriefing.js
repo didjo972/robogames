@@ -1,5 +1,4 @@
 //lance AJAX
-//rgBdd('172.16.15.42',{} , 'ADMIN/getAllEvenement', function(a,b,c)
 rgBdd('localhost',{} , 'ADMIN/getAllEvenement', function(a,b,c)
 {
 	console.log('a =',a);
@@ -127,7 +126,7 @@ function modifier_edit(evenement)
 	obj.idEvent = $('#idEvent_modif').val();
 	obj.debrief = $('#debrief_modif').val();
 	
-	rgBdd('172.16.15.42', obj, 'ADMIN/modifierDebrief', function(a,b,c)
+	rgBdd('localhost', obj, 'ADMIN/modifierDebrief', function(a,b,c)
 	{
 		console.log(a);
 	});
